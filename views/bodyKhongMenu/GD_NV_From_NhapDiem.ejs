@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-left: 30%; border-style: ridge;">
+        <a href="/nhanvien/nhapdiem"><h1>Trở về danh sách</h1></a>
+        <form action="/nhanvien/nhapdiem/luudiem" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" class="form-control" id="masv"  name="masv" value="<%=sv.MSSV%>" readonly required>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="malop"  name="malop" value="<%=sv.MaLopHP%>" readonly  required>
+            </div>
+            <div class="form-group">
+                <label for="DiemTK">Điểm thường kỳ:</label>
+                <input type="number" step="0.01" class="form-control" id="diemtk" placeholder="Điểm thường kì" name="diemtk" value="<%=sv.DiemTK%>" required>
+            </div>
+            <div class="form-group">
+                <label for="DiemTK">Điểm giữa kì:</label>
+                <input type="number" step="0.01" class="form-control" id="diemgk" placeholder="Điểm giữa kì" name="diemgk" value="<%=sv.DiemGK%>"  required>
+            </div>
+            <div class="form-group">
+                <label for="DiemTK">Điểm thực hành:</label>
+                <input type="number" step="0.01" class="form-control" id="diemth" placeholder="Điểm thực hành" name="diemth" value="<%=sv.DiemTH%>"  required>
+            </div>
+            <div class="form-group">
+                <label for="DiemTK">Điểm cuối kỳ:</label>
+                <input type="number" step="0.01" class="form-control" id="diemck" placeholder="Điểm cuối kì" name="diemck" value="<%=sv.DiemCK%>" required>
+            </div>
+            <button type="submit" class="btn btn-default">Lưu</button>
+            <div>
+                <br>
+            </div>
+        </form>
+    </div>
+</div>

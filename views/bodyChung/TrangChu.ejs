@@ -1,0 +1,94 @@
+
+    
+    <!-- Phan Model-->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Đăng nhập vào trang chủ</h4>
+                </div>
+                <div class="modal-body">
+                    <form action="/dangnhaptong" method="post" enctype="multipart/form-data">
+                        <div class="form-group"> 
+                            <label for="erroe"><%= mess%></label>
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Tên đăng nhập:</label>
+                            <input type="text" class="form-control" name="tendn">
+                        </div>
+                        <div class="form-group">
+                            <label for="pwd">Mật khẩu:</label>
+                            <input type="password" class="form-control" name="matkhau">
+                        </div>
+                        <button type="submit" class="btn btn-default">Đồng ý</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Phan Model-->
+    <% if(mess!=''){ %>
+        <script>
+            $('#myModal').modal('show');
+        </script>
+     <% } %>
+     
+     
+
+    <div class="container">
+        <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+            <h2>NHỮNG NHÀ PHÁT TRIỂN CỦA PHẦM MỀM QUẢN LÝ HỌC TẬP</h2><br><br>
+        </div>
+        <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <img src="../images/My.jpg" style="width: 200px;height: 250px;">
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="font-size: 18px;">
+                        Mã sinh viên: 18097511<br>
+                        Tên: Nguyễn Đinh Hoàng Mỹ<br>
+                        Lớp: DHKTPM14CTT<br>
+                        Email: mynguyen@gmail.com<br>
+                    </div>
+    
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <img src="../images/Tien.jpg" style="width:200px;height: 250px;">
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="font-size: 18px;">
+                        Mã sinh viên: 18078881<br>
+                        Tên: Nguyễn Việt Tiến<br>
+                        Lớp: DHKTPM14CTT<br>
+                        Email: tiencuongkhoa@gmail.com<br>
+                    </div>
+    
+                </div>
+    
+            </div>
+    
+            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <br>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <img alt="toi" src="../images/Toi.jpg" style="width: 200px;height: 250px;">
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="font-size: 18px;">
+                        Mã sinh viên:18079841<br>
+                        Tên: Nguyễn Trần Ngọc Tới <br>
+                        Lớp: DHKTPM14CTT<br>
+                        Email:ngoctoi@gmail.com<br>
+                    </div>
+    
+                </div>
+                
+            </div>
+    
+        </div>
+    </div>
+    
+

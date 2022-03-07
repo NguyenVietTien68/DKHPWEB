@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-left: 30%; border-style: ridge;">
+        <a href="/nhanvien/cnnhanvien"><h1>Trở về danh sách</h1></a>
+        <form action="/nhanvien/cnnhanvien/update_nhanvien" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="manv"  name="manv" value="<%=nv.MaNV%>" required>
+            </div>
+            <div class="form-group">
+                <label for="HoTen">Họ tên:</label>
+                <input type="text" class="form-control" id="hoten" placeholder="Họ tên" name="hoten" value="<%=nv.HoTen%>" required>
+            </div>
+            <div class="form-group">
+                <label for="DiaChi">Địa chỉ:</label>
+                <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ" name="diachi" value="<%=nv.DiaChi%>" required>
+            </div>
+            <div class="form-group">
+                <label for="GioiTinh">GioiTinh:</label>
+                <select class="form-control" id="select_giotinh" name="gioitinh">
+                    <%if(nv.GioiTinh == "Nam"){%>
+                        <option selected value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    <%}else{%>
+                        <option  value="Nam">Nam</option>
+                        <option selected value="Nữ">Nữ</option>
+                    <%}%>     
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="NgaySinh">Ngày:</label>
+                <input type="text" class="form-control" id="ngaysinh" name="ngaysinh" value="<%=nv.NgaySinh.getFullYear().toString()%>-<%=(nv.NgaySinh.getMonth()+1).toString()%>-<%=nv.NgaySinh.getDate().toString()%>" required>
+            </div>
+            <div class="form-group">
+                <label for="SoDT">Số điện thoại:</label>
+                <input type="text" class="form-control" id="sodt" name="sodt" value="<%=nv.SoDT%>" required>
+            </div>
+            <div class="form-group">
+                <label for="MaKhoa">Mã khoa:</label>
+                <input type="text" class="form-control" id="makhoa" name="makhoa" value="<%=nv.MaKhoa%>" required>
+            </div>
+            <button type="submit" class="btn btn-default">Lưu</button>
+            <div>
+                <br>
+            </div>
+        </form>
+    </div>
+</div>

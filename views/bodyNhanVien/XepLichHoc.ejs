@@ -1,0 +1,192 @@
+<header id="wrap-header">
+    <div class="container" style="background-color: white;">
+
+        <div class="row">
+            <h2 class="text-center">XẾP LỊCH HỌC
+
+            </h2>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+            <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 1%;"> -->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab1">Danh sách lịch học</a></li>
+                    <li><a data-toggle="tab" href="#tab2">Xếp lịch học</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab-pane fade in active"><br>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <form class="form-inline" action="/nhanvien/xeplichhoc/lockq">
+                                <div class="form-group">
+                                  <label for="namhoc">Năm học:</label>
+                                  <select class="form-control" id="select_namhoc" name="namhoc">
+                                    
+                                      <!-- <option value="2020-2021">2020-2021</option>
+                                      <option value="2021-2022">2021-2022</option>
+                                      <option value="2022-2023">2022-2023</option>
+                                      <option value="2023-2024">2023-2024</option> -->
+                                      <%for(let i=0;i < dsnam.length;i++){%>
+                                        <option value="<%=dsnam[i].Nam%>">
+                                          <%=dsnam[i].Nam%>
+                                        </option>
+                                        <%}%>
+                                  </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hocky">Học kỳ:</label>
+                                    <select class="form-control" id="select_hocky" name="hocky">
+                                      
+                                        <!-- <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option> -->
+                                        <%for(let i=0;i < dshocky.length;i++){%>
+                                            <option value="<%=dshocky[i].HocKy%>">
+                                              <%=dshocky[i].HocKy%>
+                                            </option>
+                                            <%}%>
+                                    </select>
+                                  </div>
+                                <button type="submit" class="btn btn-default">Lọc</button>
+                              </form><br>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <form class="form-inline" action="/nhanvien/xeplichhoc/timlhp" method="get">
+                                <div class="form-group">
+                                    <label for="malophocphan">Mã lớp học phần:</label>&ensp;&ensp;
+                                    <input type="text" class="form-control" name="malophocphan" size="50"
+                                        required>&ensp;
+                                </div>
+                                <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                            </form><br>
+                        </div>
+
+
+
+                        <table class="table table-bordered" style="margin-top: 2%;">
+                            <thead>
+                                <tr>
+                                    <th>Mã lớp</th>
+                                    <th>Nhóm</th>
+                                    <th>Tiết học</th>
+                                    <th>Ngày học</th>
+                                    <th>Phòng học</th>
+                                    <th>Mã giảng viên</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%if(listlh.length>0){%>
+                                    <%for(let i=0;i< listlh.length;i++){%>
+                                        <tr>
+                                            <!-- <td><input type="radio"></td> -->
+                                            <td>
+                                                <%=listlh[i].MaLopHP%>
+                                            </td>
+                                            <td>
+                                                <%=listlh[i].MaNhom%>
+                                            </td>
+                                            <td>
+                                                <%=listlh[i].TietHoc%>
+                                            </td>
+                                            <td>
+                                                <%=listlh[i].NgayHoc%>
+                                            </td>
+                                            <td>
+                                                <%=listlh[i].PhongHoc%>
+                                            </td>
+                                            <td>
+                                                <%=listlh[i].MaGV%>
+                                            </td>
+                                            <td>
+                                                <%=listlh[i].NgayBatDau.getDate().toString()%>-
+                                                    <%=(listlh[i].NgayBatDau.getMonth()+1).toString()%>-
+                                                        <%=listlh[i].NgayBatDau.getFullYear().toString()%>
+                                            </td>
+                                            <td>
+                                                <a href="/nhanvien/xeplichhoc/xoalich/<%=listlh[i].MaNhom%>&<%=listlh[i].MaLopHP%>"
+                                                    class="btn btn-danger ">Xóa</a>
+                                            </td>
+                                        </tr>
+                                        <%}%>
+                                <%}else{%>
+                                    <tr>
+                                        <td>Không tìm thấy hoặc chưa lọc</td>
+                                      </tr>
+                                <%}%>
+                                
+                            </tbody>
+                        </table>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <%if(sotrang>0){%>
+                                <%for(let i=1;i< sotrang;i++){%>
+                                    <ul class="pagination">
+                                        <li><a href="/nhanvien/xeplichhoc/lockq?namhoc=<%=nam%>&hocky=<%=hk%>&page=<%=i%>"><%=i%></a></li>
+                                    </ul>   
+                                <%}%>
+                            <%}%>
+                            
+
+
+                        </div>
+                    </div>
+                    <div id="tab2" class="tab-pane fade">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h4>Thêm Lịch Học Bằng File Excel</h4>
+                            <form id="uploadForm3" enctype="multipart/form-data" action="/nhanvien/xeplichhoc/uploadfilelh"
+                                method="post">
+                                <input type="file" name="myfilelh" value="Chọn file" />
+                                <br />
+                                <input type="submit" value="Đưa lên server" name="submit">
+                                <br />
+                                <span id="status"></span><br>
+                            </form>
+
+
+                            <a id="btnsavedatalh" href="#" class="btn btn-primary">Lưu dữ liệu từ
+                                file</a>
+                            <span id="statusupdatelh"></span><br><br>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+
+            <!-- </div> -->
+
+        </div>
+
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#uploadForm3').submit(function () {
+                $("#status").empty().text("Đang tải thư mục lên...");
+
+                $(this).ajaxSubmit({
+
+                    error: function (xhr) {
+                        status('Error: ' + xhr.status);
+                    },
+
+                    success: function (response) {
+                        console.log(response)
+                        $("#status").empty().text(response);
+                    }
+                });
+                return false;
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('#btnsavedatalh').click(function () {
+                $.ajax({url: "/nhanvien/xeplichhoc/savedata", success: function(result){
+                    $("#statusupdatelh").text(result.message);
+                }});
+                return false;
+            });
+        });
+    </script>
+
+</header>

@@ -1,0 +1,101 @@
+<header id="wrap-header">
+  <div class="container" style="background-color: white;">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 logo">
+
+      </div>
+    </div>
+    <div class="row">
+      <h2 class="text-center">NHẬP ĐIỂM SINH VIÊN
+
+      </h2>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <form class="form-inline" action="/nhanvien/nhapdiem/loclop">
+          <div class="form-group">
+            <label for="LopHP">Lớp học:</label>
+            <select class="form-control" id="select_lhpsv" name="lhpsv">
+              <%for(let i=0;i < listma.length;i++){%>
+                <option value="<%=listma[i].MaLopHP%>">
+                  <%=listma[i].MaLopHP%>
+                </option>
+                <%}%>
+            </select>
+
+          </div>
+          <button type="submit" class="btn btn-default">Lọc</button>
+        </form><br>
+      </div>
+
+
+
+      <div class="row" style="margin-top: 2%;">
+        <table class="table table-bordered" style="margin-top: 2%;">
+          <thead>
+            <tr>
+              <th>Mã sinh viên</th>
+              <th>Họ tên</th>
+              <th>Điểm Thường Kì</th>
+              <th>Điểm Giữa Kì</th>
+              <th>Điểm Thực Hành</th>
+              <th>Điểm Cuối kì</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <%if(dssv.length>0){%>
+              <%for(let i=0;i< dssv.length;i++){%>
+                <tr>
+                  <td>
+                    <%=dssv[i].MSSV%>
+                  </td>
+                  <td>
+                    <%=dssv[i].HoTen%>
+                  </td>
+                  <td>
+                    <%=dssv[i].DiemTK%>
+                  </td>
+                  <td>
+                    <%=dssv[i].DiemGK%>
+                  </td>
+                  <td>
+                    <%=dssv[i].DiemTH%>
+                  </td>
+                  <td>
+                    <%=dssv[i].DiemCK%>
+                  </td>
+                  <td>
+                    <a href="/nhanvien/nhapdiem/suadiem/<%=dssv[i].MSSV%>&<%=dssv[i].MaLopHP%>"
+                      class="btn btn-info">Nhập Điểm</a>
+                  </td>
+
+                </tr>
+                <%}%>
+
+                  <%}else{%>
+                    <tr>
+                      <td>Không có</td>
+                    </tr>
+                    <%}%>
+
+          </tbody>
+        </table>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <%if(trang>0){%>
+            <%for(let i=1;i< trang;i++){%>
+              <ul class="pagination">
+                <li><a href="/nhanvien/nhapdiem/loclop?lhpsv=<%=lhp%>&page=<%=i%>">
+                    <%=i%>
+                  </a></li>
+              </ul>
+              <%}%>
+                <%}%>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+</header>

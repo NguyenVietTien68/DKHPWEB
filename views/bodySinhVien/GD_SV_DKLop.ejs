@@ -1,0 +1,41 @@
+    <div class="container">
+        <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+            <h2>Đăng kí học phần</h2>
+        </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4>Danh sách lớp học phần</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Chọn</th>
+                            <th>Mã Lớp</th>
+                            <th>Sĩ số</th>
+                            <th>Số lượng đã đăng kí</th>
+                            <th>Tình trạng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <%for(let i=0;i< listlh.length;i++){%>
+                            <tr>
+                                <td>
+                                    <input name="lophocphan" type="radio" id=<%=listlh[i].MaLopHP%> value=<%=listlh[i].MaLopHP%>>
+                                </td>
+                                <td><%=listlh[i].MaLopHP%></td>
+                                <td><%=listlh[i].SiSo%></td>
+                                <td><%=listlh[i].DaDangKy%></td>
+                                <td> <% if(listlh[i].DaDangKy > 49){ %>
+                                   chấp nhận mở lớp
+                                    <% } %>
+                                    <% if(listlh[i].DaDangKy <= 49){ %>
+                                        chờ đăng ký
+                                         <% } %>
+                                </td>
+                                
+                            </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-info">Lọc</button>
+            </div>
+    </div>

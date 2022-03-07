@@ -1,0 +1,89 @@
+<header id="wrap-header">
+    <div class="container" style="background-color: white;">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 logo">
+
+            </div>
+        </div>
+        <div class="row">
+            <h1 class="text-center">TÌM KIẾM SINH VIÊN
+
+            </h1>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <form class="form-inline" action="/nhanvien/timsv/lockq" method="get">
+                    <div class="form-group">
+                        <label for="tukhoa">Từ khóa:</label>&ensp;&ensp;
+                        <input type="text" class="form-control" name="tukhoa" size="50" required>&ensp;
+                    </div>
+                    <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                </form><br>
+            </div>
+
+            <div class="row" style="margin-top: 2%;">
+                <table class="table table-bordered" style="margin-top: 2%;">
+                    <thead>
+                        <tr>
+                            <th>Mã sinh viên</th>
+                            <th>Họ tên</th>
+                            <th>Giới tính</th>
+                            <th>Ngày sinh</th>
+                            <th>Địa chỉ</th>
+                            <th>Số điện thoại</th>
+                            <th>Khóa học</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%if(listsv.length>0){%>
+                            <%for(let i=0;i< listsv.length;i++){%>
+                                <tr>
+                                    <!-- <td><input type="radio"></td> -->
+                                    <td>
+                                        <%=listsv[i].MSSV%>
+                                    </td>
+                                    <td>
+                                        <%=listsv[i].HoTen %>
+                                    </td>
+                                    <td>
+                                        <%=listsv[i].GioiTinh%>
+                                    </td>
+                                    <td>
+                                        <%=listsv[i].NgaySinh.getDate().toString()%>-
+                                            <%=(listsv[i].NgaySinh.getMonth()+1).toString()%>-
+                                                <%=listsv[i].NgaySinh.getFullYear().toString()%>
+                                    </td>
+                                    <td>
+                                        <%=listsv[i].DiaChi%>
+                                    </td>
+                                    <td>
+                                        <%=listsv[i].SoDT%>
+                                    </td>
+                                    <td>
+                                        <%=listsv[i].KhoaHoc%>
+                                    </td>
+                                </tr>
+                                <%}%>
+                        <%}else{%>
+                            <tr>
+                                <td>Không có</td>
+                              </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <%if(trang>0){%>
+                        <%for(let i = 1;i< trang;i++){%>
+                            <ul class="pagination">
+                                <li><a href="/nhanvien/timsv/lockq?tukhoa=<%=tk%>&page=<%=i%>"><%=i%></a></li>
+                            </ul>
+                        <%}%>
+                    <%}%>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    </script>
+</header>

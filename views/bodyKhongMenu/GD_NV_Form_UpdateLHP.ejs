@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-left: 30%; border-style: ridge;">
+        <a href="/nhanvien/cnlophp"><h1>Trở về danh sách</h1></a>
+        <form action="/nhanvien/cnlophp/update_lhp" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="malophp"  name="malophp" value="<%=lophp.MaLopHP%>" required>
+            </div>
+            <div class="form-group">
+                <label for="SiSo">Sỉ số:</label>
+                <input type="text" class="form-control" id="siso"  name="siso" value="<%=lophp.SiSo%>" required>
+            </div>
+            <div class="form-group">
+                <label for="MaMHP">Mã MHP:</label>
+                <input type="text" class="form-control" id="mamhp" name="mamhp" value="<%=lophp.MaMHP%>" required>
+            </div>
+            <div class="form-group">
+                <label for="Nam">Năm:</label>
+                <input type="text" class="form-control" id="nam" name="nam" value="<%=lophp.Nam%>" required>
+            </div>
+            <div class="form-group">
+                <label for="HocKy">Học kỳ:</label>
+                <input type="text" class="form-control" id="hocky" name="hocky" value="<%=lophp.HocKy%>" required>
+            </div>
+            <div class="form-group">
+                <label for="DaDangKy">Đã đăng ký:</label>
+                <input type="text" class="form-control" id="dadangky" name="dadangky" value="<%=lophp.DaDangKy%>" required>
+            </div>
+            <button type="submit" class="btn btn-default">Lưu</button>
+            <div>
+                <br>
+            </div>
+        </form>
+    </div>
+</div>

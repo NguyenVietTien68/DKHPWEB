@@ -1,0 +1,398 @@
+
+    <div class="contaner">
+        <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+            <h2>XEM LỊCH HỌC</h2><br><br>
+        </div>
+        <form class="form-horizontal"  action="/sinhvien/xemlh"  >
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <div class="form-group">
+                    <label class="label-control col-xs-4 col-sm-4 col-md-4 col-lg-4 ">Năm học:</label>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <select class="form-control" id="namhochtml" name="namhoc" >
+                            <option value="2021-2022" >2021-2022</option>
+                            <option value="2022-2023" >2022-2023</option>
+                            <option value="2023-2024"  >2023-2024</option>
+                            <option value="2024-2025"  >2024-2025</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-control col-xs-4 col-sm-4 col-md-4 col-lg-4 ">Học kì:</label>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <select class="form-control" id="hockyhtml" name="hocky">
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                            <option value=3>3</option>
+                            <option value=4>4</option>
+                        </select>
+                        <br>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <button type="submit" class="btn btn-info"> Chọn </button>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Thứ 2</th> 
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 2" ){%>
+                            <th>
+                                Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                Giảng viên: <%=listLH[i].HoTen%> <br>
+                                Phòng: <%=listLH[i].PhongHoc%> <br>
+                                Tiết: <%=listLH[i].TietHoc%> <br>
+                                -------------------
+                            </th>
+                        <%}%>
+                    <%}%>
+                    <!-- <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 2" ){%>
+                            
+                                
+                            
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 2" ){%>
+                            
+                                
+                           
+                        <%}%>
+                    <%}%> -->
+                </tr>
+                <tr>
+                    <th>Thứ 3</th> 
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 3" ){%>
+                            <%if(listLH[i].TietHoc=="01-03" || listLH[i].TietHoc=="04-06"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                    Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                    Giảng viên: <%=listLH[i].HoTen%> <br>
+                                    Phòng: <%=listLH[i].PhongHoc%> <br>
+                                    Tiết: <%=listLH[i].TietHoc%> <br>
+                                    -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 3" ){%>
+                            <%if(listLH[i].TietHoc=="07-09" || listLH[i].TietHoc=="10-12"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                    Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                    Giảng viên: <%=listLH[i].HoTen%> <br>
+                                    Phòng: <%=listLH[i].PhongHoc%> <br>
+                                    Tiết: <%=listLH[i].TietHoc%> <br>
+                                    -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 3" ){%>
+                            <%if(listLH[i].TietHoc=="13-15"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                    Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                    Giảng viên: <%=listLH[i].HoTen%> <br>
+                                    Phòng: <%=listLH[i].PhongHoc%> <br>
+                                    Tiết: <%=listLH[i].TietHoc%> <br>
+                                    -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                </tr>
+                <tr>
+                    <th>Thứ 4</th>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 4" ){%>
+                            <%if(listLH[i].TietHoc=="01-03" || listLH[i].TietHoc=="04-06"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                    Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                    Giảng viên: <%=listLH[i].HoTen%> <br>
+                                    Phòng: <%=listLH[i].PhongHoc%> <br>
+                                    Tiết: <%=listLH[i].TietHoc%> <br>
+                                    -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 4" ){%>
+                            <%if(listLH[i].TietHoc=="07-09" || listLH[i].TietHoc=="10-12"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                    Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                    Giảng viên: <%=listLH[i].HoTen%> <br>
+                                    Phòng: <%=listLH[i].PhongHoc%> <br>
+                                    Tiết: <%=listLH[i].TietHoc%> <br>
+                                    -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 4" ){%>
+                            <%if(listLH[i].TietHoc=="13-15"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                    Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                    Giảng viên: <%=listLH[i].HoTen%> <br>
+                                    Phòng: <%=listLH[i].PhongHoc%> <br>
+                                    Tiết: <%=listLH[i].TietHoc%> <br>
+                                    -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                </tr>
+                   
+                <tr>
+                   <th>Thứ 5</th>
+                   <%for(let i=0;i< listLH.length;i++){%>
+                    <%if(listLH[i].NgayHoc=="Thứ 5" ){%>
+                        <%if(listLH[i].TietHoc=="01-03" || listLH[i].TietHoc=="04-06"){%>
+                            <th>
+                                Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                Giảng viên: <%=listLH[i].HoTen%> <br>
+                                Phòng: <%=listLH[i].PhongHoc%> <br>
+                                Tiết: <%=listLH[i].TietHoc%> <br>
+                                -------------------
+                            </th>
+                        <%}%>
+                    <%}%>
+                <%}%>
+                <%for(let i=0;i< listLH.length;i++){%>
+                    <%if(listLH[i].NgayHoc=="Thứ 5" ){%>
+                        <%if(listLH[i].TietHoc=="07-09" || listLH[i].TietHoc=="10-12"){%>
+                            <th>
+                                Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                Giảng viên: <%=listLH[i].HoTen%> <br>
+                                Phòng: <%=listLH[i].PhongHoc%> <br>
+                                Tiết: <%=listLH[i].TietHoc%> <br>
+                                -------------------
+                            </th>
+                        <%}%>
+                    <%}%>
+                <%}%>
+                <%for(let i=0;i< listLH.length;i++){%>
+                    <%if(listLH[i].NgayHoc=="Thứ 5" ){%>
+                        <%if(listLH[i].TietHoc=="13-15"){%>
+                            <th>
+                                Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                Giảng viên: <%=listLH[i].HoTen%> <br>
+                                Phòng: <%=listLH[i].PhongHoc%> <br>
+                                Tiết: <%=listLH[i].TietHoc%> <br>
+                                -------------------
+                            </th>
+                        <%}%>
+                    <%}%>
+                <%}%>
+                </tr>
+                <tr>
+                        <th>Thứ 6</th>
+                        <%for(let i=0;i< listLH.length;i++){%>
+                            <%if(listLH[i].NgayHoc=="Thứ 6" ){%>
+                                <%if(listLH[i].TietHoc=="01-03" || listLH[i].TietHoc=="04-06"){%>
+                                    <th>
+                                        Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                        Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                        Giảng viên: <%=listLH[i].HoTen%> <br>
+                                        Phòng: <%=listLH[i].PhongHoc%> <br>
+                                        Tiết: <%=listLH[i].TietHoc%> <br>
+                                        -------------------
+                                    </th>
+                                <%}%>
+                            <%}%>
+                        <%}%>
+                        <%for(let i=0;i< listLH.length;i++){%>
+                            <%if(listLH[i].NgayHoc=="Thứ 6" ){%>
+                                <%if(listLH[i].TietHoc=="07-09" || listLH[i].TietHoc=="10-12"){%>
+                                    <th>
+                                        Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                        Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                        Giảng viên: <%=listLH[i].HoTen%> <br>
+                                        Phòng: <%=listLH[i].PhongHoc%> <br>
+                                        Tiết: <%=listLH[i].TietHoc%> <br>
+                                        -------------------
+                                    </th>
+                                <%}%>
+                            <%}%>
+                        <%}%>
+                        <%for(let i=0;i< listLH.length;i++){%>
+                            <%if(listLH[i].NgayHoc=="Thứ 6" ){%>
+                                <%if(listLH[i].TietHoc=="13-15"){%>
+                                    <th>
+                                        Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                        Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                        Giảng viên: <%=listLH[i].HoTen%> <br>
+                                        Phòng: <%=listLH[i].PhongHoc%> <br>
+                                        Tiết: <%=listLH[i].TietHoc%> <br>
+                                        -------------------
+                                    </th>
+                                <%}%>
+                            <%}%>
+                        <%}%>
+                </tr>
+
+                <tr>
+                    <th>Thứ 7</th>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 7" ){%>
+                            <%if(listLH[i].TietHoc=="01-03" || listLH[i].TietHoc=="04-06"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                        Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                        Giảng viên: <%=listLH[i].HoTen%> <br>
+                                        Phòng: <%=listLH[i].PhongHoc%> <br>
+                                        Tiết: <%=listLH[i].TietHoc%> <br>
+                                        -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 7" ){%>
+                            <%if(listLH[i].TietHoc=="07-09" || listLH[i].TietHoc=="10-12"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                    Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                    Giảng viên: <%=listLH[i].HoTen%> <br>
+                                    Phòng: <%=listLH[i].PhongHoc%> <br>
+                                    Tiết: <%=listLH[i].TietHoc%> <br>
+                                    -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Thứ 7" ){%>
+                            <%if(listLH[i].TietHoc=="13-15"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                        Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                        Giảng viên: <%=listLH[i].HoTen%> <br>
+                                        Phòng: <%=listLH[i].PhongHoc%> <br>
+                                        Tiết: <%=listLH[i].TietHoc%> <br>
+                                        -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                </tr>
+                <tr>
+                    <th>Chủ nhật</th>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Chủ nhật" ){%>
+                            <%if(listLH[i].TietHoc=="01-03" || listLH[i].TietHoc=="04-06"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                        Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                        Giảng viên: <%=listLH[i].HoTen%> <br>
+                                        Phòng: <%=listLH[i].PhongHoc%> <br>
+                                        Tiết: <%=listLH[i].TietHoc%> <br>
+                                        -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Chủ nhật" ){%>
+                            <%if(listLH[i].TietHoc=="07-09" || listLH[i].TietHoc=="10-12"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                        Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                        Giảng viên: <%=listLH[i].HoTen%> <br>
+                                        Phòng: <%=listLH[i].PhongHoc%> <br>
+                                        Tiết: <%=listLH[i].TietHoc%> <br>
+                                        -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                    <%for(let i=0;i< listLH.length;i++){%>
+                        <%if(listLH[i].NgayHoc=="Chủ nhật" ){%>
+                            <%if(listLH[i].TietHoc=="13-15"){%>
+                                <th>
+                                    Mã lớp: <%=listLH[i].MaLopHP%> <br>
+                                    Tên môn: <%=listLH[i].TenMHHP%> <br>
+                                    Giảng viên: <%=listLH[i].HoTen%> <br>
+                                    Phòng: <%=listLH[i].PhongHoc%> <br>
+                                    Tiết: <%=listLH[i].TietHoc%> <br>
+                                    -------------------
+                                </th>
+                            <%}%>
+                        <%}%>
+                    <%}%>
+                </tr>
+
+            </tbody>
+        </table>
+
+
+
+        <% if(namhoc=="2021-2022"){ %>
+            <script>
+                  $('#namhochtml').val("2021-2022");
+            </script>
+         <% } %>
+         <% if(namhoc=="2022-2023"){ %>
+            <script>
+                  $('#namhochtml').val("2022-2023");
+            </script>
+         <% } %>
+         <% if(namhoc=="2023-2024"){ %>
+            <script>
+                  $('#namhochtml').val("2023-2024");
+            </script>
+         <% } %>
+         <% if(namhoc=="2024-2025"){ %>
+            <script>
+                  $('#namhochtml').val("2024-2025");
+            </script>
+         <% } %>
+    
+         <% if(hocky==1){ %>
+            <script>
+                  $('#hockyhtml').val(1);
+            </script>
+         <% } %>
+         <% if(hocky==2){ %>
+            <script>
+                  $('#hockyhtml').val(2);
+            </script>
+         <% } %>
+         <% if(hocky==3){ %>
+            <script>
+                  $('#hockyhtml').val(3);
+            </script>
+         <% } %>
+         <% if(hocky==4){ %>
+            <script>
+                  $('#hockyhtml').val(4);
+            </script>
+         <% } %>    
+    </div>
+    

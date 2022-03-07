@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-left: 30%; border-style: ridge;">
+        <a href="/nhanvien/cnnhanvien"><h1>Trở về danh sách</h1></a>
+        <form action="/nhanvien/cnnhanvien/save_nhanvien" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="MaNV">Mã Nhân Viên:</label>
+                <input type="text" class="form-control" id="manv" name="manv" value="<%=matd%>" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="HoTen">Họ tên:</label>
+                <input type="text" class="form-control" id="hotennv" name="hotennv" required>
+            </div>
+            <div class="form-group">
+                <label for="DiaChi">Địa chỉ:</label>
+                <input type="text" class="form-control" id="diachinv" name="diachinv" required>
+            </div>
+            <div class="form-group">
+                <label for="GioiTinh">Giới tính:</label>
+                <select class="form-control" id="select_giotinhnv" name="gioitinhnv">
+                    <option value="Nam">Nam</option>
+                    <option value="Nữ">Nữ</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="NgaySinh">Ngày sinh:</label>
+                <input type="date" class="form-control" id="ngaysinhsv"  name="ngaysinhnv" required>
+            </div>
+            <div class="form-group">
+                <label for="SoDt">Số điện thoại:</label>
+                <input type="text" class="form-control" id="sodtnv" name="sodtnv" required>
+            </div>
+            <div class="form-group">
+                <label for="MaKhoa">Mã khoa:</label>
+                <select class="form-control" id="select_makhoa" name="makhoa">
+                    <%for(let i=0;i < listkhoa.length;i++){%>
+                      <option value="<%=listkhoa[i].MaKhoa%>">
+                        <%=listkhoa[i].MaKhoa%>
+                      </option>
+                      <%}%>
+                  </select>
+            </div>
+            <button type="submit" class="btn btn-default">Lưu</button>
+            <div>
+                <br>
+            </div>
+        </form>
+    </div>
+</div>

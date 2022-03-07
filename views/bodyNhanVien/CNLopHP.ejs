@@ -1,0 +1,140 @@
+
+    <header id="wrap-header">
+        <div class="container" style="background-color: white;">
+            <div class="row">  
+                <h2 class="text-center">CẬP NHẬT LỚP HỌC PHẦN
+
+                </h2>
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab1">Danh sách lớp học phần</a></li>
+                    <li><a data-toggle="tab" href="#tab2">Thêm lớp học phần</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab-pane fade in active">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <br>
+                            <form class="form-inline" action="/nhanvien/cnlophp/locmhp">
+                                <div class="form-inline">
+                                    <label for="MaMHP">Mã MHP:</label>&ensp;&ensp;
+                                    <select class="form-control" id="mamhp" name="mamhp" required>
+                                        <%for(let i=0;i < dsmamon.length;i++){%>
+                                            <option value="<%=dsmamon[i].MaMHP%>">
+                                                <%=dsmamon[i].MaMHP%>
+                                            </option>
+                                            <%}%>
+                                    </select>
+                                    <button class="btn btn-default">Lọc</button>
+                                </div>
+                            </form>
+                            <form class="form-inline" action="/nhanvien/cnlophp/timlophp" method="get">
+                            </br>
+                                <div class="form-group">
+                                
+                                    <label for="tukhoalophp">Từ khóa:</label>&ensp;&ensp;
+                                    <input type="text" class="form-control" name="tukhoalophp" size="50" required>&ensp;
+                                </div>
+                                <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                            </form><br>
+    
+                            <div class="row">
+                                <table class="table table-bordered" style="margin-top: 2%;">
+                                    <thead>
+                                      <tr>
+                                        <!-- <th>Chọn</th> -->
+                                        <th>Mã Lớp Học Phần</th>
+                                        <th>Sỉ số</th>
+                                        <th>Mã MHP</th>
+                                        <th>Năm</th>
+                                        <th>Học kì</th>
+                                        <th>Đã đăng ký</th>
+                                        <th></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%for(let i=0;i< listlophp.length;i++){%>
+                                            <tr>
+                                                <!-- <td><input type="radio"></td> -->
+                                                <td><%=listlophp[i].MaLopHP%></td>
+                                                <td><%=listlophp[i].SiSo%></td>
+                                                <td><%=listlophp[i].MaMHP%></td>
+                                                <td><%=listlophp[i].Nam%></td>
+                                                <td><%=listlophp[i].HocKy%></td>
+                                                <td><%=listlophp[i].DaDangKy%></td>
+                                                <td>
+                                                    <a href="/nhanvien/cnlophp/editlophp/<%=listlophp[i].MaLopHP%>" class="btn btn-warning" >Sửa</a>
+                                                    <a href="/nhanvien/cnlophp/deletelophp/<%=listlophp[i].MaLopHP%>" class="btn btn-danger" >Xóa</a>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                    </tbody>
+                                  </table>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <%if(sotrang>0){%>
+                                    <%for(let i = 1;i< sotrang;i++){%>
+                                        <ul class="pagination">
+                                            <li><a href="/nhanvien/cnlophp/locmhp?mamhp=<%=mhp%>&page=<%=i%>"><%=i%></a></li>
+                                        </ul>
+                                    <%}%>
+                                <%}%>
+                              </div>
+                        </div>
+                    </div>
+                    <div id="tab2" class="tab-pane fade">
+                    </br>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <h4>Thêm Từng lớp học phần</h4>
+                                <a href="/nhanvien/cnlophp/add-lhp" class="btn btn-primary" >Thêm lớp học phần</a><br />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <h4>Thêm Lớp Học Phần Bằng File Excel</h4>
+                                <form id="uploadForm" enctype="multipart/form-data"
+                                action="/nhanvien/cnlophp/uploadfileLopHP" method="post">
+                                    <input type="file" name="myfilelophp" value="Chọn file" />
+                                    <br />
+                                    <input type="submit" value="Đưa lên server" name="submit">
+                                    <br />
+                                    <span id="status"></span><br>
+                                </form>
+                                <a id="btnsavedatalophp" href="/nhanvien/cnlophp/savedatalophp" class="btn btn-primary">Lưu dữ
+                                    liệu từ file</a>
+                                <span id="statusupdatelhp"></span><br><br>
+    
+                            </div>
+                        </div>
+                    </div>
+            </div>  
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#uploadForm').submit(function () {
+                    $("#status").empty().text("Đang tải thư mục lên...");
+        
+                    $(this).ajaxSubmit({
+        
+                        error: function (xhr) {
+                            status('Error: ' + xhr.status);
+                        },
+        
+                        success: function (response) {
+                            console.log(response)
+                            $("#status").empty().text(response);
+                        }
+                    });
+                    return false;
+                });
+            });
+            $(document).ready(function () {
+                $('#btnsavedatalophp').click(function () {
+                    $.ajax({url: "/nhanvien/cnlophp/savedatalophp", success: function(result){
+                        $("#statusupdatelhp").text(result.message);
+                    }});
+                
+                    return false;
+                });
+            });
+        </script>
+    </header>

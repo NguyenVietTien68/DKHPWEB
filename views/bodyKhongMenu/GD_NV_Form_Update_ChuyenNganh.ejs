@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-left: 30%; border-style: ridge;">
+        <a href="/nhanvien/cnchuyennganh"><h1>Trở về danh sách</h1></a>
+        <form action="/nhanvien/cnchuyennganh/update_chuyennganh" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="hidden"  id="machuyennganh"  name="machuyennganh" value="<%=chuyennganh.MaChuyenNganh%>" required>
+            </div>
+            <div class="form-group">
+                <label for="MaKhoa">Mã khoa:</label>
+                <input type="text" class="form-control" id="makhoa" placeholder="Tên khoa" name="makhoa" value="<%=chuyennganh.MaKhoa%>" disabled required>
+            </div>
+            <div class="form-group">
+                <label for="TenChuyenNganh">Tên chuyên ngành:</label>
+                <input type="text" class="form-control" id="tenchuyennganh" placeholder="Tên chuyên ngành" name="tenchuyennganh" value="<%=chuyennganh.TenChuyenNganh%>" required>
+            </div>
+            <button type="submit" class="btn btn-default">Lưu</button>
+            <div>
+                <br>
+            </div>
+        </form>
+    </div>
+</div>

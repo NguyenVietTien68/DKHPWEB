@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-left: 30%; border-style: ridge;">
+        <a href="/nhanvien/cnmonhp"><h1>Trở về danh sách</h1></a>
+        <form action="/nhanvien/cnmonhp/update_mhp" method="post" enctype="multipart/form-data" >
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="mamhp" name="mamhp" value="<%=monhp.MaMHP%>"  required>
+            </div>
+            <div class="form-group">
+                <label >Tên môn học phần:</label>
+                <input type="text" class="form-control" id="tenmhhp"  name="tenmhhp" value="<%=monhp.TenMHHP%>" required>
+            </div>
+            <div class="form-group">
+                <label >Số tín chỉ:</label>
+                <input type="text" class="form-control" id="sotinchi" name="sotinchi" value="<%=monhp.SoTinChi%>" required>
+            </div>
+            <div class="form-group">
+                <label >Hình thức thi:</label>
+                <input type="text" class="form-control" id="hinhthucthi" name="hinhthucthi" value="<%=monhp.HinhThucThi%>" required>
+            </div>
+            <div class="form-group">
+                <label >Bắt buộc:</label>
+                <input type="text" class="form-control" id="batbuoc" name="batbuoc" value="<%=monhp.BatBuoc%>" required>
+            </div>
+            <div class="form-group">
+                <label for="MaKhoa">Mã khoa:</label>
+                <input type="text" class="form-control" id="makhoa" name="makhoa" value="<%=monhp.MaKhoa%>" required>
+
+                <!-- <label for="MaKhoa">Mã khoa:</label>
+                <select class="form-control" id="makhoa" name="makhoa" required>
+                  <%for(let i=0;i < dsmakhoa.length;i++){%>
+                    <option value="<%=monhp.MaKhoa%>">
+                      <%=dsmakhoa[i].MaKhoa%>
+                    </option>
+                    <%}%>
+                </select> -->
+            </div>
+            <div class="form-group">
+                <label >Học phần yêu cầu:</label>
+                <input type="text" class="form-control" id="hocphanyeucau" name="hocphanyeucau" value="<%=monhp.HocPhanYeuCau%>">
+                
+                <!-- <label for="HocPhanYeuCau">Học phần yêu cầu:</label>
+                <select class="form-control" id="hocphanyeucau" name="hocphanyeucau" required>
+                  <%for(let i=0;i < dshocphan.length;i++){%>
+                    <option value="<%=monhp.HocPhanYeuCau%>">
+                      <%=dshocphan[i].MaMHP%>
+                    </option>
+                    <%}%>
+                </select> -->
+            </div>
+            <button type="submit" class="btn btn-default">Lưu</button>
+            <div>
+                <br>
+            </div>
+            
+        </form>
+    </div>
+</div>

@@ -1,0 +1,154 @@
+
+    <header id="wrap-header">
+        <div class="container" style="background-color: white;">
+            
+            <div class="row">  
+                <h2 class="text-center">CẬP NHẬT GIẢNG VIÊN
+
+                </h2>
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab1">Danh sách giảng viên</a></li>
+                    <li><a data-toggle="tab" href="#tab2">Thêm giảng viên</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab-pane fade in active">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <br>
+                            <form class="form-inline" action="/nhanvien/cngiangvien/lockhoa">
+                                <div class="form-inline">
+                                    <label for="MaKhoa">Mã khoa:</label>&ensp;&ensp;
+                                    <select class="form-control" id="makhoa" name="makhoa" required>
+                                        <%for(let i=0;i < dsmakhoa.length;i++){%>
+                                            <option value="<%=dsmakhoa[i].MaKhoa%>">
+                                            <%=dsmakhoa[i].MaKhoa%>
+                                            </option>
+                                            <%}%>
+                                    </select>
+                                    <button class="btn btn-default">Lọc</button>
+                                </div>
+                            </form>
+                            <form class="form-inline" action="/nhanvien/cngiangvien/timgv" method="get">
+                            </br>
+                                <div class="form-group">
+                                
+                                    <label for="tukhoagv">Từ khóa:</label>&ensp;&ensp;
+                                    <input type="text" class="form-control" name="tukhoagv" size="50" required>&ensp;
+                                </div>
+                                <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                            </form><br>
+    
+                            <div class="row">
+                                <table class="table table-bordered" style="margin-top: 2%;">
+                                    <thead>
+                                      <tr>
+                                        <!-- <th>Chọn</th> -->
+                                        <th>Mã GV</th>
+                                        <th>Họ và tên</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Giới tính</th>
+                                        <th>Ngày sinh</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Mã khoa</th>
+                                        <th></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%if(listgv.length>0){%>
+                                            <%for(let i=0;i< listgv.length;i++){%>
+                                                <tr>
+                                                    <!-- <td><input type="radio"></td> -->
+                                                    <td><%=listgv[i].MaGV%></td>
+                                                    <td><%=listgv[i].HoTen%></td>
+                                                    <td><%=listgv[i].DiaChi%></td>
+                                                    <td><%=listgv[i].GioiTinh%></td>
+                                                    <td><%=listgv[i].NgaySinh.getDate().toString()%>-
+                                                        <%=(listgv[i].NgaySinh.getMonth()+1).toString()%>-
+                                                            <%=listgv[i].NgaySinh.getFullYear().toString()%>%>
+                                                    </td>
+                                                    <td><%=listgv[i].SoDt%></td>
+                                                    <td><%=listgv[i].Makhoa%></td>
+                                                    <td>
+                                                        <a href="/nhanvien/cngiangvien/editgv/<%=listgv[i].MaGV%>" class="btn btn-warning" >Sửa</a>
+                                                        <a href="/nhanvien/cngiangvien/deletegv/<%=listgv[i].MaGV%>" class="btn btn-danger" >Xóa</a>
+                                                    </td>
+                                                </tr>
+                                                <%}%>
+                                      <%}else{%>
+                                        <tr>
+                                          <td>Chưa lọc</td>
+                                        </tr>
+                                        <%}%>
+                                    </tbody>
+                                  </table>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <%if(sotrang>0){%>
+                                    <%for(let i = 1;i< sotrang;i++){%>
+                                        <ul class="pagination">
+                                            <li><a href="/nhanvien/cngiangvien/lockhoa?makhoa=<%=mk%>&page=<%=i%>"><%=i%></a></li>
+                                        </ul>
+                                    <%}%>
+                                <%}%>
+                              </div>
+                        </div>
+                    </div>
+                    <div id="tab2" class="tab-pane fade">
+                    </br>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <h4>Thêm Từng giảng viên</h4>
+                                <a href="/nhanvien/cngiangvien/add-gv" class="btn btn-primary" >Thêm giảng viên</a><br />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <h4>Thêm Giảng Viên Bằng File Excel</h4>
+                                <form id="uploadForm" enctype="multipart/form-data"
+                                action="/nhanvien/cngiangvien/uploadfileGV" method="post">
+                                    <input type="file" name="myfilegv" value="Chọn file" />
+                                    <br />
+                                    <input type="submit" value="Đưa lên server" name="submit">
+                                    <br />
+                                    <span id="status"></span><br>
+                                </form>
+                                <a id="btnsavedatagv" href="#" class="btn btn-primary">Lưu dữ
+                                    liệu từ file</a>
+                                <span id="statusupdategv"></span><br><br>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#uploadForm').submit(function () {
+                    $("#status").empty().text("Đang tải thư mục lên...");
+        
+                    $(this).ajaxSubmit({
+        
+                        error: function (xhr) {
+                            status('Error: ' + xhr.status);
+                        },
+        
+                        success: function (response) {
+                            console.log(response)
+                            $("#status").empty().text(response);
+                        }
+                    });
+                    return false;
+                });
+            });
+            $(document).ready(function () {
+                $('#btnsavedatagv').click(function () {
+                    $.ajax({url: "/nhanvien/cngiangvien/savedatagv", success: function(result){
+                        $("#statusupdategv").text(result.message);
+                    }});
+                
+                    return false;
+                });
+            });
+        </script>
+        
+    </header>

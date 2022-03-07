@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-left: 30%; border-style: ridge;">
+        <a href="/nhanvien/cngiangvien"><h1>Trở về danh sách</h1></a>
+        <form action="/nhanvien/cngiangvien/update_giangvien" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="magv"  name="magv" value="<%=giangvien.MaGV%>" required>
+            </div>
+            <div class="form-group">
+                <label for="HoTen">Họ tên:</label>
+                <input type="text" class="form-control" id="hoten" placeholder="Họ tên" name="hoten" value="<%=giangvien.HoTen%>" required>
+            </div>
+            <div class="form-group">
+                <label for="DiaChi">Địa chỉ:</label>
+                <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ" name="diachi" value="<%=giangvien.DiaChi%>" required>
+            </div>
+            <div class="form-group">
+                <label for="GioiTinh">GioiTinh:</label>
+                <select class="form-control" id="select_giotinh" name="gioitinh">
+                    <%if(giangvien.GioiTinh == "Nam"){%>
+                        <option selected value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    <%}else{%>
+                        <option  value="Nam">Nam</option>
+                        <option selected value="Nữ">Nữ</option>
+                    <%}%>     
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="NgaySinh">Ngày:</label>
+                <input type="text" class="form-control" id="ngaysinh" name="ngaysinh" value="<%=giangvien.NgaySinh.getFullYear().toString()%>-<%=(giangvien.NgaySinh.getMonth()+1).toString()%>-<%=giangvien.NgaySinh.getDate().toString()%>" required>
+            </div>
+            <div class="form-group">
+                <label for="SoDT">Số điện thoại:</label>
+                <input type="text" class="form-control" id="sodt" name="sodt" value="<%=giangvien.SoDt%>" required>
+            </div>
+            <button type="submit" class="btn btn-default">Lưu</button>
+            <div>
+                <br>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="container">
+    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+        <h2>Đăng kí học phần</h2>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4>Danh sách nhóm thực hành</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Chọn</th>
+                    <th>Mã nhóm</th>
+                    <th>Tên giảng viên</th>
+                    <th>Ngày học</th>
+                    <th>Phòng học</th>
+                    <th>Tiết học</th>
+                    <th>Ngày bắt đầu</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(let i=0;i< listthuchanh.length;i++){%>
+                <tr>
+                   
+                    <td>
+                        <input name="nhomth" type="radio" id=<%=listthuchanh[i].MaNhom%> value=<%=listthuchanh[i].MaNhom%>>
+                    </td>
+                    <td><%=listthuchanh[i].MaNhom%></td>
+                    <td><%=listthuchanh[i].HoTen%></td>
+                 
+                    <td><%=listthuchanh[i].NgayHoc%></td>
+                           
+                    <td><%=listthuchanh[i].PhongHoc%></td>
+                    <td><%=listthuchanh[i].TietHoc%></td>
+                 
+                    <td><%=listthuchanh[i].NgayBatDau.getDate().toString()%>
+                        /<%=(listthuchanh[i].NgayBatDau.getMonth()+1).toString()%>
+                        /<%=listthuchanh[i].NgayBatDau.getFullYear().toString()%></td>
+                </tr>
+                <%}%>
+            </tbody>
+        </table>
+        
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4>Danh sách nhóm lý thuyết</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Chọn</th>
+                    <th>Mã nhóm</th>
+                    <th>Tên giảng viên</th>
+                    <th>Ngày học</th>
+                    <th>Phòng học</th>
+                    <th>Tiết học</th>
+                    <th>Ngày bắt đầu</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+             
+                <%for(let i=0;i< listlythuyet.length;i++){%>
+                    <tr>
+                       
+                        <td>
+                            <input name="nhomlt" type="radio" id=<%=listlythuyet[i].MaNhom%> value=<%=listlythuyet[i].MaNhom%>>
+                        </td>
+                        <td><%=listlythuyet[i].MaNhom%></td>
+                        <td><%=listlythuyet[i].HoTen%></td>
+                     
+                        <td><%=listlythuyet[i].NgayHoc%></td>
+                               
+                        <td><%=listlythuyet[i].PhongHoc%></td>
+                        <td><%=listlythuyet[i].TietHoc%></td>
+                     
+                        <td><%=listlythuyet[i].NgayBatDau.getDate().toString()%>
+                            /<%=(listlythuyet[i].NgayBatDau.getMonth()+1).toString()%>
+                            /<%=listlythuyet[i].NgayBatDau.getFullYear().toString()%></td>
+                    </tr>
+                    <%}%>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-info">Đăng kí</button>
+    </div>
+</div>

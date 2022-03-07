@@ -1,0 +1,42 @@
+
+    <div class="container" style="background-color: white;">
+        <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+            <h2>ĐỔI MẬT KHẨU</h2><br><br>
+        </div>
+        <form class="form-horizontal"  action="/nhanvien/nvdoimk/doimk" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="manv">Mã nhân viên:</label>
+                <div class="col-lg-8">
+                    <input type="text" class="form-control" id="manv"% name="manv" value="<%=msnv%>" required readonly  >
+                </div>
+                <div class="col-lg-2"></div>
+            </div>
+
+            
+
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="mkc">Mật khẩu cũ:</label>
+                <div class="col-lg-8">
+                    <input type="password" class="form-control"  placeholder="Mật khẩu cũ" name="mkc" required >
+                </div>
+                <label class="control-label col-lg-2" for="erroe"><%= erromkc%></label>  
+                <div class="col-lg-2"></div>
+            </div>
+          
+
+            <div class="form-group">
+                <label class="control-label col-lg-2" for="mkm">Mật khẩu mới:</label>
+                <div class="col-lg-8">
+                    <input type="password" class="form-control"  placeholder="Mật khẩu mới" name="mkm" required >
+                </div>
+                <label class="control-label col-lg-2" for="erroe"><%= erromkm%></label>  
+                <div class="col-lg-2"></div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Cập nhật</button>
+                </div>
+            </div>
+        </form>
+    </div>
+  

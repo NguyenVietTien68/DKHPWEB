@@ -1,0 +1,352 @@
+
+    <div class="container">
+        <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+            <h2>Đăng kí học phần</h2>
+        </div>
+        <form class="form-horizontal"  action="/sinhvien/dangkyhp">
+
+        
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+
+            </div>
+            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                <!-- <form class="form-horizontal"  action="/sinhvien/dangkyhp"  > -->
+                <div class="form-group">
+                    <label class="label-control col-xs-4 col-sm-4 col-md-4 col-lg-4 ">Năm học:</label>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <select class="form-control" id="namhochtml" name="namhoc" >
+                            <option value="2021-2022" >2021-2022</option>
+                            <option value="2022-2023" >2022-2023</option>
+                            <option value="2023-2024"  >2023-2024</option>
+                            <option value="2024-2025"  >2024-2025</option>
+                          </select>
+                          <br>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="label-control col-xs-4 col-sm-4 col-md-4 col-lg-4 ">Học kì:</label>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <select class="form-control" id="hockyhtml" name="hocky">
+                            <option value=1>1</option>
+                            <option value=2>2</option>
+                            <option value=3>3</option>
+                            <option value=4>4</option>
+                          </select>
+                          <br>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                        <button type="submit" class="btn btn-info"> lọc </button>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+                <!-- </form> -->
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4>Danh sách môn học phần</h4>
+                <!-- <form class="form-horizontal"  action="/sinhvien/dangkyhp"  > -->
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Chọn</th>
+                                <th>Mã môn</th>
+                                <th>Tên môn</th>
+                                <th>Tín chỉ</th>
+                                <th>Học phần yêu cầu</th>
+                                <th>Bắt buộc</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr>
+                                <td>
+                                    <input name="monhp" type="radio" value="monhp"/>
+                                </td>
+                                <td>MHP01</td>
+                                <td>Lập trình phân tán</td>
+                                <td>3</td>
+                                <td>Lập trình hướng sự kiện</td>
+                                <td>Bắt buộc</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input name="monhp" type="radio" value="monhp"/>
+                                </td>
+                                <td>MHP02</td>
+                                <td>Toán cao cấp 1</td>
+                                <td>3</td>
+                                <td>Không</td>
+                                <td></td>
+                            </tr> -->
+                            <%for(let i=0;i< listmh.length;i++){%>
+                                <tr>
+                                    <td>
+                                        <input name="monhp" type="radio" id=<%=listmh[i].MaMHP%> value=<%=listmh[i].MaMHP%> 
+                                        >
+                                    </td>
+                                    <td><%=listmh[i].MaMHP %></td>
+                                    <td><%=listmh[i].TenMHHP %></td>
+                                    <td><%=listmh[i].SoTinChi %></td>
+                                    <td><%=listmh[i].HocPhanYeuCau %></td>
+                                    <td><%=listmh[i].BatBuoc %></td>
+                                </tr>
+                            <%}%>
+            
+                        </tbody>
+                    </table>
+                    <button id="btnLoc2" type="submit" class="btn btn-info">Lọc</button>
+                    <!-- <a href="/nhanvien/cnsinhvien/editsv/<%=listsv[i].MSSV%>" class="btn btn-warning">Sửa</a> -->
+                <!-- </form> -->
+            
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4>Danh sách lớp học phần</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Chọn</th>
+                            <th>Mã Lớp</th>
+                            <th>Sĩ số</th>
+                            <th>Số lượng đã đăng kí</th>
+                            <th>Tình trạng</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <%for(let i=0;i< listlh.length;i++){%>
+                            <tr>
+                                <td>
+                                    <input name="lophocphan" type="radio" id=<%=listlh[i].MaLopHP%> value=<%=listlh[i].MaLopHP%>>
+                                </td>
+                                <td><%=listlh[i].MaLopHP%></td>
+                                <td><%=listlh[i].SiSo%></td>
+                                <td><%=listlh[i].DaDangKy%></td>
+                                <td> <% if(listlh[i].DaDangKy > 49){ %>
+                                   chấp nhận mở lớp
+                                    <% } %>
+                                    <% if(listlh[i].DaDangKy <= 49){ %>
+                                        chờ đăng ký
+                                         <% } %>
+                                </td>
+                                
+                            </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-info">Lọc</button>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4>Danh sách nhóm thực hành</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Chọn</th>
+                            <th>Mã nhóm</th>
+                            <th>Tên giảng viên</th>
+                            <th>Ngày học</th>
+                            <th>Phòng học</th>
+                            <th>Tiết học</th>
+                            <th>Ngày bắt đầu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%for(let i=0;i< listthuchanh.length;i++){%>
+                        <tr>
+                           
+                            <td>
+                                <input name="nhomth" type="radio" id=<%=listthuchanh[i].MaNhom%> value=<%=listthuchanh[i].MaNhom%>>
+                            </td>
+                            <td><%=listthuchanh[i].MaNhom%></td>
+                            <td><%=listthuchanh[i].HoTen%></td>
+                         
+                            <td><%=listthuchanh[i].NgayHoc%></td>
+                                   
+                            <td><%=listthuchanh[i].PhongHoc%></td>
+                            <td><%=listthuchanh[i].TietHoc%></td>
+                         
+                            <td><%=listthuchanh[i].NgayBatDau.getDate().toString()%>
+                                /<%=(listthuchanh[i].NgayBatDau.getMonth()+1).toString()%>
+                                /<%=listthuchanh[i].NgayBatDau.getFullYear().toString()%></td>
+                        </tr>
+                        <%}%>
+                    </tbody>
+                </table>
+                
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4>Danh sách nhóm lý thuyết</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Chọn</th>
+                            <th>Mã nhóm</th>
+                            <th>Tên giảng viên</th>
+                            <th>Ngày học</th>
+                            <th>Phòng học</th>
+                            <th>Tiết học</th>
+                            <th>Ngày bắt đầu</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                     
+                        <%for(let i=0;i< listlythuyet.length;i++){%>
+                            <tr>
+                               
+                                <td>
+                                    <input name="nhomlt" type="radio" id=<%=listlythuyet[i].MaNhom%> value=<%=listlythuyet[i].MaNhom%>>
+                                </td>
+                                <td><%=listlythuyet[i].MaNhom%></td>
+                                <td><%=listlythuyet[i].HoTen%></td>
+                             
+                                <td><%=listlythuyet[i].NgayHoc%></td>
+                                       
+                                <td><%=listlythuyet[i].PhongHoc%></td>
+                                <td><%=listlythuyet[i].TietHoc%></td>
+                             
+                                <td><%=listlythuyet[i].NgayBatDau.getDate().toString()%>
+                                    /<%=(listlythuyet[i].NgayBatDau.getMonth()+1).toString()%>
+                                    /<%=listlythuyet[i].NgayBatDau.getFullYear().toString()%></td>
+                            </tr>
+                            <%}%>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-info">Đăng kí</button>
+                <label> <%=mess%></label>
+                <label> <%=mess1%></label>
+                <label> <%=mess2%></label>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4>Danh sách các lớp học phần đã đăng kí</h4>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Chọn</th>
+                            <th>Mã Lớp</th>
+                            <th>Tên môn</th>
+                            <th>Nhóm</th>
+                            <th>Giảng viên</th>
+                        </tr>
+                    </thead>
+                 
+                    <tbody>
+                       
+                        <%for(let i=0;i< listmonhocdadangky.length;i++){%>
+                            <tr>
+                                <td>
+                                    <input name="lhpddk" id=<%=listmonhocdadangky[i].MaLopHP%> type="radio" value=<%=listmonhocdadangky[i].MaLopHP%>>
+                                </td>
+                                <td><%=listmonhocdadangky[i].MaLopHP%></td>
+                                <td><%=listmonhocdadangky[i].TenMHHP%></td>
+                                <td><%=listmonhocdadangky[i].Nhom%></td>
+                                <td><%=listmonhocdadangky[i].HoTen%></td>
+                            </tr>
+                        <%}%>
+
+                    </tbody>
+                </table>
+                        
+                <button type="submit" class="btn btn-danger" name="" id="btnhuy" style="display: none;" >Hủy Đăng kí</button>
+                <button type="button" class="btn btn-danger" name="" onclick="myfun()" value="Click metho">Hủy Đăng kí</button>
+            </div>
+
+        </form>   
+     </div>
+     <% if(namhoc=="2021-2022"){ %>
+        <script>
+              $('#namhochtml').val("2021-2022");
+        </script>
+     <% } %>
+     <% if(namhoc=="2022-2023"){ %>
+        <script>
+              $('#namhochtml').val("2022-2023");
+        </script>
+     <% } %>
+     <% if(namhoc=="2023-2024"){ %>
+        <script>
+              $('#namhochtml').val("2023-2024");
+        </script>
+     <% } %>
+     <% if(namhoc=="2024-2025"){ %>
+        <script>
+              $('#namhochtml').val("2024-2025");
+        </script>
+     <% } %>
+
+     <% if(hocky==1){ %>
+        <script>
+              $('#hockyhtml').val(1);
+        </script>
+     <% } %>
+     <% if(hocky==2){ %>
+        <script>
+              $('#hockyhtml').val(2);
+        </script>
+     <% } %>
+     <% if(hocky==3){ %>
+        <script>
+              $('#hockyhtml').val(3);
+        </script>
+     <% } %>
+     <% if(hocky==4){ %>
+        <script>
+              $('#hockyhtml').val(4);
+        </script>
+     <% } %>
+     <% if(mamonhoc !=""){ %>
+        <script>
+            $( document ).ready(function() {
+            console.log( "ready!" );
+            const test = "<%=mamonhoc%>";
+            $("input[name=monhp][value=" + test + "]").prop('checked', true);
+           
+        });
+        </script>
+    <% } %>
+
+        <% if(malophoc !=""){ %>
+            <script>
+                $( document ).ready(function() {
+                console.log( "ready!" );
+                const test = "<%=malophoc%>";
+                $("input[name=lophocphan][value=" + test + "]").prop('checked', true);
+               
+            });
+            </script>
+            <% } %> 
+
+
+
+
+          
+        
+              
+          
+       <script type="text/javascript">
+           
+           function myfun(){
+                
+
+               var xacnhanhuy = confirm("bạn có chắc muốn hủy?") ;
+               var namhoc = document.getElementById("namhochtml").value;
+               var hocky = document.getElementById("hockyhtml").value;
+               var huy =document.getElementById("btnhuy");
+               
+                if(xacnhanhuy==true)
+                {
+                    huy.click() ;
+                    // location.replace("/sinhvien/dangkyhp?namhoc="+namhoc+"&hocky="+hocky+"&lhpddk="+huy);
+                    //location.replace("/sinhvien/dangkyhp?namhoc="+namhoc+"&hocky="+hocky);
+                   
+                    return true;
+                }else
+                    return false; 
+           }
+          
+       </script>     
+    </div>

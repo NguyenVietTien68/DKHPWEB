@@ -1,0 +1,169 @@
+<header id="wrap-header">
+  <div class="container" style="background-color: white;">
+    <div class="row">
+      <h2 class="text-center">CHIA CHUYÊN NGÀNH CHO SINH VIÊN
+      </h2>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+
+      <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 5%;"> -->
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#tab1">Danh sách sinh viên</a></li>
+          <li><a data-toggle="tab" href="#tab2">Chia chuyên ngành</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div id="tab1" class="tab-pane fade in active"><br>
+            
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              
+              <form class="form-inline" action="/nhanvien/chiachuyennganh/lockq">
+                <div class="form-group">
+                  <label for="ChuyenNganh">Chuyên ngành:</label>
+                  <select class="form-control" id="select_macn" name="macn">
+                    <%for(let i=0;i < dsmacn.length;i++){%>
+                      <option value="<%=dsmacn[i].MaChuyenNganh%>">
+                        <%=dsmacn[i].MaChuyenNganh%>
+                      </option>
+                      <%}%>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-default">Lọc</button>
+              </form><br>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <form class="form-inline" action="/nhanvien/chiachuyennganh/timsv" method="get">
+                  <div class="form-group">
+                      <label for="masvcn">Mã sinh viên:</label>&ensp;&ensp;
+                      <input type="text" class="form-control" name="masvcn" size="50"
+                          required>&ensp;
+                  </div>
+                  <button type="submit" class="btn btn-default">Tìm kiếm</button>
+              </form><br>
+            </div>
+            
+            <div class="row" style="margin-top: 2%;">
+              <table class="table table-bordered" style="margin-top: 2%;">
+                <thead>
+                  <tr>
+                    <th>Mã sinh viên</th>
+                    <th>Họ tên</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
+                    <th>Địa chỉ</th>
+                    <th>Số điện thoại</th>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <%if(listsvn.length>0){%>
+                    <%for(let i=0;i< listsvn.length;i++){%>
+                      <tr>
+                        <td>
+                          <%=listsvn[i].MSSV%>
+                        </td>
+                        <td>
+                          <%=listsvn[i].HoTen%>
+                        </td>
+                        <td>
+                          <%=listsvn[i].GioiTinh%>
+                        </td>
+                        <td>
+                          <%=listsvn[i].NgaySinh.getDate().toString()%>-
+                            <%=(listsvn[i].NgaySinh.getMonth()+1).toString()%>-
+                              <%=listsvn[i].NgaySinh.getFullYear().toString()%>
+                        </td>
+                        <td>
+                          <%=listsvn[i].DiaChi%>
+                        </td>
+                        <td>
+                          <%=listsvn[i].SoDT%>
+                        </td>
+                        <td>
+                          <a href="/nhanvien/chiachuyennganh/deletesvng/<%=listsvn[i].MSSV%>"
+                            class="btn btn-danger ">Xóa</a>
+                        </td>
+
+                      </tr>
+                      <%}%>
+
+                        <%}else{%>
+                          <tr>
+                            <td>Không có</td>
+                          </tr>
+                          <%}%>
+
+                </tbody>
+              </table>
+            </div>
+           
+              <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 1%;"> -->
+                <%if(sotrang>0){%>
+                  <%for(let i=1;i< sotrang;i++){%>
+                    <ul class="pagination">
+                      <li><a href="/nhanvien/chiachuyennganh/lockq?macn=<%=macn%>&page=<%=i%>"><%=i%></a></li>
+                    </ul>
+                    <%}%>
+                <%}%>
+              <!-- </div> -->
+            
+          </div>
+
+          <div id="tab2" class="tab-pane fade">
+            <h3>Cập Nhật Bằng File Excel</h3>
+            <form id="uploadForm1" enctype="multipart/form-data" action="/nhanvien/chiachuyennganh/uploadfilesvcn"
+              method="post">
+              <input type="file" name="myfilesvthn" value="Chọn file" />
+              <br />
+              <input type="submit" value="Đưa lên server" name="submit">
+              <br />
+              <span id="status"></span><br>
+            </form>
+
+
+            <a id="btnchiachuyennganh" href="#" class="btn btn-primary">Lưu dữ liệu từ file</a>
+            <span id="statuschiachuyennganh"></span><br><br>
+            <br />
+            <br><br>
+          </div>
+
+
+
+        </div>
+
+      <!-- </div> -->
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('#uploadForm1').submit(function () {
+        $("#status").empty().text("Đang tải thư mục lên...");
+
+        $(this).ajaxSubmit({
+
+          error: function (xhr) {
+            status('Error: ' + xhr.status);
+          },
+
+          success: function (response) {
+            console.log(response)
+            $("#status").empty().text(response);
+          }
+        });
+        return false;
+      });
+    });
+
+
+    $(document).ready(function () {
+            $('#btnchiachuyennganh').click(function () {
+                $.ajax({url: "/nhanvien/chiachuyennganh/savedata", success: function(result){
+                    $("#statuschiachuyennganh").text(result.message);
+                }});
+                
+                return false;
+            });
+        });
+  </script>
+</header>

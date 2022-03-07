@@ -1,0 +1,149 @@
+
+    <header id="wrap-header">
+        <div class="container" style="background-color: white;">
+            <div class="row">  
+                <h2 class="text-center">CẬP NHẬT MÔN HỌC PHẦN
+
+                </h2>
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab1">Danh sách môn học phần</a></li>
+                    <li><a data-toggle="tab" href="#tab2">Thêm môn học phần</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab1" class="tab-pane fade in active">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <br>
+                            <form class="form-inline" action="/nhanvien/cnmonhp/lockhoa">
+                                <div class="form-inline">
+                                    <label for="MaKhoa">Mã khoa:</label>&ensp;&ensp;
+                                    <select class="form-control" id="makhoa" name="makhoa" required>
+                                        <%for(let i=0;i < dsmakhoa.length;i++){%>
+                                            <option value="<%=dsmakhoa[i].MaKhoa%>">
+                                                <%=dsmakhoa[i].MaKhoa%>
+                                            </option>
+                                            <%}%>
+                                    </select>
+                                    <button class="btn btn-default">Lọc</button>
+                                </div>
+                            </form>
+                            <form class="form-inline" action="/nhanvien/cnmonhp/timmonhp" method="get">
+                            </br>
+                                <div class="form-group">
+                                
+                                    <label for="tukhoamonhp">Từ khóa:</label>&ensp;&ensp;
+                                    <input type="text" class="form-control" name="tukhoamonhp" size="50" required>&ensp;
+                                </div>
+                                <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                            </form><br>
+    
+                            <div class="row">
+                                <table class="table table-bordered" style="margin-top: 2%;">
+                                    <thead>
+                                      <tr>
+                                        <!-- <th>Chọn</th> -->
+                                        <th>Mã Môn Học Phần</th>
+                                        <th>Tên Môn Học Phần</th>
+                                        <th>Số tìm chỉ</th>
+                                        <th>Hình thức thi</th>
+                                        <th>Bắt buộc</th>
+                                        <th>Mã khoa</th>
+                                        <th>Học phần yêu cầu</th>
+                                        <th></th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%if(listmhp.length>0){%>
+                                            <%for(let i=0;i< listmhp.length;i++){%>
+                                                <tr>
+                                                    <!-- <td><input type="radio"></td> -->
+                                                    <td><%=listmhp[i].MaMHP%></td>
+                                                    <td><%=listmhp[i].TenMHHP%></td>
+                                                    <td><%=listmhp[i].SoTinChi%></td>
+                                                    <td><%=listmhp[i].HinhThucThi%></td>
+                                                    <td><%=listmhp[i].BatBuoc%></td>
+                                                    <td><%=listmhp[i].MaKhoa%></td>
+                                                    <td><%=listmhp[i].HocPhanYeuCau%></td>
+                                                    <td>
+                                                        <a href="/nhanvien/cnmonhp/editmonhp/<%=listmhp[i].MaMHP%>" class="btn btn-warning" >Sửa</a>
+                                                        <a href="/nhanvien/cnmonhp/deletemonhp/<%=listmhp[i].MaMHP%>" class="btn btn-danger" >Xóa</a>
+                                                    </td>
+                                                </tr>
+                                                <%}%>
+                                        <%}else{%>
+                                            <tr>
+                                                <td>Chưa lọc</td>
+                                            </tr>
+                                            <%}%>
+                                    </tbody>
+                                  </table>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <%if(sotrang>0){%>
+                                    <%for(let i = 1;i< sotrang;i++){%>
+                                        <ul class="pagination">
+                                            <li><a href="/nhanvien/cnmonhp/lockhoa?makhoa=<%=mk%>&page=<%=i%>"><%=i%></a></li>
+                                        </ul>
+                                    <%}%>
+                                <%}%>
+                              </div>
+                        </div>
+                    </div>
+                    <div id="tab2" class="tab-pane fade">
+                    </br>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <h4>Thêm Từng môn học phần</h4>
+                                <a href="/nhanvien/cnmonhp/add-monhp" class="btn btn-primary" >Thêm môn học phần</a><br />
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                                <h4>Thêm Môn Học Phần Bằng File Excel</h4>
+                                <form id="uploadForm" enctype="multipart/form-data"
+                                action="/nhanvien/cnmonhp/uploadfileMonHP" method="post">
+                                    <input type="file" name="myfilemonhp" value="Chọn file" />
+                                    <br />
+                                    <input type="submit" value="Đưa lên server" name="submit">
+                                    <br />
+                                    <span id="status"></span><br>
+                                </form>
+                                <a id="btnsavedatalophp" href="#" class="btn btn-primary">Lưu dữ
+                                    liệu từ file</a>
+                                <span id="statusupdatemhp"></span><br><br>
+    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#uploadForm').submit(function () {
+                    $("#status").empty().text("Đang tải thư mục lên...");
+        
+                    $(this).ajaxSubmit({
+        
+                        error: function (xhr) {
+                            status('Error: ' + xhr.status);
+                        },
+        
+                        success: function (response) {
+                            console.log(response)
+                            $("#status").empty().text(response);
+                        }
+                    });
+                    return false;
+                });
+            });
+            $(document).ready(function () {
+                $('#btnsavedatalophp').click(function () {
+                    $.ajax({url: "/nhanvien/cnmonhp/savedatamonhp", success: function(result){
+                        $("#statusupdatemhp").text(result.message);
+                    }});
+                
+                    return false;
+                });
+            });
+        </script>
+    </header>

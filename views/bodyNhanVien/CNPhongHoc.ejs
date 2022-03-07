@@ -1,0 +1,71 @@
+
+    <header id="wrap-header">
+        <div class="container" style="background-color: white;">
+            <div class="row">  
+                <h2 class="text-center">CẬP NHẬT PHÒNG HỌC
+
+                </h2>
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+              <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#tab1">Danh sách phòng học</a></li>
+                <li><a data-toggle="tab" href="#tab2">Thêm phòng học</a></li>
+              </ul>
+              <div class="tab-content">
+                <div id="tab1" class="tab-pane fade in active">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <form class="form-inline" action="/nhanvien/cnphonghoc/timphonghoc" method="get">
+                        </br>
+                            <div class="form-group">
+                            
+                                <label for="tukhoaphonghoc">Từ khóa:</label>&ensp;&ensp;
+                                <input type="text" class="form-control" name="tukhoaphonghoc" size="50" required>&ensp;
+                            </div>
+                            <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                        </form><br>
+
+                        <div class="row">
+                            <table class="table table-bordered" style="margin-top: 2%;">
+                                <thead>
+                                  <tr>
+                                    <!-- <th>Chọn</th> -->
+                                    <th>Phòng học</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <%for(let i=0;i< listphong.length;i++){%>
+                                    <tr>
+                                        <!-- <td><input type="radio"></td> -->
+                                        <td><%=listphong[i].PhongHoc%></td>
+                                        <td>
+                                            <a href="/nhanvien/cnphonghoc/deletephonghoc/<%=listphong[i].PhongHoc%>" class="btn btn-danger" >Xóa</a>
+                                        </td>
+                                    </tr>
+                                    <%}%>
+                                </tbody>
+                              </table>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <%if(sotrang>0){%>
+                                <%for(let i = 1;i< sotrang;i++){%>
+                                    <ul class="pagination">
+                                        <li><a href="/nhanvien/cnphonghoc/?page=<%=i%>"><%=i%></a></li>
+                                    </ul>
+                                <%}%>
+                            <%}%>
+                          </div>
+                    </div>
+                </div>
+                <div id="tab2" class="tab-pane fade">
+                </br>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                            <h4>Thêm Phòng Học</h4>
+                            <a href="/nhanvien/cnphonghoc/add-phonghoc" class="btn btn-primary" >Thêm phòng học</a><br />
+                        </div>
+                    </div>
+                </div>
+              </div>  
+            </div>
+        </div>
+    </header>

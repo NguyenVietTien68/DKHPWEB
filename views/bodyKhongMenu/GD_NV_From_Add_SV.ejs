@@ -1,0 +1,41 @@
+
+<div class="container">
+    <div class="form-group col-xs-4 col-sm-4 col-md-4 col-lg-4" style="margin-left: 30%; border-style: ridge;">
+    <a href="/nhanvien/cnsinhvien"><h1>Trở về danh sách</h1></a>
+    <form action="/nhanvien/cnsinhvien/save_sv" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="MSSV">Mã số sinh viên:</label>
+            <input type="text" class="form-control" id="masv" placeholder="Mã sinh viên" name="masv" value="<%=matdsv%>" readonly required>
+        </div>
+        <div class="form-group">
+            <label for="hoten_SV">Họ tên sinh viên:</label>
+            <input type="text" class="form-control" id="hotensv" placeholder="Họ tên sinh viên" name="hotensv" required>
+        </div>
+        <div class="form-group">
+            <label for="MSSV">Giới tính:</label>
+            <select class="form-control" id="select_giotinh" name="gioitinh">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="MSSV">Ngày sinh:</label>
+            <input type="date" class="form-control" id="ns_sv" placeholder="Ngày sinh" name="ns_sv" required>
+        </div>
+        <div class="form-group">
+            <label for="diachi_sv">Địa chỉ sinh viên:</label>
+            <input type="text" class="form-control" id="diachi_sv" placeholder="Địa chỉ sinh viên" name="diachi_sv" required>
+        </div>
+        <div class="form-group">
+            <label for="dt_sv">Điện thoại sinh viên:</label>
+            <input type="text" class="form-control" id="dt_sv" placeholder="Điện thoại" name="dt_sv" required>
+        </div>
+        <div class="form-group">
+            <label for="khoahoc_sv">Khóa học:</label>
+            <input type="text" class="form-control" id="khoahoc_sv" placeholder="Khóa học" name="khoahoc_sv" required>
+        </div>
+        <button type="submit" class="btn btn-default">Lưu</button>
+        <div><br></div>
+    </form>
+    </div>
+</div>

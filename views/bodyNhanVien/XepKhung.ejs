@@ -1,0 +1,140 @@
+<header id="wrap-header">
+  <div class="container" style="background-color: white;">
+    <div class="row">
+      <h2 class="text-center">XẾP CHƯƠNG TRÌNH KHUNG
+
+      </h2>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
+      <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#tab1">Danh sách môn học</a></li>
+        <li><a data-toggle="tab" href="#tab2">Xếp chương trình khung</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="tab1" class="tab-pane fade in active">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><br>
+            <form class="form-inline" action="/nhanvien/xepkhung/lockq">
+              <div class="form-group">
+                <label for="ChuyenNganh">Chuyên ngành:</label>
+                <select class="form-control" id="select_macn" name="macn">
+                  <%for(let i=0;i < dsmacn.length;i++){%>
+                    <option value="<%=dsmacn[i].MaChuyenNganh%>">
+                      <%=dsmacn[i].MaChuyenNganh%>
+                    </option>
+                    <%}%>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-default">Lọc</button>
+            </form><br>
+          </div>
+          
+          <div class="row"><br>
+            
+            <table class="table table-bordered" style="margin-top: 2%;">
+              <thead>
+                <tr>
+                  <th>Mã Chuyên Ngành</th>
+                  <th>Mã môn</th>
+                  <th>Tên môn</th>
+                  <th>Học kỳ</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <%if(listmh.length>0){%>
+                  <%for(let i=0;i< listmh.length;i++){%>
+                    <tr>
+                      <td>
+                        <%=listmh[i].MachuyenNganh%>
+                      </td>
+                      <td>
+                        <%=listmh[i].MaMHP%>
+                      </td>
+                      <td>
+                        <%=listmh[i].TenMHHP%>
+                      </td>
+                      <td>
+                        <%=listmh[i].HocKy%>
+                      </td>
+                      <td>
+                        <a href="/nhanvien/xepkhung/deletemhp/<%=listmh[i].MaMHP%>" class="btn btn-danger ">Xóa</a>
+                      </td>
+
+                    </tr>
+                    <%}%>
+
+                      <%}else{%>
+                        <tr>
+                          <td>Không có</td>
+                        </tr>
+                        <%}%>
+
+              </tbody>
+            </table>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 1%;">
+              <%if(sotrang>0){%>
+                <%for(let i=1;i< sotrang;i++){%>
+                  <ul class="pagination">
+                    <li><a href="/nhanvien/xepkhung/lockq?macn=<%=macn%>&page=<%=i%>"><%=i%></a></li>
+                  </ul>
+                  <%}%>
+                    <%}%>
+            </div>
+          </div>
+          
+            
+
+          
+        </div>
+        <div id="tab2" class="tab-pane fade">
+          <h3>Cập Nhật Bằng File Excel</h3>
+          <form id="uploadForm2" enctype="multipart/form-data" action="/nhanvien/xepkhung/uploadfilemhcn" method="post">
+            <input type="file" name="myfilemhcn" value="Chọn file" />
+            <br />
+            <input type="submit" value="Đưa lên server" name="submit">
+            <br />
+            <span id="status"></span><br>
+          </form><br>
+
+          <a id="btnsavekhung" href="#" class="btn btn-primary">Lưu dữ liệu từ file</a>
+          <span id="statusupdatekhung"></span><br><br>
+          <br /><br><br>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $('#uploadForm2').submit(function () {
+        $("#status").empty().text("Đang tải thư mục lên...");
+
+        $(this).ajaxSubmit({
+
+          error: function (xhr) {
+            status('Error: ' + xhr.status);
+          },
+
+          success: function (response) {
+            console.log(response)
+            $("#status").empty().text(response);
+          }
+        });
+        return false;
+      });
+    });
+
+    $(document).ready(function () {
+            $('#btnsavekhung').click(function () {
+                $.ajax({url: "/nhanvien/xepkhung/savedata", success: function(result){
+                    $("#statusupdatekhung").text(result.message);
+                }});
+               
+            });          
+        });
+  </script>
+
+</header>
