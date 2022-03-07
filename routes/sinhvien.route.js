@@ -22,7 +22,7 @@ const upload = multer();
 
 router.get('/trangchu', (req, res) => {
 
-    return res.render('./bodySinhVien/GD_SV_trangchu',{layout: './layouts/layoutSinhVien' , title: 'Trang Chủ Sinh Viên'});
+    return res.render('./bodySinhVien/GD_SV_trangchu',{layout: './layouts/layoutSinhVien' , title: 'Trang Chủ Sinh Viên', mssv, hoten, gioitinh, diachi, ngaysinh, sodt, khoahoc});
 });
 
 router.get('/dangkyhp', controllerDKHP.dangkyhocphan);
