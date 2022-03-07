@@ -45,7 +45,7 @@ module.exports.dangnhap = function (req, res) {
                                 console.log("reult:" + result);
                                 if (result) {
                                     res.cookie('mssv', username);
-                                    return res.redirect('sinhvien/trangchu');
+                                    return res.redirect('sinhvien/xemttcn');
                                 } else {
                                    
                                     res.render('./bodyChung/TrangChu',{layout: './layouts/layoutChung' , title: 'Trang Chủ', mess:'pass sv sai' });
