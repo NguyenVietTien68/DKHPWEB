@@ -3,9 +3,9 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
     //local
 
-    host:'localhost',
-    user:'root',
-    password:'123456',
+    host:'192.168.1.6',
+    user:'andro',
+    password:'andro',
     database:'sqlquanlyhocphan'
 
     //phải có dòng này trong mysql local, còn trên aws không cần
