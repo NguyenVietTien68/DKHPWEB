@@ -10,7 +10,7 @@ module.exports.trangnhapdiem = function (req, res) {
 module.exports.locdssv = function (req, res) {
     var lhp = req.query.lhpsv;
     var page = parseInt(req.query.page) || 1;
-    var perPage = 10;
+    var perPage = 6;
 
     var start = (page - 1) * perPage;
     var end = page * perPage;

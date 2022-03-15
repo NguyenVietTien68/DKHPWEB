@@ -7,7 +7,7 @@ module.exports.trangtimsv = function (req, res) {
 module.exports.timsvlockq = function (req, res) {
     var query = req.query.tukhoa;
     var page = parseInt(req.query.page) || 1;
-    var perPage = 10;
+    var perPage = 6;
 
     var start = (page - 1) * perPage;
     var end = page * perPage;

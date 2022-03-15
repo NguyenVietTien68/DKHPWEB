@@ -36,7 +36,7 @@
                 <div class="form-group">
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"></div>
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                        <button type="submit" class="btn btn-info"> lọc </button>
+                        <button type="submit" class="btn btn-info"> Lọc theo thông tin </button>
                         <br>
                         <br>
                     </div>
@@ -73,7 +73,7 @@
             
                         </tbody>
                     </table>
-                    <button id="btnLoc2" type="submit" class="btn btn-info">Lọc</button>
+                    <button id="btnLoc2" type="submit" class="btn btn-info">Lấy danh sách lớp</button>
     
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -93,9 +93,6 @@
     
                             <%for(let i=0;i< listlh.length;i++){%>
                                 <tr>
-                                    <td>
-                                        <input name="lophocphan" type="radio" id=<%=listlh[i].MaLopHP%> value=<%=listlh[i].MaLopHP%>>
-                                    </td>
                                     <td><%=listlh[i].MaLopHP%></td>
                                     <td><%=listlh[i].SiSo%></td>
                                     <td><%=listlh[i].DaDangKy%></td>
@@ -114,5 +111,61 @@
                             <%}%>
                         </tbody>
                     </table>
-                    <button type="submit" class="btn btn-info">Lọc</button>
                 </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <h4>Danh sách các lớp học phần đã đăng kí</h4>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Chọn</th>
+                                <th>Mã Lớp</th>
+                                <th>Tên môn</th>
+                                <th>Nhóm</th>
+                                <th>Giảng viên</th>
+                            </tr>
+                        </thead>
+                     
+                        <tbody>
+                           
+                            <%for(let i=0;i< listmonhocdadangky.length;i++){%>
+                                <tr>
+                                    <td>
+                                        <input name="lhpddk" id=<%=listmonhocdadangky[i].MaLopHP%> type="radio" value=<%=listmonhocdadangky[i].MaLopHP%>>
+                                    </td>
+                                    <td><%=listmonhocdadangky[i].MaLopHP%></td>
+                                    <td><%=listmonhocdadangky[i].TenMHHP%></td>
+                                    <td><%=listmonhocdadangky[i].Nhom%></td>
+                                    <td><%=listmonhocdadangky[i].HoTen%></td>
+                                </tr>
+                            <%}%>
+    
+                        </tbody>
+                    </table>
+                            
+                    <button type="submit" class="btn btn-danger" name="" id="btnhuy" style="display: none;" >Hủy Đăng kí</button>
+                    <button type="button" class="btn btn-danger" name="" onclick="myfun()" value="Click metho">Hủy Đăng kí</button>
+                </div>
+    
+            </form> 
+    </div>
+
+    <script type="text/javascript">
+           
+        function myfun(){
+            var xacnhanhuy = confirm("bạn có chắc muốn hủy?") ;
+            var namhoc = document.getElementById("namhochtml").value;
+            var hocky = document.getElementById("hockyhtml").value;
+            var huy =document.getElementById("btnhuy");
+            
+             if(xacnhanhuy==true)
+             {
+                 huy.click() ;
+                 // location.replace("/sinhvien/dangkyhp?namhoc="+namhoc+"&hocky="+hocky+"&lhpddk="+huy);
+                 //location.replace("/sinhvien/dangkyhp?namhoc="+namhoc+"&hocky="+hocky);
+                
+                 return true;
+             }else
+                 return false; 
+        }
+       
+    </script>

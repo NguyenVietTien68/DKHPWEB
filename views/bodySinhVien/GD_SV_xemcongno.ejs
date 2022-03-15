@@ -1,35 +1,38 @@
 
     <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
-        <h2>XEM CÔNG NỢ</h2><br><br>
+        <h2>CÔNG NỢ SINH VIÊN</h2><br><br>
     </div>
-    <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Tên môn</th>
-            <th>Số tín chỉ</th>
-            <th>Năm học</th>
-            <th>Học kỳ</th>
-            <th>Tiền học</th>
-          </tr>
-        </thead>
-        <tbody>
-          <%for(let i=0;i< list.length;i++){%>
-            <tr>
-        
-              <td> <%=list[i].TenMHHP%></td>
-              <td> <%=list[i].SoTinChi%></td>
-              <td> <%=list[i].Nam%></td>
-              <td> <%=list[i].HocKy%></td>
-              <td> <%=list[i].SoTinChi * 790000%>đ</td>
-            </tr>
-            <%}%>
-            <tr>
-              <td> <h3>Tổng tiền học</h3> </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td> <h3><%= tong%>đ</h3>  </td>
-            </tr>
-        </tbody>
-    </table>
-    
+    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center; margin-left: 150px;">
+      <div class="row col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <table class="table table-bordered">
+            <thead >
+              <tr>
+                <th>Tên môn</th>
+                <th>Số tín chỉ</th>
+                <th>Năm học</th>
+                <th>Học kỳ</th>
+                <th>Tiền học</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%for(let i=0;i< list.length;i++){%>
+                <tr>
+            
+                  <td> <%=list[i].TenMHHP%></td>
+                  <td> <%=list[i].SoTinChi%></td>
+                  <td> <%=list[i].Nam%></td>
+                  <td> <%=list[i].HocKy%></td>
+                  <td> <%=list[i].SoTinChi * 790000%>đ</td>
+                </tr>
+                <%}%>
+                <tr>
+                  <td> <h3>Tổng tiền học</h3> </td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td> <h3><%= tong%>đ</h3>  </td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+    </div>
