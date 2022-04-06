@@ -1,7 +1,7 @@
 
     <div class="container">
         <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
-            <h2>Đăng kí học phần</h2>
+            <h1>Đăng kí học phần</h1>
         </div>
         <form class="form-horizontal"  action="/sinhvien/dangkyhp">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -13,10 +13,10 @@
                     <label class="label-control col-xs-4 col-sm-4 col-md-4 col-lg-4 ">Năm học:</label>
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
                         <select class="form-control" id="namhochtml" name="namhoc" >
-                            <option value="2021-2022" >2021-2022</option>
-                            <option value="2022-2023" >2022-2023</option>
-                            <option value="2023-2024"  >2023-2024</option>
-                            <option value="2024-2025"  >2024-2025</option>
+                            <option value="2021-2022">2021-2022</option>
+                            <option value="2022-2023">2022-2023</option>
+                            <option value="2023-2024">2023-2024</option>
+                            <option value="2024-2025">2024-2025</option>
                           </select>
                           <br>
                     </div>
@@ -44,6 +44,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <h4>Danh sách môn học phần</h4>
+                
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -106,6 +107,8 @@
                                     <td>
                                         <a href="/sinhvien/dangkyhp/<%=listlh[i].MaLopHP%>"
                                             class="btn btn-danger">Chọn</a>
+                                            <!-- <button class="btn btn-primary" id="chuyen1" onclick="nda()"></button>
+                                            <button class="btn btn-primary" id="chuyen" onclick='ChonNhom("<%=listlh[i].MaLopHP%>")'>Chọn</button> -->
                                     </td>
                                 </tr>
                             <%}%>
@@ -167,5 +170,15 @@
              }else
                  return false; 
         }
+        function ChonNhom(malop){
+            // console.log(malop);
+            alert("helo");
+            console.log(malop);
+        }
+        function nda(){
+            console.log("helo");
+            alert("helo");
+        }
+        // alert("helo");
        
     </script>

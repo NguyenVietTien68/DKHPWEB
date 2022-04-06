@@ -30,7 +30,6 @@ module.exports.dangkyhocphan = function(req,res){
 
     var mamonhoc = req.query.monhp;
     var malophoc = req.query.lophocphan;
-
     var manhomth =  req.query.nhomth;
     var manhomlt =  req.query.nhomlt;
     var chonlophocdadangky =  req.query.lhpddk;

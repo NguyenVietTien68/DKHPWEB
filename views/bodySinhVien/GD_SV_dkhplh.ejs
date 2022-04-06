@@ -1,8 +1,11 @@
 <div class="container">
     <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
-        <h2>Đăng kí học phần</h2>
+        <h1>Đăng kí nhóm</h1>
     </div>
-    <form class="form-horizontal"  action="/sinhvien/kiemtradk">
+    <form class="form-horizontal"  action="/sinhvien/dangkyhp/<%=MaLopHP%>/kiemtra">
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+            <a href="/sinhvien/dangkyhp"><==Trở lại</a>
+        </div>
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h4>Danh sách nhóm thực hành</h4>
             <table class="table table-bordered">
@@ -79,6 +82,7 @@
                         <%}%>
                 </tbody>
             </table>
+            <label> <%=mess%></label></br>
             <button type="submit" class="btn btn-info">Đăng kí</button>
         </div>
     </form>

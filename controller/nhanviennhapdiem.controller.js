@@ -11,7 +11,6 @@ module.exports.locdssv = function (req, res) {
     var lhp = req.query.lhpsv;
     var page = parseInt(req.query.page) || 1;
     var perPage = 6;
-
     var start = (page - 1) * perPage;
     var end = page * perPage;
     database.nvnhapdiemlaymalop(function (listma) {

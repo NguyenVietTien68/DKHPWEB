@@ -151,7 +151,6 @@ module.exports.savedataChuyenNganh = function (req, res) {
                     database.themChuyenNganh(data, function (results) {
                         
                     });
-        
                 };
                  
                 res.send({ message: 'Đã thêm' });

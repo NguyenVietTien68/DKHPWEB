@@ -17,7 +17,6 @@ var storage = multer.diskStorage({
 module.exports.dangnhap = function (req, res) {
     var username = req.body.tendn;
     var pass = req.body.matkhau;
-
     console.log("tendn" + username);
     let encryptedPass = '';
     bcrypt.genSalt(saltRounds, (err, salt) => {

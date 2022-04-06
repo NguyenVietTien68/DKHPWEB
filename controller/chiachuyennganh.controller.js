@@ -33,10 +33,8 @@ module.exports.lockqcn = function (req, res) {
 
     var page = parseInt( req.query.page) || 1;
     var perPage = 6;
-
     var start = (page - 1) *perPage;
     var end = page * perPage;
-
     var macn = req.query.macn;
     database.laymachuyennganh(function(dsma){
         database.laysvtheocn(macn,function(listsvn){

@@ -33,7 +33,6 @@ module.exports.trangxepkhung = function (req, res) {
 module.exports.lockq = function (req, res) {
     var page = parseInt(req.query.page) || 1;
     var perPage = 6;
-
     var start = (page - 1) * perPage;
     var end = page * perPage;
     var macn = req.query.macn;

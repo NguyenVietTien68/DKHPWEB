@@ -30,7 +30,6 @@ module.exports.chuyennhapkhoa = function (req, res) {
     
 };
 
-
 module.exports.lockhoamh = function (req, res) {
     var page = parseInt(req.query.page) || 1;
     var perPage = 6;

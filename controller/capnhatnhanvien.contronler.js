@@ -53,6 +53,7 @@ module.exports.capnhatnhanvien = function (req, res) {
     const ngaysinh = req.body.ngaysinh;
     const sodt = req.body.sodt;
     const makhoa = req.body.makhoa;
+    
     database.capnhatnhanvien(manv,hoten,diachi,sodt,ngaysinh,gioitinh,makhoa,function (result) {
         res.redirect('/nhanvien/cnnhanvien');
     });
