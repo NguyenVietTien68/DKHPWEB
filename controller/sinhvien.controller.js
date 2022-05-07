@@ -20,7 +20,9 @@ var upload1 = multer({ storage: storage }).single('myfilesv');
 
 
 module.exports.trangcapnhatsv = function (req, res) {
-    res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: 0, trang: 0,kh:0 });
+    database.getAllKhoaHoc(function (results) {
+        res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: 0, trang: 0, kh: 0, listkhoahoc: results });
+    })
 };
 
 module.exports.lockqkh = function (req, res) {
@@ -33,8 +35,10 @@ module.exports.lockqkh = function (req, res) {
     var kh = req.query.khoahocsv;
 
     database.laysvtheokh(kh, function (listsv) {
-        let sotrang = (listsv.length) / perPage;
-        res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: listsv.slice(start,end), trang: sotrang+1,kh:kh });
+        database.getAllKhoaHoc(function (results) {
+            let sotrang = (listsv.length) / perPage;
+            res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: listsv.slice(start, end), trang: sotrang + 1, kh: kh, listkhoahoc: results });
+        });
     });
 
 };
@@ -45,35 +49,38 @@ module.exports.trangchunv = function (req, res) {
 
 module.exports.chuyennhapsv = function (req, res) {
     var matudong;
-    database.laymaSVtudong(function(result){
-        matudong = parseInt(result[0].MSSV);
-        matudong = matudong +1;
-        matudong = "00" + matudong;
-        return res.render('./bodyKhongMenu/GD_NV_From_Add_SV', { layout: './layouts/layoutKhongMenu', title: 'Thêm Sinh Viên', matdsv: matudong });
+    database.getAllKhoaHoc(function (dskhoahoc) {
+        database.laymaSVtudong(function (result) {
+            matudong = parseInt(result[0].MSSV);
+            matudong = matudong + 1;
+            matudong = "00" + matudong;
+            return res.render('./bodyKhongMenu/GD_NV_Form_Add_SV', { layout: './layouts/layoutKhongMenu', title: 'Thêm Sinh Viên', matdsv: matudong, dskhoahoc });
+        })
     })
-    
 };
 
 module.exports.chuyenedit = function (req, res) {
     const svid = req.params.svid;
-    database.chuyenDenUpdate(svid, function (results) {
-        return res.render('./bodyKhongMenu/GD_NV_From_Update_SV', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật sinh viên', sv: results[0] });
+    database.getAllKhoaHoc(function (dskhoahoc) {
+        database.chuyenDenUpdate(svid, function (results) {
+            return res.render('./bodyKhongMenu/GD_NV_Form_Update_SV', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật sinh viên', sv: results[0], dskhoahoc });
+        });
     });
 };
 
 module.exports.xoasv = function (req, res) {
     const svid = req.params.svid;
-    database.svkiemtratruocxoa(svid,function (resultsss) {
-        if(resultsss.length > 0){
+    database.svkiemtratruocxoa(svid, function (resultsss) {
+        if (resultsss.length > 0) {
             res.send('Sinh viên đã có ngành nên xóa bên chia ngành trước');
-        }else{
+        } else {
             database.xoatksv(svid, function (resultss) {
                 database.xoaSV(svid, function (results) {
                     res.redirect('/nhanvien/cnsinhvien');
                 });
             });
         }
-    });  
+    });
 };
 
 module.exports.luusv = function (req, res) {
@@ -110,8 +117,8 @@ module.exports.capnhatsv = function (req, res) {
 module.exports.uploadfile = function (req, res) {
     upload1(req, res, function (err) {
         if (err) {
-            return res.end('Error uploading file'); 
-        }else{
+            return res.end('Error uploading file');
+        } else {
             res.end('File is uploaded successfully');
         }
     });
@@ -151,49 +158,54 @@ module.exports.savedata = function (req, res) {
     }
     var arr = new Array();
     const passdefaut = "123456";
-        readXlsxFile('./file/datasv.xlsx', { schema }).then(({ rows, errors }) => {
-            errors.length == 0;
-            for (let i = 0; i < rows.length; i++) {
-                let MSSV = rows[i].MSSV;
-                arr.push(MSSV);
-            };
-            database.kiemtradl(arr,function (results) {
-                if(results.length>0){
-                    res.send({ message: 'Mã số sinh viên'+'\t' + results[0].MSSV +'\t'+ 'đã tồn tại' });
-                }else{
-                    bcrypt.hash(passdefaut, saltRounds, function (err, hash) {
-                             for (let a = 0; a < rows.length; a++) {
-                                let data = {
-                                    MSSV: rows[a].MSSV, DiaChi: rows[a].DiaChi, GioiTinh: rows[a].GioiTinh,
-                                    HoTen: rows[a].HoTen, NgaySinh: rows[a].NgaySinh, SoDT: rows[a].SoDT, KhoaHoc: rows[a].KhoaHoc
-                                };
-                                let tk = { MaTaiKhoan: rows[a].MSSV, Pass: hash };
-                                database.themSV(data, function (resultssss) {
-                                    database.themtaikhoansv(tk, function (resultsssss) {
-        
-                                    });
-                                });
-                            }
-                            res.send({ message: 'Thành công' });
-                    });
-                }
-            });
+    readXlsxFile('./file/datasv.xlsx', { schema }).then(({ rows, errors }) => {
+        errors.length == 0;
+        for (let i = 0; i < rows.length; i++) {
+            let MSSV = rows[i].MSSV;
+            arr.push(MSSV);
+        };
+        database.kiemtradl(arr, function (results) {
+            if (results.length > 0) {
+                res.send({ message: 'Mã số sinh viên' + '\t' + results[0].MSSV + '\t' + 'đã tồn tại' });
+            } else {
+                bcrypt.hash(passdefaut, saltRounds, function (err, hash) {
+                    for (let a = 0; a < rows.length; a++) {
+                        let data = {
+                            MSSV: rows[a].MSSV, DiaChi: rows[a].DiaChi, GioiTinh: rows[a].GioiTinh,
+                            HoTen: rows[a].HoTen, NgaySinh: rows[a].NgaySinh, SoDT: rows[a].SoDT, KhoaHoc: rows[a].KhoaHoc
+                        };
+                        let tk = { MaTaiKhoan: rows[a].MSSV, Pass: hash };
+                        database.themSV(data, function (resultssss) {
+                            database.themtaikhoansv(tk, function (resultsssss) {
+
+                            });
+                        });
+                    }
+                    res.send({ message: 'Thành công' });
+                });
+            }
         });
+    });
 };
 
 module.exports.timkiemsv = function (req, res) {
-    
+
     var query = req.query.tukhoasv;
     database.timkiemsv(query, function (results) {
-        if (results.length > 0) {
-           
-            res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv:results, trang:0,kh:0 });
-        } else {
-            database.getAllSV(function (result) {
-                res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv:0, trang:0,kh:0 });
-            });
-        }
+        database.getAllKhoaHoc(function (listkhoahoc) {
+            if (results.length > 0) {
+                let perPage = 6;
+                let sotrang = (results.length) / perPage;
+                // res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: listsv.slice(start,end), trang: sotrang+1,kh:kh, listkhoahoc: listkhoahoc });
+                res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: results, trang: sotrang, kh: 0, listkhoahoc });
+            } else {
+                database.getAllSV(function (result) {
+                    res.redirect('/nhanvien/cnsinhvien');
 
+                    // res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv:0, trang:0,kh:0,listkhoahoc });
+                });
+            }
+        });
     });
 };
 
@@ -201,7 +213,7 @@ module.exports.svdatlaimk = function (req, res) {
     var masv = req.params.svid;
     var passdefaut = "123456";
     bcrypt.hash(passdefaut, saltRounds, function (err, hash) {
-        database.svupdatemk(hash,masv,function (results) {
+        database.svupdatemk(hash, masv, function (results) {
             res.send('Thành công');
         });
     });

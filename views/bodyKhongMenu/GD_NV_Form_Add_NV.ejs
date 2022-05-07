@@ -30,11 +30,11 @@
                 <input type="text" class="form-control" id="sodtnv" name="sodtnv" required>
             </div>
             <div class="form-group">
-                <label for="MaKhoa">Mã khoa:</label>
+                <label for="MaKhoa">Khoa:</label>
                 <select class="form-control" id="select_makhoa" name="makhoa">
                     <%for(let i=0;i < listkhoa.length;i++){%>
                       <option value="<%=listkhoa[i].MaKhoa%>">
-                        <%=listkhoa[i].MaKhoa%>
+                        <%=listkhoa[i].TenKhoa%>
                       </option>
                       <%}%>
                   </select>

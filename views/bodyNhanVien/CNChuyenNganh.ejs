@@ -1,146 +1,158 @@
+<div class="container" style="background-color: white;">
+    <div class="row">
+        <h2 class="text-center">CẬP NHẬT CHUYÊN NGÀNH
+        </h2>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
 
-    <header id="wrap-header">
-        <div class="container" style="background-color: white;">
-            <div class="row">  
-                <h2 class="text-center">CẬP NHẬT CHUYÊN NGÀNH
-                </h2>
-            </div>
-            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top: 2%;">
-
-                <ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#tab1">Danh sách chuyên ngành</a></li>
-                    <li><a data-toggle="tab" href="#tab2">Thêm chuyên ngành</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab1" class="tab-pane fade in active">
-                        <br>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <form class="form-inline" action="/nhanvien/cnchuyennganh/lockhoa">
-                                    <div class="form-inline">
-                                        <label for="MaKhoa">Mã khoa:</label>&ensp;&ensp;
-                                        <select class="form-control" id="makhoa" name="makhoa" required>
-                                            <%for(let i=0;i < dsmakhoa.length;i++){%>
-                                                <option value="<%=dsmakhoa[i].MaKhoa%>">
-                                                <%=dsmakhoa[i].MaKhoa%>
-                                                </option>
-                                                <%}%>
-                                        </select>
-                                        <button class="btn btn-default">Lọc</button>
-                                    </div>
-                                </form>
-                                  <br>
-                                <form class="form-inline" action="/nhanvien/cnchuyennganh/timchuyennganh" method="get">
-                                    <div class="form-group">
-                                        <label for="tukhoachuyennganh">Từ khóa:</label>&ensp;&ensp;
-                                        <input type="text" class="form-control" name="tukhoachuyennganh" size="50" required>&ensp;
-                                    </div>
-                                    <button type="submit" class="btn btn-default">Tìm kiếm</button>
-                                </form><br>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#tab1">Danh sách chuyên ngành</a></li>
+            <li><a data-toggle="tab" href="#tab2">Thêm chuyên ngành</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane fade in active">
+                <br>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <form class="form-inline" action="/nhanvien/cnchuyennganh/lockhoa">
+                            <div class="form-inline">
+                                <label for="MaKhoa">Lọc theo khoa:</label>&ensp;&ensp;
+                                <select class="form-control" id="makhoahtml" name="makhoa">
+                                    <%for(let i=0;i < dsmakhoa.length;i++){%>
+                                        <option value="<%=dsmakhoa[i].MaKhoa%>">
+                                            <%=dsmakhoa[i].TenKhoa%>
+                                        </option>
+                                        <%}%>
+                                </select>
+                                <button class="btn btn-default">Lọc</button>
                             </div>
-                              <div class="row">
-                              <table class="table table-bordered" style="margin-top: 2%;">
-                                  <thead>
+                        </form>
+                        <br>
+                        <form class="form-inline" action="/nhanvien/cnchuyennganh/timchuyennganh" method="get">
+                            <div class="form-group">
+                                <label for="tukhoachuyennganh">Từ
+                                    khóa:</label>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                                <input type="text" class="form-control" name="tukhoachuyennganh" size="50"
+                                    required>&ensp;
+                            </div>
+                            <button type="submit" class="btn btn-default">Tìm kiếm</button>
+                        </form><br>
+                    </div>
+                    <div class="row">
+                        <table class="table table-bordered" style="margin-top: 2%;" id="table-content">
+                            <thead>
+                                <tr>
+                                    <th>Mã chuyên ngành</th>
+                                    <th>Mã khoa</th>
+                                    <th>Tên chuyên ngành</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- <%if(listchuyennganh.length>0){%> -->
+                                <%for(let i=0;i< listchuyennganh.length;i++){%>
                                     <tr>
-                                      <th>Mã chuyên ngành</th>
-                                      <th>Mã khoa</th>
-                                      <th>Tên chuyên ngành</th>
-                                      <th></th>
+                                        <!-- <td><input type="radio"></td> -->
+                                        <td>
+                                            <%=listchuyennganh[i].MaChuyenNganh%>
+                                        </td>
+                                        <td>
+                                            <%=listchuyennganh[i].MaKhoa %>
+                                        </td>
+                                        <td>
+                                            <%=listchuyennganh[i].TenChuyenNganh%>
+                                        </td>
+                                        <td>
+                                            <a href="/nhanvien/cnchuyennganh/editchuyennganh/<%=listchuyennganh[i].MaChuyenNganh%>"
+                                                class="btn btn-warning">Sửa</a>
+                                            <a href="/nhanvien/cnchuyennganh/deletechuyennganh/<%=listchuyennganh[i].MaChuyenNganh%>"
+                                                class="btn btn-danger ">Xóa</a>
+                                        </td>
                                     </tr>
-                                  </thead>
-                                  <tbody>
-                                    <%if(listchuyennganh.length>0){%>
-                                        <%for(let i=0;i< listchuyennganh.length;i++){%>
-                                        <tr>
-                                            <!-- <td><input type="radio"></td> -->
-                                            <td>
-                                                <%=listchuyennganh[i].MaChuyenNganh%>
-                                            </td>
-                                            <td>
-                                                <%=listchuyennganh[i].MaKhoa %>
-                                            </td>
-                                            <td>
-                                                <%=listchuyennganh[i].TenChuyenNganh%>
-                                            </td>
-                                            <td>
-                                                <a href="/nhanvien/cnchuyennganh/editchuyennganh/<%=listchuyennganh[i].MaChuyenNganh%>"
-                                                    class="btn btn-warning">Sửa</a>
-                                                <a href="/nhanvien/cnchuyennganh/deletechuyennganh/<%=listchuyennganh[i].MaChuyenNganh%>"
-                                                    class="btn btn-danger ">Xóa</a>
-                                            </td>
-                                        </tr>
-                                      <%}%>
-                                      <%}else{%>
+                                    <%}%>
+                                        <!-- <%}else{%>
                                         <tr>
                                           <td>Chưa lọc</td>
                                         </tr>
-                                        <%}%>
-                                  </tbody>
-                                </table>
-                          </div> 
-                          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <%if(sotrang>0){%>
-                                <%for(let i = 1;i< sotrang;i++){%>
-                                    <ul class="pagination">
-                                        <li><a href="/nhanvien/cnchuyennganh/lockhoa?makhoa=<%=mk%>&page=<%=i%>"><%=i%></a></li>
-                                    </ul>
-                                <%}%>
-                            <%}%>
-                          </div>
-                        </div>
+                                        <%}%> -->
+                            </tbody>
+                        </table>
                     </div>
-                    <div id="tab2" class="tab-pane fade">
-                    </br>
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                <h4>Thêm Chuyên Ngành</h4>
-                                <a href="/nhanvien/cnchuyennganh/add-chuyennganh" class="btn btn-primary">Thêm chuyên ngành</a><br />
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-                                <h4>Thêm Chuyên Ngành Bằng File Excel</h4>
-                                <form id="uploadForm" enctype="multipart/form-data" action="/nhanvien/cnchuyennganh/uploadfileChuyenNganh"
-                                    method="post">
-                                    <input type="file" name="myfilechuyennganh" value="Chọn file" />
-                                    <br />
-                                    <input type="submit" value="Đưa lên server" name="submit">
-                                    <br />
-                                    <span id="status"></span><br>
-                                </form>
-                                <a id="btncapnhatcn" href="#" class="btn btn-primary">Lưu dữ liệu từ file</a>
-                                <span id="statuscncn"></span><br><br><br /><br><br>
-                            </div>
-                        </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <%if(sotrang>0){%>
+                            <%for(let i=1;i< sotrang;i++){%>
+                                <ul class="pagination">
+                                    <li><a href="/nhanvien/cnchuyennganh/lockhoa?makhoa=<%=mk%>&page=<%=i%>">
+                                            <%=i%>
+                                        </a></li>
+                                </ul>
+                                <%}%>
+                                    <%}%>
                     </div>
                 </div>
+                <%for(let c=0; c < dsmakhoa.length; c++){%>
+                    <%if( makhoa == dsmakhoa[c].MaKhoa){%>
+                        <script>
+                            $('#makhoahtml').val("<%=dsmakhoa[c].MaKhoa%>");
+                        </script>
+                    <%}%>
+                <%}%>
+            </div>
+            <div id="tab2" class="tab-pane fade">
+                </br>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                        <h4>Thêm Chuyên Ngành</h4>
+                        <a href="/nhanvien/cnchuyennganh/add-chuyennganh" class="btn btn-primary">Thêm chuyên
+                            ngành</a><br />
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                        <h4>Thêm Chuyên Ngành Bằng File Excel</h4>
+                        <form id="uploadForm" enctype="multipart/form-data"
+                            action="/nhanvien/cnchuyennganh/uploadfileChuyenNganh" method="post">
+                            <input type="file" name="myfilechuyennganh" value="Chọn file" />
+                            <br />
+                            <input type="submit" value="Đưa lên server" name="submit">
+                            <br />
+                            <span id="status"></span><br>
+                        </form>
+                        <a id="btncapnhatcn" href="#" class="btn btn-primary">Lưu dữ liệu từ file</a>
+                        <span id="statuscncn"></span><br><br><br /><br><br>
+                    </div>
+                </div>
+            </div>
         </div>
-        <script>
-            $(document).ready(function () {
-                $('#uploadForm').submit(function () {
-                    $("#status").empty().text("Đang tải thư mục lên...");
-        
-                    $(this).ajaxSubmit({
-        
-                        error: function (xhr) {
-                            status('Error: ' + xhr.status);
-                        },
-        
-                        success: function (response) {
-                            console.log(response)
-                            $("#status").empty().text(response);
-                        }
-                    });
-                    return false;
-                });
-            });
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('#uploadForm').submit(function () {
+                $("#status").empty().text("Đang tải thư mục lên...");
 
-            $(document).ready(function () {
-            $('#btncapnhatcn').click(function () {
-                $.ajax({url: "/nhanvien/cnchuyennganh/savedatachuyennganh", success: function(result){
-                    $("#statuscncn").text(result.message);
-                }});
-                
+                $(this).ajaxSubmit({
+
+                    error: function (xhr) {
+                        status('Error: ' + xhr.status);
+                    },
+
+                    success: function (response) {
+                        console.log(response)
+                        $("#status").empty().text(response);
+                    }
+                });
                 return false;
             });
         });
-        </script>
-    </header>
+
+        $(document).ready(function () {
+            $('#btncapnhatcn').click(function () {
+                $.ajax({
+                    url: "/nhanvien/cnchuyennganh/savedatachuyennganh", success: function (result) {
+                        $("#statuscncn").text(result.message);
+                    }
+                });
+
+                return false;
+            });
+        });
+    </script>
+    

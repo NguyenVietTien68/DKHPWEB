@@ -24,7 +24,7 @@
                   <select class="form-control" id="select_macn" name="macn">
                     <%for(let i=0;i < dsmacn.length;i++){%>
                       <option value="<%=dsmacn[i].MaChuyenNganh%>">
-                        <%=dsmacn[i].MaChuyenNganh%>
+                        <%=dsmacn[i].MaChuyenNganh%> - <%=dsmacn[i].TenChuyenNganh%>
                       </option>
                       <%}%>
                   </select>
@@ -44,7 +44,7 @@
             </div>
             
             <div class="row" style="margin-top: 2%;">
-              <table class="table table-bordered" style="margin-top: 2%;">
+              <table class="table table-bordered" style="margin-top: 2%;" id="table-content">
                 <thead>
                   <tr>
                     <th>Mã sinh viên</th>

@@ -15,13 +15,13 @@ var storage = multer.diskStorage({
 var upload1 = multer({ storage: storage }).single('myfilegv');
 
 module.exports.trangcapnhatgv = function (req, res) {
-    database.laymakhoa(function (dsmak) {
+    database.getAllKhoa(function (dsmak) {
         res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên', dsmakhoa : dsmak, listgv: 0, sotrang:0});
     })
 };
 
 module.exports.chuyennhapgv = function (req, res) {
-    database.laymakhoa(function(result){
+    database.getAllKhoa(function(result){
         return res.render('./bodyKhongMenu/GD_NV_Form_Add_GiangVien', { layout: './layouts/layoutKhongMenu', title: 'Thêm Giảng Viên', dsmakhoa : result });
     })
 };
@@ -33,7 +33,7 @@ module.exports.lockhoagv = function (req, res) {
     var end = page * perPage;
 
     var makhoa = req.query.makhoa;
-    database.laymakhoa(function(dsmak){
+    database.getAllKhoa(function(dsmak){
         database.layGVtheoKhoa(makhoa,function(listgv){
             let sotrang = (listgv.length) / perPage;
             return res.render('./bodyNhanVien/CNGiangVien',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Giảng Viên',dsmakhoa : dsmak,listgv:listgv.slice(start,end), sotrang : sotrang+1,mk:makhoa});
@@ -96,11 +96,11 @@ module.exports.timkiemgv = function (req, res) {
     console.log(query);
     database.timkiemGV(query, function (results) {
         if (results.length > 0) {
-            database.laymakhoa(function (dsmak) {
+            database.getAllKhoa(function (dsmak) {
                 res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên',dsmakhoa:dsmak, listgv: results,sotrang:0 });
             });    
         } else {
-            database.laymakhoa(function (dsmak) {
+            database.getAllKhoa(function (dsmak) {
                 res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên', dsmakhoa:dsmak, listgv: 0, sotrang:0 });
             });
         }

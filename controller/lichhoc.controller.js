@@ -128,16 +128,17 @@ module.exports.savedata = function (req, res) {
             if(results.length>0){
                 res.send({ message: 'Lớp học phần có mã'+'\t' + results[0].MaLopHP +'\t' + 'và nhóm' + '\t' + results[0].MaNhom + '\t' + 'đã tồn tại' });
             }else{
-                for (let a = 0; a < rows.length; a++) { 
+                let dem = 0;
+                for (let a = 0; a < rows.length; a++) {
                     let data = {
                         MaNhom: rows[a].MaNhom, MaLopHP: rows[a].MaLopHP, TietHoc: rows[a].TietHoc,
                         NgayHoc: rows[a].NgayHoc, PhongHoc: rows[a].PhongHoc, MaGV: rows[a].MaGV, NgayBatDau: rows[a].NgayBatDau
                     };
                     database.themlichhoc(data, function (results) {
                     });
-
+                    dem++;
                 };
-                res.send({ message: 'Đã thêm' });
+                res.send({ message: 'Đã thêm '+dem+' lịch học' });
             } 
            });
     });

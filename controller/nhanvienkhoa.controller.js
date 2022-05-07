@@ -96,8 +96,8 @@ module.exports.xoakhoa = function (req, res) {
 module.exports.chuyeneditkhoa = function (req, res) {
     const khoaid = req.params.khoaid;
     database.chuyenDenUpdateKhoa(khoaid, function (results) {
-        console.log(results[0]);
-        // res.render('GD_NV_From_Update_Khoa', { sv: results[0] });
+        // console.log(results[0]);
+        // res.render('GD_NV_Form_Update_Khoa', { sv: results[0] });
         return res.render('./bodyKhongMenu/GD_NV_Form_Update_Khoa', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật khoa', khoa: results[0] });
     });
 };
@@ -145,7 +145,7 @@ module.exports.savedatakhoa = function (req, res) {
                 res.send({ message: 'Khoa có mã số' +'\t'+ result[0].MaKhoa +'\t'+ 'đã tồn tại' });
             }else{   
                 for (let a = 0; a < rows.length; a++) {
-                    
+                    console.log(rows[a].MaKhoa);
                     let data = {
                         MaKhoa: rows[a].MaKhoa, TenKhoa: rows[a].TenKhoa
                     };
@@ -154,7 +154,7 @@ module.exports.savedatakhoa = function (req, res) {
                     });
         
                 };
-                res.send({ message: 'thành công' });
+                res.send({ message: 'Thành công' });
             } 
         });
     });
@@ -176,4 +176,9 @@ module.exports.timkiemkhoa = function (req, res) {
         }
 
     });
+};
+
+module.exports.downloadkhoa = function (req, res) {
+    var query = req.body.tukhoakhoa;
+    console.log(query);
 };

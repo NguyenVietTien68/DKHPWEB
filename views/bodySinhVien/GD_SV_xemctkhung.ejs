@@ -4,9 +4,14 @@
             <h2>CHƯƠNG TRÌNH KHUNG</h2><br><br>
         </div>
         <div class="row col-xs-5 col-sm-5 col-md-5 col-lg-5">
+          <%if(list.length > 0){%>
             <h4> Tên Chuyên Ngành: <%=list[0].TenChuyenNganh%> </h4>
-        </div>
-        <table class="table table-bordered">
+          <%}%>
+          </div>
+        <%if(list.length < 0){%>
+          <h3><%=mess%></h3>
+        <%}%>
+        <table class="table table-bordered" id="table-content">
             <thead>
               <tr>
               
@@ -16,16 +21,15 @@
               </tr>
             </thead>
             <tbody>
+            <%if(list.length > 0){%>
               <%for(let i=0;i< list.length;i++){%>
                 <tr>
-            
                   <td> <%=list[i].MaMHP%></td>
                   <td> <%=list[i].TenMHHP%></td>
                   <td> <%=list[i].HocKy%></td>
                 </tr>
-                <%}%>
-              
-              
+              <%}%>
+            <%}%>
             </tbody>
           </table>
     </div>

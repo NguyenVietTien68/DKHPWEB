@@ -33,7 +33,7 @@ app.set('view engine', 'ejs');
 
 //Chung
 app.get('/', (req, res) => {
-    return res.render('./bodyChung/TrangChu',{layout: './layouts/layoutChung' , title: 'Trang Chủ'}, mess='');
+    return res.render('./bodyChung/DangNhap',{layout: './layouts/layoutDangNhap' , title: 'Trang Chủ'}, mess='');
 });
 
 //Nhân Viên router ntnt
@@ -49,7 +49,7 @@ app.post('/dangnhaptong', upload.fields([]), controllerDN.dangnhap);
 
 
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log('Server is running on port 3000!');
 });

@@ -1,6 +1,6 @@
 <header id="wrap-header">
-    <div class="container" style="background-color: white;"> 
-        <div class="row">  
+    <div class="container" style="background-color: white;">
+        <div class="row">
             <h2 class="text-center">CẬP NHẬT KHOA
 
             </h2>
@@ -14,68 +14,76 @@
                 <div id="tab1" class="tab-pane fade in active">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <form class="form-inline" action="/nhanvien/cnkhoa/timkhoa" method="get">
-                        </br>
+                            </br>
                             <div class="form-group">
-                            
+
                                 <label for="tukhoakhoa">Từ khóa:</label>&ensp;&ensp;
                                 <input type="text" class="form-control" name="tukhoakhoa" size="50" required>&ensp;
                             </div>
                             <button type="submit" class="btn btn-default">Tìm kiếm</button>
                         </form><br>
-
                         <div class="row">
-                            <table class="table table-bordered" style="margin-top: 2%;">
+                            <table class="table table-bordered" style="margin-top: 2%;" id="table-content"> 
                                 <thead>
-                                  <tr>
-                                    <!-- <th>Chọn</th> -->
-                                    <th>Mã khoa</th>
-                                    <th>Tên khoa</th>
-                                  </tr>
+                                    <tr>
+                                        <!-- <th>Chọn</th> -->
+                                        <th>Mã khoa</th>
+                                        <th>Tên khoa</th>
+                                        <th></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <%if(listkhoa.length>0){%>
-                                    <%for(let i=0;i< listkhoa.length;i++){%>
-                                        <tr>
-                                            <!-- <td><input type="radio"></td> -->
-                                            <td><%=listkhoa[i].MaKhoa%></td>
-                                            <td><%=listkhoa[i].TenKhoa%></td>
-                                            <td>
-                                                <a href="/nhanvien/cnkhoa/editkhoa/<%=listkhoa[i].MaKhoa%>" class="btn btn-warning" >Sửa</a>
-                                                <a href="/nhanvien/cnkhoa/deletekhoa/<%=listkhoa[i].MaKhoa%>" class="btn btn-danger" >Xóa</a>
-                                            </td>
-                                        </tr>
-                                        <%}%>
-                                    <%}else{%>
-                                        <tr>
-                                            <td>Không tìm thấy</td>
-                                        </tr>
-                                    <%}%>
+                                    <%if(listkhoa.length>0){%>
+                                        <%for(let i=0;i< listkhoa.length;i++){%>
+                                            <tr>
+                                                <!-- <td><input type="radio"></td> -->
+                                                <td>
+                                                    <%=listkhoa[i].MaKhoa%>
+                                                </td>
+                                                <td>
+                                                    <%=listkhoa[i].TenKhoa%>
+                                                </td>
+                                                <td>
+                                                    <a href="/nhanvien/cnkhoa/editkhoa/<%=listkhoa[i].MaKhoa%>"
+                                                        class="btn btn-warning">Sửa</a>
+                                                    <a href="/nhanvien/cnkhoa/deletekhoa/<%=listkhoa[i].MaKhoa%>"
+                                                        class="btn btn-danger">Xóa</a>
+                                                </td>
+                                            </tr>
+                                            <%}%>
+                                                <%}else{%>
+                                                    <tr>
+                                                        <td>Không tìm thấy</td>
+                                                    </tr>
+                                                    <%}%>
                                 </tbody>
-                              </table>
+                            </table>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                             <%if(sotrang>0){%>
-                                <%for(let i = 1;i< sotrang;i++){%>
+                                <%for(let i=1;i< sotrang;i++){%>
                                     <ul class="pagination">
-                                        <li><a href="/nhanvien/cnkhoa/?page=<%=i%>"><%=i%></a></li>
+                                        <li><a href="/nhanvien/cnkhoa/?page=<%=i%>">
+                                                <%=i%>
+                                            </a></li>
                                     </ul>
-                                <%}%>
-                            <%}%>
-                            
+                                    <%}%>
+                                        <%}%>
+
                         </div>
                     </div>
                 </div>
                 <div id="tab2" class="tab-pane fade">
-                </br>
+                    </br>
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                             <h4>Thêm Từng Khoa</h4>
-                            <a href="/nhanvien/cnkhoa/add-khoa" class="btn btn-primary" >Thêm khoa</a><br />
+                            <a href="/nhanvien/cnkhoa/add-khoa" class="btn btn-primary">Thêm khoa</a><br />
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                             <h4>Thêm Khoa Bằng File Excel</h4>
-                            <form id="uploadForm" enctype="multipart/form-data"
-                            action="/nhanvien/cnkhoa/uploadfileKhoa" method="post">
+                            <form id="uploadForm" enctype="multipart/form-data" action="/nhanvien/cnkhoa/uploadfileKhoa"
+                                method="post">
                                 <input type="file" name="myfilekhoa" value="Chọn file" />
                                 <br />
                                 <input type="submit" value="Đưa lên server" name="submit">
@@ -89,7 +97,7 @@
                     </div>
                 </div>
             </div>
-          <!-- <a href="/nhanvien/cnkhoa/add-khoa" class="btn btn-primary" >Thêm khoa</a><br/>
+            <!-- <a href="/nhanvien/cnkhoa/add-khoa" class="btn btn-primary" >Thêm khoa</a><br/>
           <h3>Thêm khoa bằng excel</h3>
           <form id="uploadForm" enctype="multipart/form-data" action="/nhanvien/cnkhoa/uploadfileKhoa" method="post">
               <input type="file" name="myfilekhoa" value="Chọn file"/>
@@ -99,40 +107,42 @@
               <span id="status"></span><br>
           </form>
           <a href="/nhanvien/cnkhoa/savedataKhoa" class="btn btn-primary" >Lưu dữ liệu từ file</a><br/> -->
-      </div>
-      
+        </div>
+
     </div>
-        
-  <script>
-    $(document).ready(function () {
-        $('#uploadForm').submit(function () {
-            $("#status").empty().text("Đang tải thư mục lên...");
 
-            $(this).ajaxSubmit({
+    <script>
+        $(document).ready(function () {
+            $('#uploadForm').submit(function () {
+                $("#status").empty().text("Đang tải thư mục lên...");
 
-                error: function (xhr) {
-                    status('Error: ' + xhr.status);
-                },
+                $(this).ajaxSubmit({
 
-                success: function (response) {
-                    console.log(response)
-                    $("#status").empty().text(response);
-                }
-            });
-            return false;
-        });
-    });
+                    error: function (xhr) {
+                        status('Error: ' + xhr.status);
+                    },
 
-    $(document).ready(function () {
-            $('#btnsavedatakhoa').click(function () {
-                $.ajax({url: "/nhanvien/cnkhoa/savedatakhoa", success: function(result){
-                    $("#statusupdatek").text(result.message);
-                    // alert('thanhcong')
-                }});
+                    success: function (response) {
+                        console.log(response)
+                        $("#status").empty().text(response);
+                    }
+                });
                 return false;
-               
             });
-            
         });
-</script>
+
+        $(document).ready(function () {
+            $('#btnsavedatakhoa').click(function () {
+                $.ajax({
+                    url: "/nhanvien/cnkhoa/savedatakhoa", success: function (result) {
+                        $("#statusupdatek").text(result.message);
+                        // alert('thanhcong')
+                    }
+                });
+                return false;
+
+            });
+
+        });
+    </script>
 </header>

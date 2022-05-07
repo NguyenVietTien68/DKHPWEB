@@ -23,7 +23,7 @@ module.exports.uploadfilesvcn = function (req, res) {
 };
 
 module.exports.trangchiacn = function (req, res) {
-    database.laymachuyennganh(function(dsma){
+    database.getAllChuyenNganh(function(dsma){
         return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',dsmacn:dsma,listsvn:0,macn:0,sotrang:0});
     });  
 };
@@ -36,7 +36,7 @@ module.exports.lockqcn = function (req, res) {
     var start = (page - 1) *perPage;
     var end = page * perPage;
     var macn = req.query.macn;
-    database.laymachuyennganh(function(dsma){
+    database.getAllChuyenNganh(function(dsma){
         database.laysvtheocn(macn,function(listsvn){
             let sotrang = (listsvn.length)/perPage;
             return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',dsmacn:dsma,listsvn:listsvn.slice(start,end),macn:macn,sotrang:sotrang+1});
@@ -56,7 +56,7 @@ module.exports.xoasvkhcn = function (req, res) {
 
 module.exports.timsvcn = function (req, res) {
     var masvcn = req.query.masvcn;
-    database.laymachuyennganh(function (dsma) {
+    database.getAllChuyenNganh(function (dsma) {
         database.timsvtrongcn(masvcn,function(listsv){
             if (listsv.length > 0) {
                 return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',dsmacn:dsma,listsvn:listsv,macn:0,sotrang:0});

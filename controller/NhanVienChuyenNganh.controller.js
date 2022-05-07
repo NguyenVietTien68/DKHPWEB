@@ -17,8 +17,8 @@ var upload1 = multer({ storage: storage }).single('myfilechuyennganh');
 
 module.exports.trangcapnhatchuyennganh = function (req, res) {
 
-    database.laymakhoa(function (dsmak) {
-        res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', dsmakhoa : dsmak,listchuyennganh: 0, sotrang:0});
+    database.getAllKhoa(function (dsmak) {
+        res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', dsmakhoa: dsmak, listchuyennganh: 0, sotrang: 0 });
     })
 };
 
@@ -31,60 +31,59 @@ module.exports.lockhoa = function (req, res) {
     var end = page * perPage;
 
     var makhoa = req.query.makhoa;
-    database.laymakhoa(function(dsmak){
-        database.layCNtheoKhoa(makhoa,function(listchuyennganh){
+    database.getAllKhoa(function (dsmak) {
+        database.layCNtheoKhoa(makhoa, function (listchuyennganh) {
             let sotrang = (listchuyennganh.length) / perPage;
-            return res.render('./bodyNhanVien/CNChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Chuyên Ngành',dsmakhoa : dsmak,listchuyennganh:listchuyennganh.slice(start,end),sotrang: sotrang+1, mk:makhoa });
+            return res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', dsmakhoa: dsmak, listchuyennganh: listchuyennganh.slice(start, end), sotrang: sotrang + 1, mk: makhoa });
         });
-    });  
+    });
 };
 
-module.exports.chuyenaddchuyennganh = function(req,res){
-    database.laymakhoa(function (dsmak) {
-        return res.render('./bodyKhongMenu/GD_NV_Form_Add_ChuyenNganh', { layout: './layouts/layoutKhongMenu', title: 'Thêm chuyên ngành',dsmakhoa : dsmak});
+module.exports.chuyenaddchuyennganh = function (req, res) {
+    database.getAllKhoa(function (dsmak) {
+        return res.render('./bodyKhongMenu/GD_NV_Form_Add_ChuyenNganh', { layout: './layouts/layoutKhongMenu', title: 'Thêm chuyên ngành', dsmakhoa: dsmak });
     })
 }
 
-module.exports.luuchuyennganh = function(req,res){
+module.exports.luuchuyennganh = function (req, res) {
     console.log(req.body);
-        
-        const machuyennganh = req.body.machuyennganh;
-        database.kiemtracntrung(machuyennganh,function(result){
-            if(result.length>0){
-                res.send({ message: 'Chuyên ngành mã số'+" "+ result[0].MaChuyenNganh+" "+ 'đã tồn tại' });
-            }else{     
-                    let data = {
-                        MaChuyenNganh: req.body.machuyennganh, MaKhoa: req.body.makhoa, TenChuyenNganh: req.body.tenchuyennganh
-                    };
-                    database.themChuyenNganh(data, function(results){
-                        res.redirect('/nhanvien/cnchuyennganh');
-                    });      
-            } 
-        })
+    const machuyennganh = req.body.machuyennganh;
+    database.kiemtracntrung(machuyennganh, function (result) {
+        if (result.length > 0) {
+            res.send({ message: 'Chuyên ngành mã số' + " " + result[0].MaChuyenNganh + " " + 'đã tồn tại' });
+        } else {
+            let data = {
+                MaChuyenNganh: req.body.machuyennganh, MaKhoa: req.body.makhoa, TenChuyenNganh: req.body.tenchuyennganh
+            };
+            database.themChuyenNganh(data, function (results) {
+                res.redirect('/nhanvien/cnchuyennganh');
+            });
+        }
+    })
 };
 
 module.exports.xoachuyennganh = function (req, res) {
     const chuyennganhid = req.params.chuyennganhid;
-        database.xoaChuyenNganh(chuyennganhid, function(results){
-            res.redirect('/nhanvien/cnchuyennganh');
-        });
+    database.xoaChuyenNganh(chuyennganhid, function (results) {
+        res.redirect('/nhanvien/cnchuyennganh');
+    });
 };
 
 module.exports.chuyeneditchuyennganh = function (req, res) {
     const chuyennganhid = req.params.chuyennganhid;
     database.chuyenDenUpdateChuyenNganh(chuyennganhid, function (results) {
-        console.log(results[0]);
-        // res.render('GD_NV_From_Update_Khoa', { sv: results[0] });
+        // console.log(results[0]);
+        // res.render('GD_NV_Form_Update_Khoa', { sv: results[0] });
         return res.render('./bodyKhongMenu/GD_NV_Form_Update_ChuyenNganh', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật chuyên ngành', chuyennganh: results[0] });
     });
 };
 
-module.exports.capnhatchuyennganh = function(req,res){
+module.exports.capnhatchuyennganh = function (req, res) {
     const machuyennganh = req.body.machuyennganh;
     const makhoa = req.body.makhoa;
     const tenchuyennganh = req.body.tenchuyennganh;
 
-    database.updateChuyenNganh(tenchuyennganh,machuyennganh,function (results){
+    database.updateChuyenNganh(tenchuyennganh, machuyennganh, function (results) {
         res.redirect('/nhanvien/cnchuyennganh');
     });
 };
@@ -95,12 +94,12 @@ module.exports.timkiemchuyennganh = function (req, res) {
     database.timkiemChuyenNganh(query, function (results) {
         if (results.length > 0) {
             database.laymakhoa(function (dsmak) {
-                res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật chuyên ngành', listchuyennganh: results,dsmakhoa :dsmak,sotrang:0});
+                res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật chuyên ngành', listchuyennganh: results, dsmakhoa: dsmak, sotrang: 0 });
             })
         } else {
             database.getAllChuyenNganh(function (result) {
                 database.laymakhoa(function (dsmak) {
-                    res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật chuyên ngành', listchuyennganh: 0, dsmakhoa :dsmak,sotrang:0 });
+                    res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật chuyên ngành', listchuyennganh: 0, dsmakhoa: dsmak, sotrang: 0 });
                 })
             });
         }
@@ -138,25 +137,24 @@ module.exports.savedataChuyenNganh = function (req, res) {
         for (let i = 0; i < rows.length; i++) {
             let chuyennganh = rows[i].MaChuyenNganh;
             arr.push(chuyennganh);
-
         };
-         database.chuyennganhkiemtradulieu(arr,function (results) {
-             if(results.length > 0){
-                res.send({ message: 'Chuyên ngành có mã'+ '\t' + results[0].MaChuyenNganh + '\t' + 'đã tồn tại' });
-             }else{
+        database.chuyennganhkiemtradulieu(arr, function (results) {
+            if (results.length > 0) {
+                res.send({ message: 'Chuyên ngành có mã' + '\t' + results[0].MaChuyenNganh + '\t' + 'đã tồn tại' });
+            } else {
                 for (let a = 0; a < rows.length; a++) {
                     let data = {
-                        MaChuyenNganh: rows[a].MaChuyenNganh, TenChuyenNganh: rows[a].TenChuyenNganh, MaKhoa: rows[a].MaKhoa, 
+                        MaChuyenNganh: rows[a].MaChuyenNganh, TenChuyenNganh: rows[a].TenChuyenNganh, MaKhoa: rows[a].MaKhoa,
                     };
                     database.themChuyenNganh(data, function (results) {
-                        
+
                     });
                 };
-                 
+
                 res.send({ message: 'Đã thêm' });
-             }
-             
-         });
+            }
+
+        });
     });
 
 };

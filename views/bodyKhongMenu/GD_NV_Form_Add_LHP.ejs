@@ -14,22 +14,36 @@
                 <!-- <label for="MaMHP">Mã MHP:</label>
                 <input type="text" class="form-control" id="mamhp" name="mamhp" required> -->
 
-                <label for="MaMHP">Mã MHP:</label>
+                <label for="MaMHP">Môn học phần:</label>
                 <select class="form-control" id="mamhp" name="mamhp" required>
                   <%for(let i=0;i < dsmamon.length;i++){%>
                     <option value="<%=dsmamon[i].MaMHP%>">
-                      <%=dsmamon[i].MaMHP%>
+                      <%=dsmamon[i].MaMHP%> - <%=dsmamon[i].TenMHHP%>
                     </option>
                     <%}%>
                 </select>
             </div>
             <div class="form-group">
                 <label for="Nam">Năm:</label>
-                <input type="text" class="form-control" id="nam" name="nam" required>
+                <!-- <input type="text" class="form-control" id="nam" name="nam" required> -->
+                <select class="form-control" id="nam" name="nam" required>
+                    <%for(let i=0;i < listnamhoc.length;i++){%>
+                      <option value="<%=listnamhoc[i].NamHoc%>">
+                        <%=listnamhoc[i].Nam%>
+                      </option>
+                      <%}%>
+                </select>
             </div>
             <div class="form-group">
                 <label for="HocKy">Học kỳ:</label>
-                <input type="text" class="form-control" id="hocky" name="hocky" value="1" required>
+                <!-- <input type="text" class="form-control" id="hocky" name="hocky" value="1" required> -->
+                <select class="form-control" id="hocky" name="hocky" required>
+                    <%for(let i=0;i < listhocky.length;i++){%>
+                      <option value="<%=listhocky[i].HocKy%>">
+                        <%=listhocky[i].HocKy%>
+                      </option>
+                      <%}%>
+                </select>
             </div>
             <div class="form-group">
                 <label for="DaDangKy">Đã đăng ký:</label>

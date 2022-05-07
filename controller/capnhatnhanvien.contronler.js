@@ -16,7 +16,7 @@ module.exports.chuyentrangnhap = function (req, res) {
             matudong = parseInt(result[0].MaNV);
             matudong = matudong +1;
             matudong = "0" + matudong;
-            return res.render('./bodyKhongMenu/GD_NV_From_Add_NV', { layout: './layouts/layoutKhongMenu', title: 'Thêm Nhân Viên',listkhoa:results,matd:matudong });
+            return res.render('./bodyKhongMenu/GD_NV_Form_Add_NV', { layout: './layouts/layoutKhongMenu', title: 'Thêm Nhân Viên',listkhoa:results,matd:matudong });
         }); 
     });
         
@@ -25,7 +25,9 @@ module.exports.chuyentrangnhap = function (req, res) {
 module.exports.chuyentrangcapnhat = function (req, res) {
     const nvid = req.params.nvid;
     database.nvchuyendentrangcapnhat(nvid,function (results) {
-        return res.render('./bodyKhongMenu/GD_NV_Form_Update_NV', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật nhân viên', nv: results[0] });
+        database.getAllKhoa(function (listkhoa) {
+            return res.render('./bodyKhongMenu/GD_NV_Form_Update_NV', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật nhân viên', nv: results[0], listkhoa});
+        })
     });
 };
 

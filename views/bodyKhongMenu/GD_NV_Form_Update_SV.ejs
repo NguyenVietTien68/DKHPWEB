@@ -35,8 +35,22 @@
             <input type="text" class="form-control" id="dt_sv" placeholder="Điện thoại" value="<%=sv.SoDT%>" name="dt_sv" required>
         </div>
         <div class="form-group">
-            <label for="khoahoc_sv">Điện thoại sinh viên:</label>
-            <input type="text" class="form-control" id="khoahoc_sv"" placeholder="Điện thoại" value="<%=sv.KhoaHoc%>" name="khoahoc_sv" required>
+            <label for="khoahoc_sv">Khoá học:</label>
+            <!-- <input type="text" class="form-control" id="khoahoc_sv"" placeholder="Điện thoại" value="<%=sv.KhoaHoc%>" name="khoahoc_sv" required> -->
+            <select class="form-control" id="khoahoc_sv" name="khoahoc_sv">
+                <%for(let i=0;i < dskhoahoc.length;i++){%>
+                    <%if(dskhoahoc[i].KhoaHoc == sv.KhoaHoc){%>
+                        <option selected value="<%=dskhoahoc[i].KhoaHoc%>">
+                            <%=dskhoahoc[i].KhoaHoc%>
+                        </option>
+                    <%}%>
+                <%}%>
+                <%for(let i=0;i < dskhoahoc.length;i++){%>
+                    <option value="<%=dskhoahoc[i].KhoaHoc%>">
+                        <%=dskhoahoc[i].KhoaHoc%>
+                    </option>
+                <%}%>
+            </select>
         </div>
         <button type="submit" class="btn btn-default">Lưu</button>
     </form>

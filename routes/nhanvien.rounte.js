@@ -53,6 +53,7 @@ router.get('/cnkhoa/deletekhoa/:khoaid',controllerkhoa.xoakhoa);
 router.get('/cnkhoa/editkhoa/:khoaid', controllerkhoa.chuyeneditkhoa);
 router.get('/cnkhoa/timkhoa',upload.fields([]), controllerkhoa.timkiemkhoa);
 router.get('/cnkhoa/savedatakhoa', upload.fields([]),controllerkhoa.savedatakhoa);
+router.get('/cnkhoa/download',controllerkhoa.downloadkhoa);
 
 router.post('/cnkhoa/save_khoa', upload.fields([]),controllerkhoa.luukhoa);
 router.post('/cnkhoa/update_khoa', upload.fields([]), controllerkhoa.capnhatkhoa);
@@ -60,7 +61,7 @@ router.post('/cnkhoa/uploadfileKhoa', controllerkhoa.uploadfilekhoa);
 
 //Nhân viên cập nhật môn học phần
 router.get('/cnmonhp',controllermhp.trangcapnhatmhp);
-router.get('/cnmonhp/add-monhp', controllermhp.chuyennhapkhoa);
+router.get('/cnmonhp/add-monhp', controllermhp.chuyennhapmhp);
 router.get('/cnmonhp/deletemonhp/:monhpid', controllermhp.xoamonhp);
 router.get('/cnmonhp/editmonhp/:monhpid', controllermhp.chuyeneditmonhp);
 router.get('/cnmonhp/timmonhp', upload.fields([]),controllermhp.timkiemmhp);
@@ -183,9 +184,14 @@ router.get('/trangchuNV', (req, res) => {
 
 //Nhập điểm
 router.get('/nhapdiem', controllernhapdiem.trangnhapdiem);
+router.get('/nhapdiem/exportfile/:malop', controllernhapdiem.exports);
 router.get('/nhapdiem/loclop',controllernhapdiem.locdssv);
 router.get('/nhapdiem/suadiem/:masv&:malop',controllernhapdiem.chuyendentrangsuadiem);
+router.get('/nhapdiem/savediem', upload.fields([]),controllernhapdiem.savedataDiem);
+
+
 router.post('/nhapdiem/luudiem',upload.fields([]),controllernhapdiem.luudiem);
+router.post('/nhapdiem/uploadfileDiem', controllernhapdiem.uploadfileDiem);
 
 //đăng xuất
 router.get('/dangxuat', (req, res) => {

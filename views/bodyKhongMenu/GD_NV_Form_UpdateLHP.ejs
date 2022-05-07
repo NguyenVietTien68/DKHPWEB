@@ -3,7 +3,8 @@
         <a href="/nhanvien/cnlophp"><h1>Trở về danh sách</h1></a>
         <form action="/nhanvien/cnlophp/update_lhp" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="hidden" class="form-control" id="malophp"  name="malophp" value="<%=lophp.MaLopHP%>" required>
+                <label>Mã lớp học phần:</label>
+                <input type="text" class="form-control" id="malophp"  name="malophp" value="<%=lophp.MaLopHP%>" required readonly>
             </div>
             <div class="form-group">
                 <label for="SiSo">Sỉ số:</label>
@@ -11,15 +12,57 @@
             </div>
             <div class="form-group">
                 <label for="MaMHP">Mã MHP:</label>
-                <input type="text" class="form-control" id="mamhp" name="mamhp" value="<%=lophp.MaMHP%>" required>
+                <select class="form-control" id="mamhp" name="mamhp" required>
+                    <%for(let i=0;i < dsmamon.length;i++){%>
+                        <%if(dsmamon[i].MaMHP == lophp.MaMHP){%>
+                            <option value="<%=dsmamon[i].MaMHP%>">
+                                <%=dsmamon[i].MaMHP%> - <%=dsmamon[i].TenMHHP%>
+                            </option>
+                        <%}%>      
+                    <%}%>
+                    <%for(let i=0;i < dsmamon.length;i++){%>
+                        <option value="<%=dsmamon[i].MaMHP%>">
+                            <%=dsmamon[i].MaMHP%> - <%=dsmamon[i].TenMHHP%>
+                        </option>
+                    <%}%>
+                </select>
+                <!-- <input type="text" class="form-control" id="mamhp" name="mamhp" value="<%=lophp.MaMHP%>" required> -->
             </div>
             <div class="form-group">
-                <label for="Nam">Năm:</label>
-                <input type="text" class="form-control" id="nam" name="nam" value="<%=lophp.Nam%>" required>
+                <label for="Nam">Năm học:</label>
+                <!-- <input type="text" class="form-control" id="nam" name="nam" value="<%=lophp.Nam%>" required> -->
+                <select class="form-control" id="nam" name="nam" required>
+                    <%for(let i=0;i < listnamhoc.length;i++){%>
+                        <%if(listnamhoc[i].Nam == lophp.Nam){%>
+                            <option value="<%=listnamhoc[i].Nam%>">
+                                <%=listnamhoc[i].Nam%>
+                            </option>
+                        <%}%>      
+                    <%}%>
+                    <%for(let i=0;i < listnamhoc.length;i++){%>
+                        <option value="<%=listnamhoc[i].Nam%>">
+                            <%=listnamhoc[i].Nam%> 
+                        </option>
+                    <%}%>
+                </select>
             </div>
             <div class="form-group">
                 <label for="HocKy">Học kỳ:</label>
-                <input type="text" class="form-control" id="hocky" name="hocky" value="<%=lophp.HocKy%>" required>
+                <!-- <input type="text" class="form-control" id="hocky" name="hocky" value="<%=lophp.HocKy%>" required> -->
+                <select class="form-control" id="hocky" name="hocky" required>
+                    <%for(let i=0;i < listhocky.length;i++){%>
+                        <%if(listhocky[i].HocKy == lophp.HocKy){%>
+                            <option value="<%=listhocky[i].HocKy%>">
+                                <%=listhocky[i].HocKy%>
+                            </option>
+                        <%}%>      
+                    <%}%>
+                    <%for(let i=0;i < listhocky.length;i++){%>
+                        <option value="<%=listhocky[i].HocKy%>">
+                            <%=listhocky[i].HocKy%> 
+                        </option>
+                    <%}%>
+                </select>
             </div>
             <div class="form-group">
                 <label for="DaDangKy">Đã đăng ký:</label>

@@ -1,38 +1,61 @@
+<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+  <h1>CÔNG NỢ SINH VIÊN</h1><br><br>
+</div>
+<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center; margin-left: 150px;">
+  <div class="row col-xs-10 col-sm-10 col-md-10 col-lg-10">
+    <table class="table table-bordered" id="table-content">
+      <thead>
+        <tr>
+          <th>Tên môn</th>
+          <th>Số tín chỉ</th>
+          <th>Năm học</th>
+          <th>Học kỳ</th>
+          <th>Tiền học</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%for(let i=0;i< list.length;i++){%>
+            <tr>
+              <td>
+                <%=list[i].TenMHHP%>
+              </td>
+              <td>
+                <%=list[i].SoTinChi%>
+              </td>
+              <td>
+                <%=list[i].Nam%>
+              </td>
+              <td>
+                <%=list[i].HocKy%>
+              </td>
+              <td>
+                <%=listTien[i]%>
+              </td>
+            </tr>
+          
+        <%}%>
+            <tr>
+              <td>
+                <h3>Tổng tiền học</h3>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <h3>
+                  <%= tong%>
+                </h3>
+              </td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
-        <h2>CÔNG NỢ SINH VIÊN</h2><br><br>
-    </div>
-    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center; margin-left: 150px;">
-      <div class="row col-xs-10 col-sm-10 col-md-10 col-lg-10">
-        <table class="table table-bordered">
-            <thead >
-              <tr>
-                <th>Tên môn</th>
-                <th>Số tín chỉ</th>
-                <th>Năm học</th>
-                <th>Học kỳ</th>
-                <th>Tiền học</th>
-              </tr>
-            </thead>
-            <tbody>
-              <%for(let i=0;i< list.length;i++){%>
-                <tr>
-            
-                  <td> <%=list[i].TenMHHP%></td>
-                  <td> <%=list[i].SoTinChi%></td>
-                  <td> <%=list[i].Nam%></td>
-                  <td> <%=list[i].HocKy%></td>
-                  <td> <%=list[i].SoTinChi * 790000%>đ</td>
-                </tr>
-                <%}%>
-                <tr>
-                  <td> <h3>Tổng tiền học</h3> </td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td> <h3><%= tong%>đ</h3>  </td>
-                </tr>
-            </tbody>
-        </table>
-      </div>
-    </div>
+<script>
+  function format1(n, currency) {
+    return n.toFixed(0).replace(/./g, function (c, i, a) {
+      return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
+    }) + currency;
+  }
+</script>

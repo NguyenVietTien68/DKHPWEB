@@ -17,11 +17,11 @@
                             <br>
                             <form class="form-inline" action="/nhanvien/cnmonhp/lockhoa">
                                 <div class="form-inline">
-                                    <label for="MaKhoa">Mã khoa:</label>&ensp;&ensp;
+                                    <label for="MaKhoa">Lọc theo khoa:</label>&ensp;&ensp;
                                     <select class="form-control" id="makhoa" name="makhoa" required>
                                         <%for(let i=0;i < dsmakhoa.length;i++){%>
                                             <option value="<%=dsmakhoa[i].MaKhoa%>">
-                                                <%=dsmakhoa[i].MaKhoa%>
+                                                <%=dsmakhoa[i].TenKhoa%>
                                             </option>
                                             <%}%>
                                     </select>
@@ -39,7 +39,7 @@
                             </form><br>
     
                             <div class="row">
-                                <table class="table table-bordered" style="margin-top: 2%;">
+                                <table class="table table-bordered" style="margin-top: 2%;" id="table-content">
                                     <thead>
                                       <tr>
                                         <!-- <th>Chọn</th> -->

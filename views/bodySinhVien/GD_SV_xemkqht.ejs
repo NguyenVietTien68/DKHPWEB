@@ -4,7 +4,7 @@
     </div>
     <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
         <div class="row col-xs-10 col-sm-10 col-md-10 col-lg-10" style="margin-left: 150px">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="table-content">
                 <thead>
                     <tr>
                         <th>Năm</th>
@@ -31,31 +31,38 @@
                             <td><%=list[i].DiemGK%></td>
                             <td><%=list[i].DiemTH%></td>
                             <td><%=list[i].DiemCK%></td>
-                            <td><%=(((list[i].DiemTK+list[i].DiemTH)/2)*2 
-                                +(list[i].DiemGK*3)
-                                +(list[i].DiemCK*5))/10%></td>
                             <td>
-                                <% var x =  (((list[i].DiemTK+list[i].DiemTH)/2)*2  
-                                            +(list[i].DiemGK*3) 
-                                            +(list[i].DiemCK*5))/10%>
-                                <% if( x>=8 ){ %>
-                                    Giỏi
-                                <% } %>
-                                <% if( x<8 && x>=6.5 ){ %>
-                                    Khá
-                                <% } %>
-                                <% if( x<6.5 && x>=5 ){ %>
-                                    Trung bình
-                                <% } %>
-                                <% if(x<5 && x >= 4){ %>
-                                    Kém
-                                <% } %>
-                                <% if( x<4 ){ %>
-                                    Học lại
-                                <% } %>
-                                
-
-
+                                <% if( list[i].DiemTK== null || list[i].DiemGK== null ||list[i].DiemCK== null ||list[i].DiemTH== null){ %>
+                                    
+                                <%}else{%>
+                                    <%=(((list[i].DiemTK+list[i].DiemTH)/2)*2 
+                                    +(list[i].DiemGK*3)
+                                    +(list[i].DiemCK*5))/10%>
+                                <%}%>
+                            </td>
+                            <td>
+                                <% if( list[i].DiemTK== null || list[i].DiemGK== null ||list[i].DiemCK== null ||list[i].DiemTH== null){ %>
+                                    
+                                <%}else{%>
+                                    <% var x =  (((list[i].DiemTK+list[i].DiemTH)/2)*2  
+                                                +(list[i].DiemGK*3) 
+                                                +(list[i].DiemCK*5))/10%>
+                                    <% if( x>=8 ){ %>
+                                        Giỏi
+                                    <% } %>
+                                    <% if( x<8 && x>=6.5 ){ %>
+                                        Khá
+                                    <% } %>
+                                    <% if( x<6.5 && x>=5 ){ %>
+                                        Trung bình
+                                    <% } %>
+                                    <% if(x<5 && x >= 4){ %>
+                                        Kém
+                                    <% } %>
+                                    <% if( x<4 ){ %>
+                                        Học lại
+                                    <% } %>
+                                <%}%>
                             </td>    
 
                         </tr>

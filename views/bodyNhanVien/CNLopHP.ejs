@@ -21,7 +21,7 @@
                                     <select class="form-control" id="mamhp" name="mamhp" required>
                                         <%for(let i=0;i < dsmamon.length;i++){%>
                                             <option value="<%=dsmamon[i].MaMHP%>">
-                                                <%=dsmamon[i].MaMHP%>
+                                                <%=dsmamon[i].TenMHHP%>
                                             </option>
                                             <%}%>
                                     </select>
@@ -39,7 +39,7 @@
                             </form><br>
     
                             <div class="row">
-                                <table class="table table-bordered" style="margin-top: 2%;">
+                                <table class="table table-bordered" style="margin-top: 2%;" id="table-content">
                                     <thead>
                                       <tr>
                                         <!-- <th>Chọn</th> -->
@@ -67,7 +67,7 @@
                                                     <a href="/nhanvien/cnlophp/deletelophp/<%=listlophp[i].MaLopHP%>" class="btn btn-danger" >Xóa</a>
                                                 </td>
                                             </tr>
-                                            <%}%>
+                                        <%}%>
                                     </tbody>
                                   </table>
                             </div>
@@ -75,7 +75,7 @@
                                 <%if(sotrang>0){%>
                                     <%for(let i = 1;i< sotrang;i++){%>
                                         <ul class="pagination">
-                                            <li><a href="/nhanvien/cnlophp/locmhp?mamhp=<%=mhp%>&page=<%=i%>"><%=i%></a></li>
+                                            <li><a href="/nhanvien/cnlophp/?page=<%=i%>"><%=i%></a></li>
                                         </ul>
                                     <%}%>
                                 <%}%>

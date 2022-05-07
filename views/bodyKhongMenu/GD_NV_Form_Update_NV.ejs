@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ" name="diachi" value="<%=nv.DiaChi%>" required>
             </div>
             <div class="form-group">
-                <label for="GioiTinh">GioiTinh:</label>
+                <label for="GioiTinh">Giới tính:</label>
                 <select class="form-control" id="select_giotinh" name="gioitinh">
                     <%if(nv.GioiTinh == "Nam"){%>
                         <option selected value="Nam">Nam</option>
@@ -26,16 +26,33 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="NgaySinh">Ngày:</label>
+                <label for="NgaySinh">Ngày sinh:</label>
                 <input type="text" class="form-control" id="ngaysinh" name="ngaysinh" value="<%=nv.NgaySinh.getFullYear().toString()%>-<%=(nv.NgaySinh.getMonth()+1).toString()%>-<%=nv.NgaySinh.getDate().toString()%>" required>
             </div>
             <div class="form-group">
                 <label for="SoDT">Số điện thoại:</label>
                 <input type="text" class="form-control" id="sodt" name="sodt" value="<%=nv.SoDT%>" required>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="MaKhoa">Mã khoa:</label>
                 <input type="text" class="form-control" id="makhoa" name="makhoa" value="<%=nv.MaKhoa%>" required>
+            </div> -->
+            <div class="form-group">
+                <label for="MaKhoa">Khoa:</label>
+                <select class="form-control" id="select_makhoa" name="makhoa">
+                    <%for(let i=0;i < listkhoa.length;i++){%>
+                        <%if(listkhoa[i].MaKhoa == nv.MaKhoa){%>
+                            <option value="<%=listkhoa[i].MaKhoa%>">
+                                <%=listkhoa[i].TenKhoa%>
+                            </option>
+                        <%}%>      
+                    <%}%>
+                    <%for(let i=0;i < listkhoa.length;i++){%>
+                        <option value="<%=listkhoa[i].MaKhoa%>">
+                            <%=listkhoa[i].TenKhoa%>
+                        </option>
+                    <%}%>
+                </select>
             </div>
             <button type="submit" class="btn btn-default">Lưu</button>
             <div>

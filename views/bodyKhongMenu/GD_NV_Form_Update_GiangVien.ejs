@@ -14,7 +14,7 @@
                 <input type="text" class="form-control" id="diachi" placeholder="Địa chỉ" name="diachi" value="<%=giangvien.DiaChi%>" required>
             </div>
             <div class="form-group">
-                <label for="GioiTinh">GioiTinh:</label>
+                <label for="GioiTinh">Giới tính:</label>
                 <select class="form-control" id="select_giotinh" name="gioitinh">
                     <%if(giangvien.GioiTinh == "Nam"){%>
                         <option selected value="Nam">Nam</option>
@@ -26,7 +26,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="NgaySinh">Ngày:</label>
+                <label for="NgaySinh">Ngày sinh:</label>
                 <input type="text" class="form-control" id="ngaysinh" name="ngaysinh" value="<%=giangvien.NgaySinh.getFullYear().toString()%>-<%=(giangvien.NgaySinh.getMonth()+1).toString()%>-<%=giangvien.NgaySinh.getDate().toString()%>" required>
             </div>
             <div class="form-group">

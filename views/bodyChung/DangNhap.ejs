@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="forms-container">
+    <div class="dangnhap">
+      <form action="/dangnhaptong" method="post" enctype="multipart/form-data" class="sign-in-form">
+        <div><img class="anhlogin" src="images/neniuh1.png"></div>
+        <h1 class="title">Đăng nhập hệ thống</h1>
+        <div class="input-field">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Mã số" name="tendn" />
+        </div>
+        <div class="input-field">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Mật khẩu" name="matkhau" />
+        </div>
+        <div class="form-group"><label class="messbao" for="erroe">
+            <%= mess%>
+          </label></div>
+        <button type="submit" class="btn solid">Đăng nhập
+      </form>
+    </div>
+  </div>
+</div>
+
+<% if(mess!='' ){ %>
+  <script>
+    $('#myModal').modal('show');
+  </script>
+  <% } %>

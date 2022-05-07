@@ -20,14 +20,21 @@
             </div>
             <div class="form-group">
                 <label for="BatBuoc">Bắt buộc:</label>
-                <input type="text" class="form-control" id="batbuoc" name="batbuoc" required>
+                <select class="form-control" id="batbuoc" name="batbuoc" required>
+                      <option value="Có">
+                        Có
+                      </option>
+                      <option value="Không">
+                        Không
+                      </option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="MaKhoa">Mã khoa:</label>
+                <label for="MaKhoa">Khoa:</label>
                 <select class="form-control" id="makhoa" name="makhoa" required>
                   <%for(let i=0;i < dsmakhoa.length;i++){%>
                     <option value="<%=dsmakhoa[i].MaKhoa%>">
-                      <%=dsmakhoa[i].MaKhoa%>
+                      <%=dsmakhoa[i].TenKhoa%>
                     </option>
                     <%}%>
                 </select>
@@ -41,7 +48,7 @@
                     <option> </option>
                   <%for(let i=0;i < dshocphan.length;i++){%>
                     <option value="<%=dshocphan[i].MaMHP%>">
-                      <%=dshocphan[i].MaMHP%>
+                      <%=dshocphan[i].MaMHP%> - <%=dshocphan[i].TenMHHP%>
                     </option>
                     <%}%>
                 </select>

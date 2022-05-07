@@ -24,7 +24,7 @@ module.exports.uploadfilemhcn = function (req, res) {
 
 
 module.exports.trangxepkhung = function (req, res) {
-    database.laymachuyennganh(function (dsma) {
+    database.getAllChuyenNganh(function (dsma) {
         return res.render('./bodyNhanVien/XepKhung', { layout: './layouts/layoutNhanVien', title: 'Xếp Chương Trình Khung', dsmacn: dsma, listmh: 0, macn: 0, sotrang: 0 });
     });
 };
@@ -36,7 +36,7 @@ module.exports.lockq = function (req, res) {
     var start = (page - 1) * perPage;
     var end = page * perPage;
     var macn = req.query.macn;
-    database.laymachuyennganh(function (dsma) {
+    database.getAllChuyenNganh(function (dsma) {
         database.laymhtheocng(macn, function (dsmh) {
             //console.log(dsmh);
             let sotrang = (dsmh.length) / perPage;
