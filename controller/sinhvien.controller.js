@@ -20,8 +20,10 @@ var upload1 = multer({ storage: storage }).single('myfilesv');
 
 
 module.exports.trangcapnhatsv = function (req, res) {
+    let khoahoc = "";
+    let query = "";
     database.getAllKhoaHoc(function (results) {
-        res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: 0, trang: 0, kh: 0, listkhoahoc: results });
+        res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', query, khoahoc, listsv: 0, trang: 0, kh: 0, listkhoahoc: results });
     })
 };
 
@@ -34,10 +36,12 @@ module.exports.lockqkh = function (req, res) {
     var end = page * perPage;
     var kh = req.query.khoahocsv;
 
+    let query = "";
+
     database.laysvtheokh(kh, function (listsv) {
         database.getAllKhoaHoc(function (results) {
             let sotrang = (listsv.length) / perPage;
-            res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: listsv.slice(start, end), trang: sotrang + 1, kh: kh, listkhoahoc: results });
+            res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', query, khoahoc :kh,  listsv: listsv.slice(start, end), trang: sotrang + 1, kh: kh, listkhoahoc: results });
         });
     });
 
@@ -84,7 +88,7 @@ module.exports.xoasv = function (req, res) {
 };
 
 module.exports.luusv = function (req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     const passdefaut = "123456";
     bcrypt.hash(passdefaut, saltRounds, function (err, hash) {
         let data = {
@@ -189,15 +193,20 @@ module.exports.savedata = function (req, res) {
 };
 
 module.exports.timkiemsv = function (req, res) {
-
+    let khoahoc = "";
     var query = req.query.tukhoasv;
     database.timkiemsv(query, function (results) {
         database.getAllKhoaHoc(function (listkhoahoc) {
             if (results.length > 0) {
+                var page = parseInt(req.query.page) || 1;
                 let perPage = 6;
                 let sotrang = (results.length) / perPage;
+
+                var start = (page - 1) * perPage;
+                var end = page * perPage;   
+                // console.log(sotrang);
                 // res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: listsv.slice(start,end), trang: sotrang+1,kh:kh, listkhoahoc: listkhoahoc });
-                res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: results, trang: sotrang, kh: 0, listkhoahoc });
+                res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', query, khoahoc, listsv: results.slice(start, end), trang: sotrang+1, kh: 0, listkhoahoc });
             } else {
                 database.getAllSV(function (result) {
                     res.redirect('/nhanvien/cnsinhvien');

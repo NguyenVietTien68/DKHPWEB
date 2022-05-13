@@ -20,10 +20,12 @@ module.exports.trangcapnhatlhp = function (req, res) {
     var start = (page - 1) * perPage;
     var end = page * perPage;
 
+    let mamhp = "";
+    let query = "";
     database.getAllLHP(function (listlophp) {
         database.getAllMHP(function (dsmamon) {
             let sotrang = (listlophp.length) / perPage;
-            res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Lớp Học Phần', dsmamon: dsmamon, listlophp: listlophp.slice(start, end), sotrang: sotrang + 1 });
+            res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Lớp Học Phần', mamhp, query, dsmamon: dsmamon, listlophp: listlophp.slice(start, end), sotrang: sotrang + 1 });
         })
     })
 };
@@ -32,7 +34,12 @@ module.exports.chuyennhaplhp = function (req, res) {
     database.getAllMHP(function (dsmamon) {
         database.getAllNamHoc(function (listnamhoc) {
             database.getAllHocKy(function (listhocky) {
-                return res.render('./bodyKhongMenu/GD_NV_Form_Add_LHP', { layout: './layouts/layoutKhongMenu', title: 'Thêm Lớp Học Phần', dsmamon: dsmamon, listnamhoc, listhocky });
+                database.laymaLOPHPtudong(function (malophptd){
+                    let machia = parseInt(malophptd[0].MaLopHP.slice(3,5)) + 1;
+                    let malophp = "LHP" + machia;
+                    console.log(malophp);
+                    return res.render('./bodyKhongMenu/GD_NV_Form_Add_LHP', { layout: './layouts/layoutKhongMenu', title: 'Thêm Lớp Học Phần', dsmamon: dsmamon, listnamhoc, listhocky, malophp});
+                })
             })
         })
     })
@@ -45,13 +52,14 @@ module.exports.locmhp = function (req, res) {
     var start = (page - 1) * perPage;
     var end = page * perPage;
 
+    let query = "";
     var mamhp = req.query.mamhp;
     console.log(mamhp);
 
     database.getAllMHP(function (dsmamon) {
         database.layLHPtheoMH(mamhp, function (listlophp) {
             let sotrang = (listlophp.length) / perPage;
-            return res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', dsmamon: dsmamon, listlophp: listlophp.slice(start, end), sotrang: sotrang + 1 });
+            return res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', mamhp, query, dsmamon: dsmamon, listlophp: listlophp.slice(start, end), sotrang: sotrang + 1 });
         });
     });
 };
@@ -117,19 +125,21 @@ module.exports.capnhatlophp = function (req, res) {
 
 module.exports.timkiemlophp = function (req, res) {
     var query = req.query.tukhoalophp;
+    let mamhp = "";
     // console.log(query);
     database.timkiemlhp(query, function (results) {
         if (results.length > 0) {
             // res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Lớp Học Phần', listlophp: results });
             database.getAllMHP(function (dsmamon) {
-                res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Lớp Học Phần', dsmamon: dsmamon, listlophp: results, sotrang: 0 });
+                res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Lớp Học Phần', mamhp, query, dsmamon: dsmamon, listlophp: results, sotrang: 0 });
             });
         } else {
-            database.getAllLHP(function (result) {
-                database.getAllMHP(function (dsmamon) {
-                    res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Lớp Học Phần', dsmamon: dsmamon, listlophp: 0, sotrang: 0 });
-                });
-            });
+            // database.getAllLHP(function (result) {
+            //     database.getAllMHP(function (dsmamon) {
+            //         res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Lớp Học Phần', dsmamon: dsmamon, listlophp: 0, sotrang: 0 });
+            //     });
+            // });
+            res.redirect('/nhanvien/cnlophp')
         }
 
     });

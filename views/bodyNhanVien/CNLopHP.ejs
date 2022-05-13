@@ -18,7 +18,7 @@
                             <form class="form-inline" action="/nhanvien/cnlophp/locmhp">
                                 <div class="form-inline">
                                     <label for="MaMHP">Mã MHP:</label>&ensp;&ensp;
-                                    <select class="form-control" id="mamhp" name="mamhp" required>
+                                    <select class="form-control" id="mamhphtml" name="mamhp" required>
                                         <%for(let i=0;i < dsmamon.length;i++){%>
                                             <option value="<%=dsmamon[i].MaMHP%>">
                                                 <%=dsmamon[i].TenMHHP%>
@@ -33,7 +33,7 @@
                                 <div class="form-group">
                                 
                                     <label for="tukhoalophp">Từ khóa:</label>&ensp;&ensp;
-                                    <input type="text" class="form-control" name="tukhoalophp" size="50" required>&ensp;
+                                    <input type="text" class="form-control" id="tukhoa" name="tukhoalophp" size="50" required>&ensp;
                                 </div>
                                 <button type="submit" class="btn btn-default">Tìm kiếm</button>
                             </form><br>
@@ -108,6 +108,17 @@
                     </div>
             </div>  
         </div>
+        <%for(let c=0; c < dsmamon.length; c++){%>
+            <%if(mamhp == dsmamon[c].MaMHP){%>
+                <script>
+                    $('#mamhphtml').val("<%=dsmamon[c].MaMHP%>");
+                </script>
+            <%}%>
+        <%}%>
+    
+        <script>
+            $('#tukhoa').val("<%=query%>");
+        </script>
         <script>
             $(document).ready(function () {
                 $('#uploadForm').submit(function () {

@@ -19,7 +19,7 @@
                                 <div class="form-group">
                                 
                                     <label for="tukhoanamhoc">Từ khóa:</label>&ensp;&ensp;
-                                    <input type="text" class="form-control" name="tukhoanamhoc" size="50" required>&ensp;
+                                    <input type="text" class="form-control" id="tukhoa" name="tukhoanamhoc" size="50" required>&ensp;
                                 </div>
                                 <button type="submit" class="btn btn-default">Tìm kiếm</button>
                             </form><br>
@@ -70,4 +70,7 @@
                 </div>
             </div>  
         </div>
+        <script>
+            $('#tukhoa').val("<%=query%>");
+        </script>
     </header>

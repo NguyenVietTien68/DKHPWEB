@@ -15,8 +15,10 @@ var storage = multer.diskStorage({
 var upload1 = multer({ storage: storage }).single('myfilegv');
 
 module.exports.trangcapnhatgv = function (req, res) {
+    let makhoa ="";
+    let query = "";
     database.getAllKhoa(function (dsmak) {
-        res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên', dsmakhoa : dsmak, listgv: 0, sotrang:0});
+        res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên', makhoa, query, dsmakhoa : dsmak, listgv: 0, sotrang:0});
     })
 };
 
@@ -33,10 +35,11 @@ module.exports.lockhoagv = function (req, res) {
     var end = page * perPage;
 
     var makhoa = req.query.makhoa;
+    let query = "";
     database.getAllKhoa(function(dsmak){
         database.layGVtheoKhoa(makhoa,function(listgv){
             let sotrang = (listgv.length) / perPage;
-            return res.render('./bodyNhanVien/CNGiangVien',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Giảng Viên',dsmakhoa : dsmak,listgv:listgv.slice(start,end), sotrang : sotrang+1,mk:makhoa});
+            return res.render('./bodyNhanVien/CNGiangVien',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Giảng Viên', makhoa, query, dsmakhoa : dsmak,listgv:listgv.slice(start,end), sotrang : sotrang+1,mk:makhoa});
         });
     });  
 };
@@ -59,9 +62,6 @@ module.exports.luugv = function(req,res){
     })
 };
 
-
-
-
 module.exports.xoagv = function (req, res) {
     const gvid = req.params.gvid;
         database.xoaGV(gvid, function(results){
@@ -72,8 +72,11 @@ module.exports.xoagv = function (req, res) {
 module.exports.chuyeneditgv = function (req, res) {
     const gvid = req.params.gvid;
     database.chuyenDenUpdateGV(gvid, function (results) {
-        console.log(results[0]);
-        return res.render('./bodyKhongMenu/GD_NV_Form_Update_GiangVien', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật giảng viên', giangvien: results[0] });
+        database.getAllKhoa(function (listkhoa){
+            // console.log(listkhoa)
+            // console.log(results[0].MaKhoa);
+            return res.render('./bodyKhongMenu/GD_NV_Form_Update_GiangVien', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật giảng viên', giangvien: results[0], listkhoa });            
+        });
     });
 };
 
@@ -84,25 +87,35 @@ module.exports.capnhatgv = function(req,res){
     const gioitinh = req.body.gioitinh;
     const ngaysinh = req.body.ngaysinh;
     const sodt = req.body.sodt;
+    const khoa = req.body.khoa;
 
-    database.updateGV(hoten,diachi,gioitinh,ngaysinh,sodt,magv,function (results){
+    database.updateGV(hoten,diachi,gioitinh,ngaysinh,sodt,khoa,magv,function (results){
         res.redirect('/nhanvien/cngiangvien');
     });
-    console.log(hoten,diachi,gioitinh,ngaysinh,sodt,magv);
+    console.log(hoten,diachi,gioitinh,ngaysinh,sodt,khoa,magv);
 };
 
 module.exports.timkiemgv = function (req, res) {
     var query = req.query.tukhoagv;
-    console.log(query);
+    // console.log(query);
+    let makhoa = "";
     database.timkiemGV(query, function (results) {
         if (results.length > 0) {
+            var page = parseInt(req.query.page) || 1;
+            var perPage = 5;
+
+            var start = (page - 1) * perPage;
+            var end = page * perPage;
+
+            sotrang = (results.length) / perPage;
             database.getAllKhoa(function (dsmak) {
-                res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên',dsmakhoa:dsmak, listgv: results,sotrang:0 });
+                res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên', makhoa, query, dsmakhoa:dsmak, listgv: results.slice(start, end),sotrang: sotrang+1 });
             });    
         } else {
-            database.getAllKhoa(function (dsmak) {
-                res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên', dsmakhoa:dsmak, listgv: 0, sotrang:0 });
-            });
+            // database.getAllKhoa(function (dsmak) {
+            //     res.render('./bodyNhanVien/CNGiangVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Giảng Viên', dsmakhoa:dsmak, listgv: 0, sotrang:0 });
+            // });
+            res.redirect("/nhanvien/cngiangvien");
         }
 
     });

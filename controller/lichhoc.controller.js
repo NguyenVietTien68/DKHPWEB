@@ -21,9 +21,12 @@ module.exports.uploadfile = function (req, res) {
 };
 
 module.exports.trangxeplich = function (req, res) {
+    let namhoc ="";
+    let hocky= "";
+    let query = "";
     database.getdsNam(function (dsnam) {
         database.getdshocky(function (dshocky) {
-            return res.render('./bodyNhanVien/XepLichHoc',{layout: './layouts/layoutNhanVien' , title: 'Xếp Lịch Học',listlh:0,sotrang:0,nam:0,hk:0,dsnam:dsnam,dshocky:dshocky});
+            return res.render('./bodyNhanVien/XepLichHoc',{layout: './layouts/layoutNhanVien' , title: 'Xếp Lịch Học', namhoc, hocky, query, listlh:0,sotrang:0,nam:0,hk:0,dsnam:dsnam,dshocky:dshocky});
         });       
     });
     
@@ -39,25 +42,30 @@ module.exports.lockqlh = function (req, res) {
     var end = page * perPage;
     var namhoc = req.query.namhoc;
     var hocky = req.query.hocky;
+    let query = "";
     database.getdsNam(function (dsnam) {
         database.getdshocky(function (dshocky) {
             database.nvloclichhoc(namhoc,hocky,function (listlich) {
+                // console.log(listlich)
                 let sotrang = (listlich.length) / perPage;
-                res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', listlh: listlich.slice(start,end), sotrang: sotrang+1,nam:namhoc,hk:hocky,dsnam:dsnam,dshocky:dshocky });
+                res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', namhoc, hocky, query, listlh: listlich.slice(start,end), sotrang: sotrang+1,nam:namhoc,hk:hocky,dsnam:dsnam,dshocky:dshocky });
             });
         });       
     });
 };
 
 module.exports.timlhp = function (req, res) {
-    var malophp = req.query.malophocphan;
+    var query = req.query.malophocphan;
+    let namhoc ="";
+    let hocky= "";
     database.getdsNam(function (dsnam) {
         database.getdshocky(function (dshocky) {
-            database.timlophplh(malophp,function(listlh){
+            database.timlophplh(query,function(listlh){
                 if (listlh.length > 0) {
-                    res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', listlh: listlh, sotrang:0,nam:0,hk:0,dsnam:dsnam,dshocky:dshocky });
+                    res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', namhoc, hocky, query, listlh: listlh, sotrang:0,nam:0,hk:0,dsnam:dsnam,dshocky:dshocky });
                 } else {
-                    res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', listlh: 0, sotrang: 0,nam:0,hk:0,dsnam:dsnam,dshocky:dshocky });
+                    // res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', listlh: 0, sotrang: 0,nam:0,hk:0,dsnam:dsnam,dshocky:dshocky });
+                    return res.redirect('/nhanvien/xeplichhoc')
                 }
                 
             });
@@ -81,7 +89,6 @@ module.exports.xoalichhoc = function (req, res) {
     });
     
 };
-
 
 module.exports.savedata = function (req, res) {
     const schema = {

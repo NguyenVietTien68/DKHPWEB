@@ -36,7 +36,7 @@
               <form class="form-inline" action="/nhanvien/chiachuyennganh/timsv" method="get">
                   <div class="form-group">
                       <label for="masvcn">Mã sinh viên:</label>&ensp;&ensp;
-                      <input type="text" class="form-control" name="masvcn" size="50"
+                      <input type="text" class="form-control" id="tukhoa" name="masvcn" size="50"
                           required>&ensp;
                   </div>
                   <button type="submit" class="btn btn-default">Tìm kiếm</button>
@@ -50,9 +50,9 @@
                     <th>Mã sinh viên</th>
                     <th>Họ tên</th>
                     <th>Giới tính</th>
-                    <th>Ngày sinh</th>
                     <th>Địa chỉ</th>
                     <th>Số điện thoại</th>
+                    <td>Chuyên ngành</td>
                     <td></td>
                   </tr>
                 </thead>
@@ -70,19 +70,18 @@
                           <%=listsvn[i].GioiTinh%>
                         </td>
                         <td>
-                          <%=listsvn[i].NgaySinh.getDate().toString()%>-
-                            <%=(listsvn[i].NgaySinh.getMonth()+1).toString()%>-
-                              <%=listsvn[i].NgaySinh.getFullYear().toString()%>
-                        </td>
-                        <td>
                           <%=listsvn[i].DiaChi%>
                         </td>
                         <td>
                           <%=listsvn[i].SoDT%>
                         </td>
                         <td>
+                          <%=listsvn[i].TenChuyenNganh%>
+                        </td>
+                        <td>
                           <a href="/nhanvien/chiachuyennganh/deletesvng/<%=listsvn[i].MSSV%>"
                             class="btn btn-danger ">Xóa</a>
+                          <a class="btn btn-primary">Sửa</a>
                         </td>
 
                       </tr>
@@ -90,7 +89,7 @@
 
                         <%}else{%>
                           <tr>
-                            <td>Không có</td>
+                            <td>Chưa có dữ liệu</td>
                           </tr>
                           <%}%>
 
@@ -135,6 +134,18 @@
       <!-- </div> -->
     </div>
   </div>
+  <%for(let c=0; c < dsmacn.length; c++){%>
+    <%if(  macn == dsmacn[c].MaChuyenNganh){%>
+        <script>
+            $('#select_macn').val("<%=dsmacn[c].MaChuyenNganh%>");
+      </script>
+    <%}%>
+  <%}%>
+
+  <script>
+      $('#tukhoa').val("<%=masvcn%>");
+  </script>
+
   <script>
     $(document).ready(function () {
       $('#uploadForm1').submit(function () {

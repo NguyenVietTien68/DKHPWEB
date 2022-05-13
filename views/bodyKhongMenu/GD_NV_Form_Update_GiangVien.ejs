@@ -3,7 +3,8 @@
         <a href="/nhanvien/cngiangvien"><h1>Trở về danh sách</h1></a>
         <form action="/nhanvien/cngiangvien/update_giangvien" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <input type="hidden" class="form-control" id="magv"  name="magv" value="<%=giangvien.MaGV%>" required>
+                <label >Mã GV:</label>
+                <input type="text" class="form-control" id="magv"  name="magv" value="<%=giangvien.MaGV%>" required readonly>
             </div>
             <div class="form-group">
                 <label for="HoTen">Họ tên:</label>
@@ -33,6 +34,16 @@
                 <label for="SoDT">Số điện thoại:</label>
                 <input type="text" class="form-control" id="sodt" name="sodt" value="<%=giangvien.SoDt%>" required>
             </div>
+            <div class="form-group">
+                <label>Mã khoa:</label>
+                <select class="form-control" id="makhoa" name="khoa">
+                    <%for(let i=0;i < listkhoa.length;i++){%>
+                        <option value="<%=listkhoa[i].MaKhoa%>">
+                            <%=listkhoa[i].MaKhoa%> - <%=listkhoa[i].TenKhoa%>
+                        </option>
+                    <%}%>
+                </select>
+            </div>
             <button type="submit" class="btn btn-default">Lưu</button>
             <div>
                 <br>
@@ -40,3 +51,11 @@
         </form>
     </div>
 </div>
+
+<%for(let i=0;i < listkhoa.length;i++){%>
+    <%if(listkhoa[i].MaKhoa == giangvien.Makhoa){%>
+        <script>
+            $('#makhoa').val("<%=listkhoa[i].MaKhoa%>");
+        </script>
+    <%}%>      
+<%}%>

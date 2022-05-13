@@ -4,7 +4,7 @@
         <form action="/nhanvien/cnlophp/save_lophp" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="MaLopHP">Mã lớp học phần:</label>
-                <input type="text" class="form-control" id="malophp" name="malophp" required>
+                <input type="text" class="form-control" id="malophp" name="malophp" value="<%=malophp%>" required>
             </div>
             <div class="form-group">
                 <label for="SiSo">Sỉ số:</label>
@@ -28,7 +28,7 @@
                 <!-- <input type="text" class="form-control" id="nam" name="nam" required> -->
                 <select class="form-control" id="nam" name="nam" required>
                     <%for(let i=0;i < listnamhoc.length;i++){%>
-                      <option value="<%=listnamhoc[i].NamHoc%>">
+                      <option value="<%=listnamhoc[i].Nam%>">
                         <%=listnamhoc[i].Nam%>
                       </option>
                       <%}%>

@@ -40,13 +40,7 @@
             <div class="form-group">
                 <label for="MaKhoa">Khoa:</label>
                 <select class="form-control" id="select_makhoa" name="makhoa">
-                    <%for(let i=0;i < listkhoa.length;i++){%>
-                        <%if(listkhoa[i].MaKhoa == nv.MaKhoa){%>
-                            <option value="<%=listkhoa[i].MaKhoa%>">
-                                <%=listkhoa[i].TenKhoa%>
-                            </option>
-                        <%}%>      
-                    <%}%>
+                    
                     <%for(let i=0;i < listkhoa.length;i++){%>
                         <option value="<%=listkhoa[i].MaKhoa%>">
                             <%=listkhoa[i].TenKhoa%>
@@ -61,3 +55,11 @@
         </form>
     </div>
 </div>
+
+<%for(let i=0;i < listkhoa.length;i++){%>
+    <%if(listkhoa[i].MaKhoa == nv.MaKhoa){%>
+        <script>
+            $('#select_makhoa').val("<%=listkhoa[i].MaKhoa%>");
+        </script>
+    <%}%>      
+<%}%>

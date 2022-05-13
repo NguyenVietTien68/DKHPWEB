@@ -1,16 +1,4 @@
 var database = require("../database");
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const readXlsxFile = require('read-excel-file/node');
-var multer = require('multer');
-var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, './file');
-    },
-    filename: function (req, file, callback) {
-        callback(null, file.originalname);
-    }
-});
 
 module.exports.trangcapnhatNamHoc = function (req, res) {
     var page = parseInt(req.query.page) || 1;
@@ -18,10 +6,10 @@ module.exports.trangcapnhatNamHoc = function (req, res) {
 
     var start = (page - 1) * perPage;
     var end = page * perPage;
-
+    let query = "";
     database.getAllNamHoc(function (result) {
         let sotrang = (result.length) / perPage;
-        res.render('./bodyNhanVien/CNNamHoc', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Năm Học', listnamhoc : result.slice(start,end),sotrang:sotrang+1});
+        res.render('./bodyNhanVien/CNNamHoc', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Năm Học',query, listnamhoc : result.slice(start,end),sotrang:sotrang+1});
     })
 };
 
@@ -59,11 +47,12 @@ module.exports.timkiemNamHoc = function (req, res) {
     console.log(query);
     database.timkiemNamHoc(query, function (results) {
         if (results.length > 0) {
-            res.render('./bodyNhanVien/CNNamHoc', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Năm Học', listnamhoc: results,sotrang:0 });
+            res.render('./bodyNhanVien/CNNamHoc', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Năm Học', query, listnamhoc: results,sotrang:0 });
         } else {
-            database.getAllNamHoc(function (result) {
-                res.render('./bodyNhanVien/CNNamHoc', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Năm Học', listnamhoc: result,sotrang:0 });
-            });
+            // database.getAllNamHoc(function (result) {
+            //     res.render('./bodyNhanVien/CNNamHoc', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Năm Học', query, listnamhoc: result,sotrang:0 });
+            // });
+            res.redirect('nhanvien/cnnamhoc')
         }
 
     });

@@ -20,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label >Bắt buộc:</label>
-                <select class="form-control" id="makhoa" name="makhoa" required>
+                <select class="form-control" id="batbuoc" name="batbuoc" required>
                     <%if(monhp.BatBuoc == "Có"){%>
                         <option selected value="Có">Có</option>
                         <option value="Không">Không</option>
@@ -34,13 +34,6 @@
                 <label for="MaKhoa">Khoa:</label>
                 <select class="form-control" id="makhoa" name="makhoa" required>
                     <%for(let i=0;i < dsmakhoa.length;i++){%>
-                        <%if(dsmakhoa[i].MaKhoa == monhp.MaKhoa){%>
-                            <option value="<%=dsmakhoa[i].MaKhoa%>">
-                                <%=dsmakhoa[i].MaKhoa%> - <%=dsmakhoa[i].TenKhoa%>
-                            </option>
-                        <%}%>      
-                    <%}%>
-                    <%for(let i=0;i < dsmakhoa.length;i++){%>
                         <option value="<%=dsmakhoa[i].MaKhoa%>">
                             <%=dsmakhoa[i].MaKhoa%> - <%=dsmakhoa[i].TenKhoa%>
                         </option>
@@ -50,13 +43,7 @@
             <div class="form-group">
                 <label >Học phần yêu cầu:</label>
                 <select class="form-control" id="hocphanyeucau" name="hocphanyeucau" required>
-                    <%for(let i=0;i < dshocphan.length;i++){%>
-                        <%if(dshocphan[i].MaMHP == monhp.HocPhanYeuCau){%>
-                            <option value="<%=dshocphan[i].MaMHP%>">
-                                <%=dshocphan[i].MaMHP%> - <%=dshocphan[i].TenMHHP%>
-                            </option>
-                        <%}%>      
-                    <%}%>
+
                     <%for(let i=0;i < dshocphan.length;i++){%>
                         <option value="<%=dshocphan[i].MaMHP%>">
                             <%=dshocphan[i].MaMHP%> - <%=dshocphan[i].TenMHHP%>
@@ -80,3 +67,19 @@
         </form>
     </div>
 </div>
+
+<%for(let i=0;i < dsmakhoa.length;i++){%>
+    <%if(dsmakhoa[i].MaKhoa == monhp.MaKhoa){%>
+        <script>
+            $('#makhoa').val("<%=dsmakhoa[i].MaKhoa%>");
+        </script>
+    <%}%>      
+<%}%>
+
+<%for(let i=0;i < dshocphan.length;i++){%>
+    <%if(dshocphan[i].MaMHP == monhp.HocPhanYeuCau){%>
+        <script>
+            $('#hocphanyeucau').val("<%=dshocphan[i].MaMHP%>");
+        </script>
+    <%}%>      
+<%}%>

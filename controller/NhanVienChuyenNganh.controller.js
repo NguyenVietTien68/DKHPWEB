@@ -16,9 +16,11 @@ var upload1 = multer({ storage: storage }).single('myfilechuyennganh');
 
 
 module.exports.trangcapnhatchuyennganh = function (req, res) {
-
+    let makhoa;
+    let query;
+    // console.log(query)
     database.getAllKhoa(function (dsmak) {
-        res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', dsmakhoa: dsmak, listchuyennganh: 0, sotrang: 0 });
+        res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', query, makhoa, dsmakhoa: dsmak, listchuyennganh: 0, sotrang: 0 });
     })
 };
 
@@ -30,11 +32,12 @@ module.exports.lockhoa = function (req, res) {
     var start = (page - 1) * perPage;
     var end = page * perPage;
 
+    let query = "";
     var makhoa = req.query.makhoa;
     database.getAllKhoa(function (dsmak) {
         database.layCNtheoKhoa(makhoa, function (listchuyennganh) {
             let sotrang = (listchuyennganh.length) / perPage;
-            return res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', dsmakhoa: dsmak, listchuyennganh: listchuyennganh.slice(start, end), sotrang: sotrang + 1, mk: makhoa });
+            return res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', query, makhoa, dsmakhoa: dsmak, listchuyennganh: listchuyennganh.slice(start, end), sotrang: sotrang + 1, mk: makhoa });
         });
     });
 };
@@ -90,18 +93,28 @@ module.exports.capnhatchuyennganh = function (req, res) {
 
 module.exports.timkiemchuyennganh = function (req, res) {
     var query = req.query.tukhoachuyennganh;
-    console.log(query);
+    let makhoa ="";
+    // console.log(query);
     database.timkiemChuyenNganh(query, function (results) {
         if (results.length > 0) {
-            database.laymakhoa(function (dsmak) {
-                res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật chuyên ngành', listchuyennganh: results, dsmakhoa: dsmak, sotrang: 0 });
+            var page = parseInt(req.query.page) || 1;
+            var perPage = 5;
+
+            var start = (page - 1) * perPage;
+            var end = page * perPage;
+
+            sotrang = (results.length) / perPage;
+            database.getAllKhoa(function (dsmak) {
+                // console.log(dsmak)
+                res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật chuyên ngành',query, makhoa, listchuyennganh: results.slice(start, end), dsmakhoa: dsmak, sotrang: sotrang +1 });
             })
         } else {
-            database.getAllChuyenNganh(function (result) {
-                database.laymakhoa(function (dsmak) {
-                    res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật chuyên ngành', listchuyennganh: 0, dsmakhoa: dsmak, sotrang: 0 });
-                })
-            });
+            // database.getAllChuyenNganh(function (result) {
+            //     database.getAllKhoa(function (dsmak) {
+            //         res.render('./bodyNhanVien/CNChuyenNganh', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật chuyên ngành',query, listchuyennganh: 0, dsmakhoa: dsmak, sotrang: 0 });
+            //     })
+            // });
+            res.redirect('/nhanvien/cnchuyennganh');
         }
 
     });

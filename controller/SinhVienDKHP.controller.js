@@ -6,6 +6,26 @@ module.exports.dangkyhocphan = function (req, res) {
     // console.log(month);
     // console.log(year);
     // console.log(hockykiemtra);
+    let hockykiemtra1;
+    let namhockiemtra1;
+    let d = new Date();
+    // let year = d.getFullYear();
+    // let month = d.getMonth()+1;
+    let month = 10;
+    let year = 2021;
+    // console.log(month);      
+    // let day = d.getDate();
+    if (month <= 5) {
+        hockykiemtra1 = "2";            
+        year = year - 1;            }
+    else if (6 <= month && month <= 7) {
+        hockykiemtra1 = "3";
+        year = year - 1;            }
+    else if (8 <= month && month <= 12) {
+        hockykiemtra1 = "1";
+    }
+    namhockiemtra1 = year + "-"+ (year+1);
+    console.log(namhockiemtra1,hockykiemtra1);
     database.getAllHocKy(function (listhocky) {
         database.getAllNamHoc(function (listnamhoc) {
             database.getKhoaHocSV(mssv, function (khoa) {
@@ -15,7 +35,7 @@ module.exports.dangkyhocphan = function (req, res) {
                 // console.log("nam hoc: "+namhoc);
                 var monhp = req.query.monhp;
                 var chonlophocdadangky = req.query.lhpddk;
-                let hockykiemtra;
+                console.log(hocky)
                 let dadangky;
                 let tachkhoa = khoa[0].KhoaHoc.slice(0, 4);
                 let viTri;
@@ -34,7 +54,7 @@ module.exports.dangkyhocphan = function (req, res) {
                     }
                 }
                 database.laydanhsachlophodadangkychosinhvien(hocky, namhoc, mssv, function (listmonhocdadangky) {
-                    console.log(listmonhocdadangky);
+                    // console.log(listmonhocdadangky);
                     dadangky = listmonhocdadangky;
                     if (chonlophocdadangky != "") {
                         database.huydangkyhocphanchosinhvien(mssv, chonlophocdadangky);
@@ -60,7 +80,7 @@ module.exports.dangkyhocphan = function (req, res) {
                             // console.log(listmonhocdadangky);
                             return res.render('./bodySinhVien/GD_SV_dkhp1', {
                                 layout: './layouts/layoutSinhVien',
-                                title: 'Đăng Ký Học Phần', listmh, namhoc, hocky, listlh, listmonhocdadangky, listhocky, listnamhoc: listnamhoca
+                                title: 'Đăng Ký Học Phần', namhockiemtra1, hockykiemtra1, listmh, namhoc, hocky, listlh, listmonhocdadangky, listhocky, listnamhoc: listnamhoca
                             });
                         });
                     });

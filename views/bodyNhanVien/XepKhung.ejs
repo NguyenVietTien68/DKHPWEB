@@ -16,7 +16,7 @@
             <form class="form-inline" action="/nhanvien/xepkhung/lockq">
               <div class="form-group">
                 <label for="ChuyenNganh">Chuyên ngành:</label>
-                <select class="form-control" id="select_macn" name="macn">
+                <select class="form-control" id="macnhtml" name="macn">
                   <%for(let i=0;i < dsmacn.length;i++){%>
                     <option value="<%=dsmacn[i].MaChuyenNganh%>">
                       <%=dsmacn[i].MaChuyenNganh%> - <%=dsmacn[i].TenChuyenNganh%>
@@ -30,7 +30,7 @@
           
           <div class="row"><br>
             
-            <table class="table table-bordered" style="margin-top: 2%;">
+            <table class="table table-bordered" style="margin-top: 2%;" id ="table-content">
               <thead>
                 <tr>
                   <th>Mã Chuyên Ngành</th>
@@ -106,7 +106,14 @@
     </div>
 
   </div>
-
+  <%for(let c=0; c < dsmacn.length; c++){%>
+    <%if(  macn == dsmacn[c].MaChuyenNganh){%>
+        <script>
+            $('#macnhtml').val("<%=dsmacn[c].MaChuyenNganh%>");
+      </script>
+    <%}%>
+  <%}%>
+  
   <script>
     $(document).ready(function () {
       $('#uploadForm2').submit(function () {

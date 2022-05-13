@@ -23,9 +23,11 @@ module.exports.trangcapnhatkhoa = function (req, res) {
     var start = (page - 1) * perPage;
     var end = page * perPage;
 
+    let query = "";
+
     database.getAllKhoa(function (result) {
         let sotrang = (result.length) / perPage;
-        res.render('./bodyNhanVien/CNKhoa', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Khoa', listkhoa : result.slice(start,end),sotrang: sotrang+1});
+        res.render('./bodyNhanVien/CNKhoa', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Khoa', query, listkhoa : result.slice(start,end),sotrang: sotrang+1});
     })
 };
 
@@ -165,13 +167,13 @@ module.exports.savedatakhoa = function (req, res) {
 
 module.exports.timkiemkhoa = function (req, res) {
     var query = req.query.tukhoakhoa;
-    console.log(query);
+    // console.log(query);
     database.timkiemkhoa(query, function (results) {
         if (results.length > 0) {
-            res.render('./bodyNhanVien/CNKhoa', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Khoa', listkhoa: results,sotrang: 0});
+            res.render('./bodyNhanVien/CNKhoa', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Khoa', query, listkhoa: results,sotrang: 0});
         } else {
             // database.getAllKhoa(function (result) {
-                res.render('./bodyNhanVien/CNKhoa', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Khoa', listkhoa: 0,sotrang: 0 });
+                res.render('./bodyNhanVien/CNKhoa', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Khoa', query, listkhoa: 0,sotrang: 0 });
             // });
         }
 

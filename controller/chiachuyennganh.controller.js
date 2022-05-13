@@ -23,8 +23,10 @@ module.exports.uploadfilesvcn = function (req, res) {
 };
 
 module.exports.trangchiacn = function (req, res) {
+    let macn = "";
+    let masvcn = "";
     database.getAllChuyenNganh(function(dsma){
-        return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',dsmacn:dsma,listsvn:0,macn:0,sotrang:0});
+        return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',macn, masvcn, dsmacn:dsma,listsvn:0,macn:0,sotrang:0});
     });  
 };
 
@@ -36,10 +38,13 @@ module.exports.lockqcn = function (req, res) {
     var start = (page - 1) *perPage;
     var end = page * perPage;
     var macn = req.query.macn;
+    let masvcn ="";
+
     database.getAllChuyenNganh(function(dsma){
         database.laysvtheocn(macn,function(listsvn){
+            // console.log(listsvn);
             let sotrang = (listsvn.length)/perPage;
-            return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',dsmacn:dsma,listsvn:listsvn.slice(start,end),macn:macn,sotrang:sotrang+1});
+            return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',macn, masvcn,dsmacn:dsma,listsvn:listsvn.slice(start,end),macn:macn,sotrang:sotrang+1});
         });
     });  
 };
@@ -51,24 +56,23 @@ module.exports.xoasvkhcn = function (req, res) {
     });
 };
 
-
-
-
 module.exports.timsvcn = function (req, res) {
     var masvcn = req.query.masvcn;
+    let macn = "";
     database.getAllChuyenNganh(function (dsma) {
         database.timsvtrongcn(masvcn,function(listsv){
+            console.log(listsv)
             if (listsv.length > 0) {
-                return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',dsmacn:dsma,listsvn:listsv,macn:0,sotrang:0});
+                return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',macn, masvcn, dsmacn:dsma, listsvn:listsv, macn:0, sotrang:0});
             } else {
-                return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',dsmacn:dsma,listsvn:0,macn:0,sotrang:0});
+                // return res.render('./bodyNhanVien/ChiaChuyenNganh',{layout: './layouts/layoutNhanVien' , title: 'Chia Chuyên Ngành',dsmacn:dsma,listsvn:0,macn:0,sotrang:0});
+                res.redirect('/nhanvien/chiachuyennganh')
             }
             
         });
     });
     
 };
-
 
 module.exports.savedata = function (req, res) {
     const schema = {

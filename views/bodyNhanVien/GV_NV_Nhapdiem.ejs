@@ -154,20 +154,6 @@
       </div>
     </div>
   </div>
-  <%for(let c=0; c < listnamhoc.length; c++){%>
-    <%if(  namhoc == listnamhoc[c].Nam){%>
-        <script>
-            $('#namhochtml').val("<%=listnamhoc[c].Nam%>");
-      </script>
-    <%}%>
-  <%}%>
-  <%for(let d=0; d < listhocky.length; d++){%>
-      <%if( hocky == listhocky[d].HocKy){%>
-          <script>
-              $('#hockyhtml').val("<%=listhocky[d].HocKy%>");
-        </script>
-      <%}%>
-  <%}%>
   <script>
     $(document).ready(function () {
         $('#uploadForm').submit(function () {

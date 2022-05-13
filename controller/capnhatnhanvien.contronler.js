@@ -2,10 +2,16 @@ var database = require("../database");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-
 module.exports.trangcapnhapnv = function (req, res) {
+    var page = parseInt(req.query.page) || 1;
+    var perPage = 5;
+
+    var start = (page - 1) * perPage;
+    var end = page * perPage;
+
     database.cnnvlayds(function (results) {
-        return res.render('./bodyNhanVien/CNNhanvien',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Nhân viên',listnv:results});
+        sotrang = (results.length) / perPage;
+        return res.render('./bodyNhanVien/CNNhanvien',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Nhân viên',listnv:results.slice(start, end), sotrang: sotrang + 1});
     });
 };
 

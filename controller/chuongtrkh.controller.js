@@ -24,8 +24,9 @@ module.exports.uploadfilemhcn = function (req, res) {
 
 
 module.exports.trangxepkhung = function (req, res) {
+    let macn = "";
     database.getAllChuyenNganh(function (dsma) {
-        return res.render('./bodyNhanVien/XepKhung', { layout: './layouts/layoutNhanVien', title: 'Xếp Chương Trình Khung', dsmacn: dsma, listmh: 0, macn: 0, sotrang: 0 });
+        return res.render('./bodyNhanVien/XepKhung', { layout: './layouts/layoutNhanVien', title: 'Xếp Chương Trình Khung', macn, dsmacn: dsma, listmh: 0, macn: 0, sotrang: 0 });
     });
 };
 
@@ -40,11 +41,10 @@ module.exports.lockq = function (req, res) {
         database.laymhtheocng(macn, function (dsmh) {
             //console.log(dsmh);
             let sotrang = (dsmh.length) / perPage;
-            return res.render('./bodyNhanVien/XepKhung', { layout: './layouts/layoutNhanVien', title: 'Xếp Chương Trình Khung', dsmacn: dsma, listmh: dsmh.slice(start, end), macn: macn, sotrang: sotrang + 1 });
+            return res.render('./bodyNhanVien/XepKhung', { layout: './layouts/layoutNhanVien', title: 'Xếp Chương Trình Khung', macn, dsmacn: dsma, listmh: dsmh.slice(start, end), macn: macn, sotrang: sotrang + 1 });
         });
     });
 };
-
 
 module.exports.xoamhkhcn = function (req, res) {
     const mhid = req.params.mhid;
@@ -53,10 +53,6 @@ module.exports.xoamhkhcn = function (req, res) {
         res.redirect('/nhanvien/xepkhung');
     });
 };
-
-
-
-
 
 module.exports.savedata = function (req, res) {
 

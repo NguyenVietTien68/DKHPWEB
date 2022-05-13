@@ -15,9 +15,21 @@ var storage = multer.diskStorage({
 var upload1 = multer({ storage: storage }).single('myfilemonhp');
 
 module.exports.trangcapnhatmhp = function (req, res) {
-    
+    let d = new Date();
+    let nam = d.getFullYear();
+    let namkiemtra = nam.toString() + "-" + (nam+1).toString();
+    database.getAllNamHoc(function (listnamhoc){
+        for(let a = 0; a < listnamhoc.length; a++){
+            if(listnamhoc[a].Nam == namkiemtra){
+                console.log(listnamhoc[a].Nam)
+            }
+        }
+    })
+    // console.log(namkiemtra);
+    let makhoa;
+    let query;
     database.getAllKhoa(function (dsmak) {
-        res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn Học Phần',dsmakhoa: dsmak, listmhp : 0,sotrang:0});
+        res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn Học Phần', query, makhoa, dsmakhoa: dsmak, listmhp : 0,sotrang:0});
     })
 };
 
@@ -38,10 +50,11 @@ module.exports.lockhoamh = function (req, res) {
     var end = page * perPage;
 
     var makhoa = req.query.makhoa;
+    let query = "";
     database.getAllKhoa(function(dsmak){
         database.layMHtheoKhoa(makhoa,function(listmhp){
             let sotrang = (listmhp.length) / perPage;
-            return res.render('./bodyNhanVien/CNMonHocPhan',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Môn Học Phần',dsmakhoa : dsmak,listmhp:listmhp.slice(start,end),sotrang:sotrang+1, mk:makhoa});
+            return res.render('./bodyNhanVien/CNMonHocPhan',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Môn Học Phần', query, makhoa, dsmakhoa : dsmak,listmhp:listmhp.slice(start,end),sotrang:sotrang+1});
         });
     });  
 };
@@ -111,19 +124,28 @@ module.exports.capnhatmhp = function(req,res){
 
 module.exports.timkiemmhp = function (req, res) {
     var query = req.query.tukhoamonhp;
-
+    let makhoa = "" ;
     console.log(query);
     database.timkiemmhp(query, function (results) {
         if (results.length > 0) {
+            var page = parseInt(req.query.page) || 1;
+            var perPage = 5;
+
+            var start = (page - 1) * perPage;
+            var end = page * perPage;
+
+            sotrang = (results.length) / perPage;
+
             database.getAllKhoa(function (dsmak) {
-                res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn học phần',dsmakhoa: dsmak, listmhp: results,sotrang:0 });
+                res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn học phần',makhoa, query, dsmakhoa: dsmak, listmhp: results.slice(start, end),sotrang:sotrang+1 });
             });
         } else {
-            database.getAllMHP(function (result) {
-                database.getAllKhoa(function (dsmak) {
-                    res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn học phần',dsmakhoa: dsmak, listmhp: 0, sotrang:0 });
-                });
-            });
+            // database.getAllMHP(function (result) {
+            //     database.getAllKhoa(function (dsmak) {
+            //         res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn học phần',dsmakhoa: dsmak, listmhp: 0, sotrang:0 });
+            //     });
+            // });
+            res.redirect('/nhanvien/cnmonhp')
         }
 
     });

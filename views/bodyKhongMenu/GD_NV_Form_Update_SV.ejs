@@ -39,13 +39,6 @@
             <!-- <input type="text" class="form-control" id="khoahoc_sv"" placeholder="Điện thoại" value="<%=sv.KhoaHoc%>" name="khoahoc_sv" required> -->
             <select class="form-control" id="khoahoc_sv" name="khoahoc_sv">
                 <%for(let i=0;i < dskhoahoc.length;i++){%>
-                    <%if(dskhoahoc[i].KhoaHoc == sv.KhoaHoc){%>
-                        <option selected value="<%=dskhoahoc[i].KhoaHoc%>">
-                            <%=dskhoahoc[i].KhoaHoc%>
-                        </option>
-                    <%}%>
-                <%}%>
-                <%for(let i=0;i < dskhoahoc.length;i++){%>
                     <option value="<%=dskhoahoc[i].KhoaHoc%>">
                         <%=dskhoahoc[i].KhoaHoc%>
                     </option>
@@ -57,3 +50,11 @@
     <br>
     </div>
 </div>
+
+<%for(let i=0;i < dskhoahoc.length;i++){%>
+    <%if(dskhoahoc[i].KhoaHoc == sv.KhoaHoc){%>
+        <script>
+            $('#khoahoc_sv').val("<%=dskhoahoc[i].KhoaHoc%>");
+        </script>
+    <%}%>
+<%}%>
