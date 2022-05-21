@@ -22,8 +22,9 @@ var upload1 = multer({ storage: storage }).single('myfilesv');
 module.exports.trangcapnhatsv = function (req, res) {
     let khoahoc = "";
     let query = "";
+    let mess = "";
     database.getAllKhoaHoc(function (results) {
-        res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', query, khoahoc, listsv: 0, trang: 0, kh: 0, listkhoahoc: results });
+        res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', mess, query, khoahoc, listsv: 0, trang: 0, kh: 0, listkhoahoc: results });
     })
 };
 
@@ -37,11 +38,12 @@ module.exports.lockqkh = function (req, res) {
     var kh = req.query.khoahocsv;
 
     let query = "";
+    let mess = "";
 
     database.laysvtheokh(kh, function (listsv) {
         database.getAllKhoaHoc(function (results) {
             let sotrang = (listsv.length) / perPage;
-            res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', query, khoahoc :kh,  listsv: listsv.slice(start, end), trang: sotrang + 1, kh: kh, listkhoahoc: results });
+            res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', mess, query, khoahoc: kh, listsv: listsv.slice(start, end), trang: sotrang + 1, kh: kh, listkhoahoc: results });
         });
     });
 
@@ -53,12 +55,13 @@ module.exports.trangchunv = function (req, res) {
 
 module.exports.chuyennhapsv = function (req, res) {
     var matudong;
+    let mess = "";
     database.getAllKhoaHoc(function (dskhoahoc) {
         database.laymaSVtudong(function (result) {
             matudong = parseInt(result[0].MSSV);
             matudong = matudong + 1;
             matudong = "00" + matudong;
-            return res.render('./bodyKhongMenu/GD_NV_Form_Add_SV', { layout: './layouts/layoutKhongMenu', title: 'Thêm Sinh Viên', matdsv: matudong, dskhoahoc });
+            return res.render('./bodyKhongMenu/GD_NV_Form_Add_SV', { layout: './layouts/layoutKhongMenu', title: 'Thêm Sinh Viên', mess, matdsv: matudong, dskhoahoc });
         })
     })
 };
@@ -74,21 +77,32 @@ module.exports.chuyenedit = function (req, res) {
 
 module.exports.xoasv = function (req, res) {
     const svid = req.params.svid;
-    database.svkiemtratruocxoa(svid, function (resultsss) {
-        if (resultsss.length > 0) {
-            res.send('Sinh viên đã có ngành nên xóa bên chia ngành trước');
-        } else {
-            database.xoatksv(svid, function (resultss) {
-                database.xoaSV(svid, function (results) {
-                    res.redirect('/nhanvien/cnsinhvien');
+    let khoahoc = "";
+    let query = "";
+    let mess = "";
+    database.getAllKhoaHoc(function (listkhoa) {
+        database.svkiemtratruocxoa(svid, function (resultsss) {
+            if (resultsss.length > 0) {
+                mess = 'Sinh viên đã được phân chuyên ngành, nên xóa bên chuyên ngành trước';
+                res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', mess, query, khoahoc, listsv: 0, trang: 0, kh: 0, listkhoahoc: listkhoa });
+
+            } else {
+                database.xoatksv(svid, function (resultss) {
+                    database.xoaSV(svid, function (results) {
+                        mess = 'Xoá thành công sinh viên '+svid;
+                        res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', mess, query, khoahoc, listsv: 0, trang: 0, kh: 0, listkhoahoc: listkhoa });
+                    });
                 });
-            });
-        }
-    });
+            }
+        });
+    })
 };
 
 module.exports.luusv = function (req, res) {
     // console.log(req.body);
+    let khoahoc = "";
+    let query = "";
+    
     const passdefaut = "123456";
     bcrypt.hash(passdefaut, saltRounds, function (err, hash) {
         let data = {
@@ -98,7 +112,13 @@ module.exports.luusv = function (req, res) {
         let tk = { MaTaiKhoan: req.body.masv, Pass: hash };
         database.themSV(data, function (results) {
             database.themtaikhoansv(tk, function (resultss) {
-                res.redirect('/nhanvien/cnsinhvien');
+                database.getAllKhoaHoc(function (listkhoa) {
+                    let masv =req.body.masv;
+                    let tensv = req.body.hotensv;
+                    // console.log(tensv);
+                    mess = 'Thêm thành công sinh viên '+ masv +'-'+tensv;
+                    res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', mess, query, khoahoc, listsv: 0, trang: 0, kh: 0, listkhoahoc: listkhoa });
+                })
             })
 
         });
@@ -161,6 +181,7 @@ module.exports.savedata = function (req, res) {
         }
     }
     var arr = new Array();
+    let dem = 0;
     const passdefaut = "123456";
     readXlsxFile('./file/datasv.xlsx', { schema }).then(({ rows, errors }) => {
         errors.length == 0;
@@ -169,6 +190,7 @@ module.exports.savedata = function (req, res) {
             arr.push(MSSV);
         };
         database.kiemtradl(arr, function (results) {
+            // console.log(results);
             if (results.length > 0) {
                 res.send({ message: 'Mã số sinh viên' + '\t' + results[0].MSSV + '\t' + 'đã tồn tại' });
             } else {
@@ -183,9 +205,10 @@ module.exports.savedata = function (req, res) {
                             database.themtaikhoansv(tk, function (resultsssss) {
 
                             });
+                            dem++;
                         });
                     }
-                    res.send({ message: 'Thành công' });
+                    res.send({ message: 'Đã thêm thành công '+dem +' sinh viên'});
                 });
             }
         });
@@ -194,6 +217,7 @@ module.exports.savedata = function (req, res) {
 
 module.exports.timkiemsv = function (req, res) {
     let khoahoc = "";
+    let mess= "";
     var query = req.query.tukhoasv;
     database.timkiemsv(query, function (results) {
         database.getAllKhoaHoc(function (listkhoahoc) {
@@ -203,14 +227,13 @@ module.exports.timkiemsv = function (req, res) {
                 let sotrang = (results.length) / perPage;
 
                 var start = (page - 1) * perPage;
-                var end = page * perPage;   
+                var end = page * perPage;
                 // console.log(sotrang);
                 // res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv: listsv.slice(start,end), trang: sotrang+1,kh:kh, listkhoahoc: listkhoahoc });
-                res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', query, khoahoc, listsv: results.slice(start, end), trang: sotrang+1, kh: 0, listkhoahoc });
+                res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên',mess, query, khoahoc, listsv: results.slice(start, end), trang: sotrang + 1, kh: 0, listkhoahoc });
             } else {
                 database.getAllSV(function (result) {
                     res.redirect('/nhanvien/cnsinhvien');
-
                     // res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', listsv:0, trang:0,kh:0,listkhoahoc });
                 });
             }
@@ -221,9 +244,15 @@ module.exports.timkiemsv = function (req, res) {
 module.exports.svdatlaimk = function (req, res) {
     var masv = req.params.svid;
     var passdefaut = "123456";
+    let khoahoc = "";
+    let mess= "";
+    var query = "";
     bcrypt.hash(passdefaut, saltRounds, function (err, hash) {
-        database.svupdatemk(hash, masv, function (results) {
-            res.send('Thành công');
+        database.svupdatemk(hash, masv, function () {
+            database.getAllKhoaHoc(function (listkhoa) {
+                mess="Đặt lại thành công mật khẩu sinh viên "+ masv;
+                res.render('./bodyNhanVien/CNSinhVien', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Sinh Viên', mess, query, khoahoc, listsv: 0, trang: 0, kh: 0, listkhoahoc: listkhoa });
+            })
         });
     });
 };

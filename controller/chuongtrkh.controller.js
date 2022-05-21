@@ -54,6 +54,56 @@ module.exports.xoamhkhcn = function (req, res) {
     });
 };
 
+// module.exports.savedata = function (req, res) {
+
+//     const schema = {
+//         'Mã chuyên ngành': {
+//             prop: 'MaChuyenNganh',
+//             type: String
+//         },
+//         'Mã môn học phần': {
+//             prop: 'MaMHP',
+//             type: String
+//         },
+//         'Học Kì': {
+//             prop: 'HocKy',
+//             type: Number
+//         },
+//     };
+//     var arrcn = new Array();
+//     var arrmhp = new Array();
+//     let dem = 0;
+//     readXlsxFile('./file/datamhthuocnganh.xlsx', { schema }).then(({ rows, errors }) => {
+//         errors.length === 0;
+//         for (let i = 0; i < rows.length; i++) {
+//             let MaChuyenNganh = rows[i].MaChuyenNganh;
+//             arrcn.push(MaChuyenNganh);
+//             let MaMHP = rows[i].MaMHP
+//             arrmhp.push(MaMHP);
+            
+//         };
+//         database.kiemtradulieuxepkhung(arrcn,arrmhp,function (results) {
+//             if(results.length>0){
+//                 res.send({ message: 'Môn học có mã' + '\t' + results[0].MaMHP + '\t' + 'thuộc chuyên ngành' + '\t' + results[0].MachuyenNganh + '\t' + 'đã tồn tại'});
+//             }else{
+            
+//                 for (let i = 0; i < rows.length; i++) {
+                
+//                         let data = {
+//                             MaChuyenNganh: rows[i].MaChuyenNganh, MaMHP: rows[i].MaMHP, HocKy: rows[i].HocKy
+//                         };
+//                         database.themMHCN(data, function (results) {
+
+//                         });
+//                         dem++;
+//                     };
+//                 res.send({ message: 'Đã thêm '+ dem+ ' môn học phần vào '+ arrcn[0].MaChuyenNganh});
+//             }  
+//         });
+//     });
+
+// };
+
 module.exports.savedata = function (req, res) {
 
     const schema = {
@@ -87,8 +137,7 @@ module.exports.savedata = function (req, res) {
             }else{
             
                 for (let i = 0; i < rows.length; i++) {
-                
-                        let data = {
+                    let data = {
                             MaChuyenNganh: rows[i].MaChuyenNganh, MaMHP: rows[i].MaMHP, HocKy: rows[i].HocKy
                         };
                         database.themMHCN(data, function (results) {
@@ -102,7 +151,3 @@ module.exports.savedata = function (req, res) {
     });
 
 };
-
-
-
-

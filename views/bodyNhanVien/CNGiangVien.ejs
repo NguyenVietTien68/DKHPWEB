@@ -142,7 +142,11 @@
         <script>
             $('#tukhoa').val("<%=query%>");
         </script>
-
+        <%if(mess!=""){%>
+            <script>
+                swal("<%=mess%>");
+            </script>
+        <%}%>
         <script>
             $(document).ready(function () {
                 $('#uploadForm').submit(function () {

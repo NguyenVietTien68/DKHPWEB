@@ -14,16 +14,17 @@ module.exports.trangcapnhatNamHoc = function (req, res) {
 };
 
 module.exports.chuyennhapNamHoc = function (req, res) {
-    return res.render('./bodyKhongMenu/GD_NV_Form_Add_NamHoc', { layout: './layouts/layoutKhongMenu', title: 'Thêm Năm Học' });
+    let mess="";
+    return res.render('./bodyKhongMenu/GD_NV_Form_Add_NamHoc', { layout: './layouts/layoutKhongMenu', title: 'Thêm Năm Học' ,mess});
 };
 
 module.exports.luuNamHoc = function(req,res){
-    console.log(req.body);
-
     const nam = req.body.nam;
+    let mess="";
     database.kiemtranamtrung(nam,function(result){
         if(result.length>0){
-            res.send({ message: 'Năm học'+" "+ result[0].Nam+" "+ 'đã tồn tại' });
+            mess= 'Năm học'+" "+ result[0].Nam+" "+ 'đã tồn tại' ;
+            return res.render('./bodyKhongMenu/GD_NV_Form_Add_NamHoc', { layout: './layouts/layoutKhongMenu', title: 'Thêm Năm Học' ,mess});
         }else{
             let data = {
                 Nam: req.body.nam

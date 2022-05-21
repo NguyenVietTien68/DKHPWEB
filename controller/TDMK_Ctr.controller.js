@@ -49,32 +49,25 @@ module.exports.postDoiMatKhauSV = function (req, res) {
         return res.render('./bodySinhVien/GD_SV_doimk', { layout: './layouts/layoutSinhVien', title: 'Đổi Mật Khẩu', mssv, erromkc: '(trống)', erromkm: '', mkc, mkm });
     }
     bcrypt.genSalt(saltRounds, (err, salt) => {
-
-
         database.getPassSV(mssv, function (resultQuery) {
             if (resultQuery.length > 0) {
                 bcrypt.compare(mkc, resultQuery[0].Pass, function (err, result) {
                     console.log("reult:" + result);
                     if (result) {
-                       
                         console.log("đổi mật khẩu thành công");
                         doimatkhauthanhcong = 1;
-                        console.log("doi mat khau brt" + doimatkhauthanhcong);
-
-
-                       
-                            bcrypt.hash(mkm, salt, function (err, has) {
-                                console.log("hash mật khẩu mới" + has);
-                                var pass = has;
-                                database.updatematkhausv( mssv,pass);
-                            });
-                            mkc = "";
-                            mkm = ""
+                        // console.log("doi mat khau brt" + doimatkhauthanhcong);
+                        bcrypt.hash(mkm, salt, function (err, has) {
+                            // console.log("hash mật khẩu mới" + has);
+                            var pass = has;
+                            database.updatematkhausv(mssv, pass);
+                        });
+                        mkc = "";
+                        mkm = ""
 
                     } else {
                         console.log("đổi mk thấy bại");
                         doimatkhauthanhcong = 0;
-
                     }
                     console.log("doi mat khau" + doimatkhauthanhcong);
                     if (doimatkhauthanhcong == 1) {

@@ -160,7 +160,11 @@
           </script>
         <%}%>
     <%}%>
-
+    <%if(mess!=""){%>
+        <script>
+            swal("<%=mess%>");
+        </script>
+    <%}%>
     <script>
         $('#tukhoa').val("<%=query%>");
     </script>

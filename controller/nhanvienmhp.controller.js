@@ -15,31 +15,22 @@ var storage = multer.diskStorage({
 var upload1 = multer({ storage: storage }).single('myfilemonhp');
 
 module.exports.trangcapnhatmhp = function (req, res) {
-    let d = new Date();
-    let nam = d.getFullYear();
-    let namkiemtra = nam.toString() + "-" + (nam+1).toString();
-    database.getAllNamHoc(function (listnamhoc){
-        for(let a = 0; a < listnamhoc.length; a++){
-            if(listnamhoc[a].Nam == namkiemtra){
-                console.log(listnamhoc[a].Nam)
-            }
-        }
-    })
-    // console.log(namkiemtra);
     let makhoa;
     let query;
+    let mess= "";
     database.getAllKhoa(function (dsmak) {
-        res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn Học Phần', query, makhoa, dsmakhoa: dsmak, listmhp : 0,sotrang:0});
+        res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn Học Phần', mess, query, makhoa, dsmakhoa: dsmak, listmhp: 0, sotrang: 0 });
     })
 };
 
 module.exports.chuyennhapmhp = function (req, res) {
+    let mess = "";
     database.getAllKhoa(function (dsmak) {
         database.getAllMHP(function (dsmamon) {
-            return res.render('./bodyKhongMenu/GD_NV_Form_Add_MHP', { layout: './layouts/layoutKhongMenu', title: 'Thêm Môn học phần', dsmakhoa: dsmak, dshocphan: dsmamon });
+            return res.render('./bodyKhongMenu/GD_NV_Form_Add_MHP', { layout: './layouts/layoutKhongMenu', title: 'Thêm Môn học phần', mess, dsmakhoa: dsmak, dshocphan: dsmamon });
         });
     });
-    
+
 };
 
 module.exports.lockhoamh = function (req, res) {
@@ -51,63 +42,75 @@ module.exports.lockhoamh = function (req, res) {
 
     var makhoa = req.query.makhoa;
     let query = "";
-    database.getAllKhoa(function(dsmak){
-        database.layMHtheoKhoa(makhoa,function(listmhp){
+    let mess = "";
+    database.getAllKhoa(function (dsmak) {
+        database.layMHtheoKhoa(makhoa, function (listmhp) {
             let sotrang = (listmhp.length) / perPage;
-            return res.render('./bodyNhanVien/CNMonHocPhan',{layout: './layouts/layoutNhanVien' , title: 'Cập Nhật Môn Học Phần', query, makhoa, dsmakhoa : dsmak,listmhp:listmhp.slice(start,end),sotrang:sotrang+1});
+            return res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn Học Phần', mess, query, makhoa, dsmakhoa: dsmak, listmhp: listmhp.slice(start, end), sotrang: sotrang + 1 });
         });
-    });  
+    });
 };
 
-module.exports.luumhp = function(req,res){
-    console.log(req.body);
+module.exports.luumhp = function (req, res) {
     const mamhp = req.body.mamhp;
-    database.kiemtramhtrung(mamhp,function(result){
-        if(result.length>0){
-            res.send({ message: 'Môn học phần mã số'+" "+ result[0].MaMHP+" "+ 'đã tồn tại' });
-        }else{     
-            let data = {
-                MaMHP: req.body.mamhp, TenMHHP: req.body.tenmhhp,SoTinChi: req.body.sotinchi, HinhThucThi: req.body.hinhthucthi, BatBuoc: req.body.batbuoc, MaKhoa: req.body.makhoa, HocPhanYeuCau: req.body.hocphanyeucau
-            };
-            database.themMHP(data, function(results){
-                res.redirect('/nhanvien/cnmonhp');
-            });   
-        } 
+    let makhoa;
+    let query;
+    let mess;
+    database.getAllKhoa(function (dsmak) {
+        database.kiemtramhtrung(mamhp, function (result) {
+            if (result.length > 0) {
+                database.getAllKhoa(function (dsmak) {
+                    database.getAllMHP(function (dsmamon) {
+                        mess = 'Môn học phần mã số' + " " + result[0].MaMHP + " " + 'đã tồn tại';
+                        return res.render('./bodyKhongMenu/GD_NV_Form_Add_MHP', { layout: './layouts/layoutKhongMenu', title: 'Thêm Môn học phần', mess, dsmakhoa: dsmak, dshocphan: dsmamon });
+                    });
+                });
+            } else {
+                let data = {
+                    MaMHP: req.body.mamhp, TenMHHP: req.body.tenmhhp, SoTinChi: req.body.sotinchi, HinhThucThi: req.body.hinhthucthi, BatBuoc: req.body.batbuoc, MaKhoa: req.body.makhoa, HocPhanYeuCau: req.body.hocphanyeucau
+                };
+                database.themMHP(data, function (results) {
+                    mess = 'Thêm thành công môn học phần ' + mamhp;
+                    res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn Học Phần', mess, query, makhoa, dsmakhoa: dsmak, listmhp: 0, sotrang: 0 });
+                });
+            }
+        })
     })
-        // let data = {
-        //     MaMHP: req.body.mamhp, TenMHHP: req.body.tenmhhp,SoTinChi: req.body.sotinchi, HinhThucThi: req.body.hinhthucthi, BatBuoc: req.body.batbuoc, MaKhoa: req.body.makhoa, HocPhanYeuCau: req.body.hocphanyeucau
-        // };
-        // database.themMHP(data, function(results){
-        //     res.redirect('/nhanvien/cnmonhp');
-        // });
 };
 
 module.exports.xoamonhp = function (req, res) {
     const monhpid = req.params.monhpid;
-    database.kiemtramhptruocxoa(monhpid, function(ketqua){
-        if(ketqua.length > 0){
-            res.send({message:'Môn học phần đã được phân lớp, cần xoá lớp học phần chứa môn'+" " +ketqua[0].MaMHP+" "+'trước'});
-        }else{
-            database.xoaMHP(monhpid, function(results){
-                res.redirect('/nhanvien/cnmonhp');
+    let makhoa;
+    let query;
+    let mess;
+    database.getAllKhoa(function (dsmak) {
+    database.kiemtramhptruocxoa(monhpid, function (ketqua) {
+        if (ketqua.length > 0) {
+            mess = 'Môn học phần đã được phân lớp, cần xoá lớp học phần chứa môn' + " " + ketqua[0].MaMHP + " " + 'trước';
+            res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn Học Phần', mess, query, makhoa, dsmakhoa: dsmak, listmhp: 0, sotrang: 0 });
+        } else {
+            database.xoaMHP(monhpid, function (results) {
+                mess = 'Xoá thành công môn học phần '+ monhpid;
+                res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn Học Phần', mess, query, makhoa, dsmakhoa: dsmak, listmhp: 0, sotrang: 0 });
             });
         }
-    })  
+    })
+})
 };
 
 module.exports.chuyeneditmonhp = function (req, res) {
     const monhpid = req.params.monhpid;
     database.chuyenDenUpdateMHP(monhpid, function (results) {
-        console.log(results[0]);
+        // console.log(results[0]);
         database.getAllKhoa(function (dsmak) {
             database.getAllMHP(function (dsmamon) {
-                return res.render('./bodyKhongMenu/GD_NV_Form_UpdateMHP', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật Môn học phần',dsmakhoa:dsmak,dshocphan: dsmamon , monhp: results[0] });
+                return res.render('./bodyKhongMenu/GD_NV_Form_UpdateMHP', { layout: './layouts/layoutKhongMenu', title: 'Cập nhật Môn học phần', dsmakhoa: dsmak, dshocphan: dsmamon, monhp: results[0] });
             });
         });
     });
 };
 
-module.exports.capnhatmhp = function(req,res){
+module.exports.capnhatmhp = function (req, res) {
     const mamhp = req.body.mamhp;
     const tenmhhp = req.body.tenmhhp;
     const sotinchi = req.body.sotinchi;
@@ -116,7 +119,7 @@ module.exports.capnhatmhp = function(req,res){
     const makhoa = req.body.makhoa;
     const hocphanyeucau = req.body.hocphanyeucau;
 
-    database.updateMHP(sotinchi,hinhthucthi,batbuoc,makhoa,hocphanyeucau,tenmhhp,mamhp,function (results){
+    database.updateMHP(sotinchi, hinhthucthi, batbuoc, makhoa, hocphanyeucau, tenmhhp, mamhp, function (results) {
         res.redirect('/nhanvien/cnmonhp');
     });
     // console.log(mamhp,tenmhhp,sotinchi,hinhthucthi,batbuoc,makhoa,hocphanyeucau);
@@ -124,8 +127,9 @@ module.exports.capnhatmhp = function(req,res){
 
 module.exports.timkiemmhp = function (req, res) {
     var query = req.query.tukhoamonhp;
-    let makhoa = "" ;
-    console.log(query);
+    let makhoa = "";
+    let mess = "";
+    // console.log(query);
     database.timkiemmhp(query, function (results) {
         if (results.length > 0) {
             var page = parseInt(req.query.page) || 1;
@@ -137,7 +141,7 @@ module.exports.timkiemmhp = function (req, res) {
             sotrang = (results.length) / perPage;
 
             database.getAllKhoa(function (dsmak) {
-                res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn học phần',makhoa, query, dsmakhoa: dsmak, listmhp: results.slice(start, end),sotrang:sotrang+1 });
+                res.render('./bodyNhanVien/CNMonHocPhan', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Môn học phần', mess, makhoa, query, dsmakhoa: dsmak, listmhp: results.slice(start, end), sotrang: sotrang + 1 });
             });
         } else {
             // database.getAllMHP(function (result) {
@@ -192,30 +196,29 @@ module.exports.savedatamonhp = function (req, res) {
         },
     };
     var arr = new Array();
+    let dem = 0;
     readXlsxFile('./file/datamonhocphan.xlsx', { schema }).then(({ rows, errors }) => {
-        
+
         for (let i = 0; i < rows.length; i++) {
             let monhoc = rows[i].MaMHP;
             arr.push(monhoc);
 
         };
-        database.monhocphankiemtradulieu(arr,function (results) {
-            if(results.length > 0){
-                res.send({ message: 'Môn phần có mã'+ '\t' + results[0].MaMHP + '\t' + 'đã tồn tại'});
-            }else{
-                for (let a = 0; a < rows.length; a++) {  
+        database.monhocphankiemtradulieu(arr, function (results) {
+            if (results.length > 0) {
+                res.send({ message: 'Môn phần có mã' + '\t' + results[0].MaMHP + '\t' + 'đã tồn tại' });
+            } else {
+                for (let a = 0; a < rows.length; a++) {
                     let data = {
                         MaMHP: rows[a].MaMHP, TenMHHP: rows[a].TenMHHP, SoTinChi: rows[a].SoTinChi, HinhThucThi: rows[a].HinhThucThi, BatBuoc: rows[a].BatBuoc, MaKhoa: rows[a].MaKhoa, HocPhanYeuCau: rows[a].HocPhanYeuCau
                     };
                     database.themMHP(data, function (results) {
-                        
+
                     });
-        
+                    dem++;
                 };
-                res.send({ message: 'Đã thêm' });
+                res.send({ message: 'Đã thêm thành công '+dem+" môn học phần" });
             }
         });
-        
     });
-
 };

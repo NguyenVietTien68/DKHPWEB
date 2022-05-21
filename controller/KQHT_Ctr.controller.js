@@ -1,35 +1,22 @@
 var database = require("../database");
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const readXlsxFile = require('read-excel-file/node');
-var multer = require('multer');
-// const { param } = require("../routes/sinhvien.route");
-var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, './file');
-    },
-    filename: function (req, file, callback) {
-        callback(null, file.originalname);
-    }
-});
-
-
-const upload = multer();
-
-var upload1 = multer({ storage: storage }).single('myfilesv');
 //xem kết quả học tập
-module.exports.xemketquahoctap = function(req, res){
+module.exports.xemketquahoctap = function (req, res) {
     const { cookies } = req;
-   // console.log(cookies.mssv);
+    // console.log(cookies.mssv);
     var mssv = cookies.mssv;
-    var list;
+    var listth = new Array();
     database.layketquahoctapchosinhvien(mssv, function (listkq) {
-        list =listkq;
+        database.layketquahoctapchosinhvien(mssv, function (listtimth) {
+        for(let i = 0; i < listkq.length; i++) {
+            if(listkq[i].MaLopHP = listtimth[i].MaLopHP) {
+                listth.push(listkq[i]);
+            }
+        }
         return res.render('./bodySinhVien/GD_SV_xemkqht',
-                            {layout: './layouts/layoutSinhVien' , 
-                            title: 'Xem kết quả học tập',  list:listkq});
+            {
+                layout: './layouts/layoutSinhVien',
+                title: 'Xem kết quả học tập', list: listkq, listth
+            });
     });
-   
-   
-   
+    });
 };

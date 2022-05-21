@@ -11,7 +11,7 @@ module.exports.dangkyhocphan = function (req, res) {
     let d = new Date();
     // let year = d.getFullYear();
     // let month = d.getMonth()+1;
-    let month = 10;
+    let month = 9;
     let year = 2021;
     // console.log(month);      
     // let day = d.getDate();
@@ -25,7 +25,7 @@ module.exports.dangkyhocphan = function (req, res) {
         hockykiemtra1 = "1";
     }
     namhockiemtra1 = year + "-"+ (year+1);
-    console.log(namhockiemtra1,hockykiemtra1);
+    // console.log(namhockiemtra1,hockykiemtra1);
     database.getAllHocKy(function (listhocky) {
         database.getAllNamHoc(function (listnamhoc) {
             database.getKhoaHocSV(mssv, function (khoa) {

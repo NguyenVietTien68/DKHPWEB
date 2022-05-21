@@ -17,12 +17,15 @@ var upload1 = multer({ storage: storage }).single('filediem');
 
 module.exports.trangnhapdiem = function (req, res) {
     let MaLopHP = "hello";
-
+    let lhp = "";
+    let namhoc = "";
+    let hocky = "";
     database.getAllNamHoc(function (listnamhoc) {
         database.getAllHocKy(function (listhocky) {
             // database.getAllLHP(function (listLop) {
             //     if (namhoc != "null" && hocky != "null") {
-            //         database.nvnhapdiemthongtinlop(function (thongtin) {
+            // database.nvnhapdiemthongtinlop(function (thongtin) {
+            // console.log(thongtin);
             //             let listmamoi = new Array();
             //             let ma;
             //             let listma = new Array();
@@ -38,11 +41,11 @@ module.exports.trangnhapdiem = function (req, res) {
             //             }
             //             // console.log(listmamoi);
             //             console.log(listma);
-            return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma: 0, dssv: 0, trang: 0, lhp: 0, listnamhoc, listhocky });
+            return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', lhp, listma: 0, dssv: 0, trang: 0, lhp: 0, listnamhoc, listhocky, namhoc, hocky });
             // });
             // }
-            // });
         });
+        // });
     });
 };
 
@@ -50,52 +53,60 @@ module.exports.trangnhapdiem = function (req, res) {
 module.exports.locdssv = function (req, res) {
     let namhoc = req.query.namhoc;
     let hocky = req.query.hocky;
-    var page = parseInt(req.query.page) || 1;
-    var lhp = req.query.lhpsv;
-    var perPage = 6;
-    var start = (page - 1) * perPage;
-    var end = page * perPage;
-    // database.nvnhapdiemthongtinlop(function (listma) {
-    //     database.nvnhapdiemlaydssv(lhp, function (dssv) {
-    //         // console.log(listma);
-    //         // console.log(dssv);
-    //         let sotrang = (dssv.length) / perPage;
-    //         return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma: listma.slice(start, end), dssv: dssv, trang: sotrang + 1, lhp: lhp, MaLopHP: lhp });
-    //     });
-    // });
-    database.getAllNamHoc(function (listnamhoc) {
-        database.getAllHocKy(function (listhocky) {
-            if (namhoc == "null" && hocky == "null") {
-                return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma: 0, dssv: 0, trang: 0, lhp: 0, listnamhoc, listhocky });
-            }
-            if (namhoc != "null" && hocky == "null") {
-                database.laydiemloptheonam(namhoc, function (listmalop) {
-                    // console.log(listmalop);
-                    console.log(lhp);
-                    database.nvnhapdiemlaydssv(lhp, function (dssv) {
-                        return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma: listmalop, dssv, trang: 0, lhp: 0, listnamhoc, listhocky });
-                    });
+    database.nvnhapdiemthongtinlop(namhoc, hocky, function (listma) {
+        var lhp = req.query.lhpsv;
+        database.nvnhapdiemlaydssv(lhp, function (dssv) {
+            database.getAllNamHoc(function (listnamhoc) {
+                database.getAllHocKy(function (listhocky) {
+                    // console.log(listma);
+                    // console.log(dssv);
+                    var page = parseInt(req.query.page) || 1;
+                    var perPage = 6;
+                    var start = (page - 1) * perPage;
+                    var end = page * perPage;
+                    let sotrang = (dssv.length) / perPage;
+                    return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', lhp, listma: listma, dssv: dssv.slice(start, end), trang: sotrang + 1, MaLopHP: lhp, namhoc, hocky, listnamhoc, listhocky });
                 });
-            }
-            if (namhoc == "null" && hocky != "null") {
-                return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma: 0, dssv: 0, trang: 0, lhp: 0, listnamhoc, listhocky });
-            }
-            if (namhoc != "null" && hocky != "null") {
-                database.laydiemlop(namhoc, hocky, function (listma) {
-                    database.nvnhapdiemlaydssv(lhp, function (dssv) {
-                        return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma, dssv: dssv, trang: 0, lhp: 0, listnamhoc, listhocky });
-                    })
-                })
-            }
-        })
-    })
+            });
+        });
+    });
+    // database.getAllNamHoc(function (listnamhoc) {
+    //     database.getAllHocKy(function (listhocky) {
+    //         if (namhoc == "null" && hocky == "null") {
+    //             return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma: 0, dssv: 0, trang: 0, lhp: 0, listnamhoc, listhocky });
+    //         }
+    //         if (namhoc != "null" && hocky == "null") {
+    //             database.laydiemloptheonam(namhoc, function (listmalop) {
+    //                 // console.log(listmalop);
+    //                 console.log(lhp);
+    //                 database.nvnhapdiemlaydssv(lhp, function (dssv) {
+    //                     return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma: listmalop, dssv, trang: 0, lhp: 0, listnamhoc, listhocky });
+    //                 });
+    //             });
+    //         }
+    //         if (namhoc == "null" && hocky != "null") {
+    //             return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma: 0, dssv: 0, trang: 0, lhp: 0, listnamhoc, listhocky });
+    //         }
+    //         if (namhoc != "null" && hocky != "null") {
+    //             database.laydiemlop(namhoc, hocky, function (listma) {
+    //                 database.nvnhapdiemlaydssv(lhp, function (dssv) {
+    //                     return res.render('./bodyNhanVien/GV_NV_Nhapdiem', { layout: './layouts/layoutNhanVien', title: 'Giao Dien Nhập Điểm', listma, dssv: dssv, trang: 0, lhp: 0, listnamhoc, listhocky });
+    //                 })
+    //             })
+    //         }
+    //     })
+    // })
 };
 
 module.exports.chuyendentrangsuadiem = function (req, res) {
     var massv = req.params.masv;
     var malop = req.params.malop;
+    let mess = "";
     database.nvnhapdiemlaysv(massv, malop, function (sv) {
-        return res.render('./bodyKhongMenu/GD_NV_Form_NhapDiem', { layout: './layouts/layoutKhongMenu', title: 'Giao dien nhap diem', sv: sv[0] });
+        database.nvnhapdiemlaysvth(massv, malop, function (th) {
+            // console.log(th)
+            return res.render('./bodyKhongMenu/GD_NV_Form_NhapDiem', { layout: './layouts/layoutKhongMenu', title: 'Giao dien nhap diem', sv: sv[0], mess, th });
+        });
     });
 };
 
@@ -106,26 +117,41 @@ module.exports.luudiem = function (req, res) {
     let diemck = req.body.diemck;
     let masv = req.body.masv;
     let malop = req.body.malop;
-    if (diemtk != "") {
-        // database.nvnhapdiemtk(diemtk, masv, malop, function (result) {
-        // });
-        if (diemgk != "") {
-            // database.nvnhapdiemgk(diemgk, masv, malop, function (result) {
-            // });
-            if (diemth != "") {
-                // database.nvnhapdiemth(diemth, masv, malop, function (result) {
-                // });
-                if (diemck != "") {
-                    // database.nvnhapdiemck(diemck, masv, malop, function (results) {
-                    //     res.redirect('/nhanvien/nhapdiem');
-                    // });
+    // console.log(diemtk,diemgk, diemth, diemck)
+    if (diemth != "") {
+        console.log(diemtk,diemgk,diemth,diemck)
+        if (diemtk <= 10 && diemgk <= 10 && diemth <= 10 && diemck <= 10) {
+            if (diemtk != "") {
+                if (diemgk != "") {
+                    if (diemth != "") {
+                        if (diemck != "") {
+                            database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
+                                res.redirect('/nhanvien/nhapdiem');
+                            });
+                        } else {
+                            diemck = null;
+                            database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
+                                res.redirect('/nhanvien/nhapdiem');
+                            });
+                        }
+                    } else {
+                        diemth = null;
+                        diemck = null;
+                        database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
+                            res.redirect('/nhanvien/nhapdiem');
+                        });
+                    }
                 } else {
+                    diemgk = null;
+                    diemth = null;
                     diemck = null;
                     database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
                         res.redirect('/nhanvien/nhapdiem');
                     });
                 }
             } else {
+                diemtk = null;
+                diemgk = null;
                 diemth = null;
                 diemck = null;
                 database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
@@ -133,23 +159,56 @@ module.exports.luudiem = function (req, res) {
                 });
             }
         } else {
-            diemgk = null;
-            diemth = null;
-            diemck = null;
-            database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
-                res.redirect('/nhanvien/nhapdiem');
+            let mess = "Nhập sai định dạng điểm";
+            // console.log(diemtk, diemgk, diemth, diemck);
+            database.nvnhapdiemlaysv(masv, malop, function (sv) {
+                database.nvnhapdiemlaysvth(masv, malop, function (th) {
+                    return res.render('./bodyKhongMenu/GD_NV_Form_NhapDiem', { layout: './layouts/layoutKhongMenu', title: 'Giao dien nhap diem', sv: sv[0], mess, th });
+                });
             });
         }
     } else {
-        diemtk = null;
-        diemgk = null;
         diemth = null;
-        diemck = null;
-        database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
-            res.redirect('/nhanvien/nhapdiem');
-        });
+        console.log(diemtk, diemgk, diemck +"không th")
+        if (diemtk <= 10 && diemgk <= 10 && diemck <= 10) {
+            if (diemtk != "" ) {
+                if (diemgk != "" ) {
+                    if (diemck != "") {
+                        database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
+                            res.redirect('/nhanvien/nhapdiem');
+                        });
+                    } else {
+                        diemck = null;
+                        database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
+                            res.redirect('/nhanvien/nhapdiem');
+                        });
+                    }
+                } else {
+                    diemgk = null;
+                    diemck = null;
+                    database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
+                        res.redirect('/nhanvien/nhapdiem');
+                    });
+                }
+            } else {
+                diemtk = null;
+                diemgk = null;
+                diemth = null;
+                diemck = null;
+                database.nvnhapdiemcapnhatdiem(diemtk, diemgk, diemth, diemck, masv, malop, function (results) {
+                    res.redirect('/nhanvien/nhapdiem');
+                });
+            }
+        } else {
+            let mess = "Nhập sai định dạng điểm";
+            // console.log(diemtk, diemgk, diemth, diemck + 'không th');
+            database.nvnhapdiemlaysv(masv, malop, function (sv) {
+                database.nvnhapdiemlaysvth(masv, malop, function (th) {
+                    return res.render('./bodyKhongMenu/GD_NV_Form_NhapDiem', { layout: './layouts/layoutKhongMenu', title: 'Giao dien nhap diem', sv: sv[0], mess, th });
+                });
+            });
+        }
     }
-
 };
 
 module.exports.exports = function (req, res) {
@@ -226,26 +285,21 @@ module.exports.savedataDiem = function (req, res) {
         },
     };
     var arr = new Array();
+    var arrlop = new Array();
+    let dem = 0;
     readXlsxFile('./file/filediem.xlsx', { schema }).then(({ rows, errors }) => {
         errors.length === 0;
         for (let i = 0; i < rows.length; i++) {
             let mssv = rows[i].MSSV;
             arr.push(mssv);
+            arrlop.push(rows[i].MaLopHP)
         };
         database.kiemtradulieudiem(arr, function (result) {
             if (result.length < 0) {
                 res.send({ message: 'Sinh viên mã số' + '\t' + result[0].MSSV + '\t' + 'không tồn tại' });
             } else {
                 for (let a = 0; a < rows.length; a++) {
-                    // if(rows[a].DiemTK == undefined){
-                    //     rows[a].DiemTK = null;
-                    //     if(rows[a].DiemGK == undefined){
-                    //         rows[a].DiemGK = null;
-                    //         if(rows[a].DiemCK == undefined){
-                    //             rows[a].DiemCK = null;
-                    //         }
-                    //     }
-                    // }
+                    dem++;
                     if (rows[a].DiemTK != undefined) {
                         database.nvnhapdiemtk(rows[a].DiemTK, rows[a].MSSV, rows[a].MaLopHP, function (result) {
                         });
@@ -256,19 +310,19 @@ module.exports.savedataDiem = function (req, res) {
                                 database.nvnhapdiemth(rows[a].DiemTH, rows[a].MSSV, rows[a].MaLopHP, function (result) {
                                 }); if (rows[a].DiemCK != undefined) {
                                     database.nvnhapdiemck(rows[a].DiemCK, rows[a].MSSV, rows[a].MaLopHP, function (results) {
-                                        res.send({ message: 'thành công' });
+                                        res.send({ message: 'Cập nhật thành công điểm của ' + dem + ' sinh viên thuộc ' + arrlop[0] });
                                     });
                                 } else {
                                     rows[a].DiemCK = null;
                                     database.nvnhapdiemcapnhatdiem(rows[a].DiemTK, rows[a].DiemGK, rows[a].DiemTH, rows[a].DiemCK, rows[a].MSSV, rows[a].MaLopHP, function (results) {
-                                        res.send({ message: 'thành công' });
+                                        res.send({ message: 'Cập nhật thành công điểm của ' + dem + ' sinh viên thuộc ' + arrlop[0] });
                                     });
                                 }
                             } else {
                                 rows[a].DiemTH = null;
                                 rows[a].DiemCK = null;
                                 database.nvnhapdiemcapnhatdiem(rows[a].DiemTK, rows[a].DiemGK, rows[a].DiemTH, rows[a].DiemCK, rows[a].MSSV, rows[a].MaLopHP, function (results) {
-                                    res.send({ message: 'thành công' });
+                                    res.send({ message: 'Cập nhật thành công điểm của ' + dem + ' sinh viên thuộc ' + arrlop[0] });
                                 });
                             }
                         } else {
@@ -276,7 +330,7 @@ module.exports.savedataDiem = function (req, res) {
                             rows[a].DiemTH = null;
                             rows[a].DiemCK = null;
                             database.nvnhapdiemcapnhatdiem(rows[a].DiemTK, rows[a].DiemGK, rows[a].DiemTH, rows[a].DiemCK, rows[a].MSSV, rows[a].MaLopHP, function (results) {
-                                res.send({ message: 'thành công' });
+                                res.send({ message: 'Cập nhật thành công điểm của ' + dem + ' sinh viên thuộc ' + arrlop[0] });
                             });
                         }
                     } else {
@@ -285,7 +339,7 @@ module.exports.savedataDiem = function (req, res) {
                         rows[a].DiemTH = null;
                         rows[a].DiemCK = null;
                         database.nvnhapdiemcapnhatdiem(rows[a].DiemTK, rows[a].DiemGK, rows[a].DiemTH, rows[a].DiemCK, rows[a].MSSV, rows[a].MaLopHP, function (results) {
-                            res.send({ message: 'thành công' });
+                            res.send({ message: 'Cập nhật thành công điểm của ' + dem + ' sinh viên thuộc ' + arrlop[0] });
                         });
                     }
                     // let data = {
@@ -300,8 +354,4 @@ module.exports.savedataDiem = function (req, res) {
             }
         });
     });
-
-
-
 };
-// module.exports.NhapDiem;

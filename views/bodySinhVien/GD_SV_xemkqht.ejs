@@ -22,7 +22,6 @@
                 <tbody>
                     <%for(let i=0;i< list.length;i++){%>
                         <tr>
-                    
                             <td><%=list[i].Nam%></td>
                             <td><%=list[i].hocky%></td>
                             <td><%=list[i].TenMHHP%></td>
@@ -32,16 +31,21 @@
                             <td><%=list[i].DiemTH%></td>
                             <td><%=list[i].DiemCK%></td>
                             <td>
-                                <% if( list[i].DiemTK== null || list[i].DiemGK== null ||list[i].DiemCK== null ||list[i].DiemTH== null){ %>
-                                    
+                                <% if(list[i].DiemCK== null ){ %>
                                 <%}else{%>
-                                    <%=(((list[i].DiemTK+list[i].DiemTH)/2)*2 
-                                    +(list[i].DiemGK*3)
-                                    +(list[i].DiemCK*5))/10%>
+                                    <%if(list[i].DiemTH != null){%>
+                                        <%=(((list[i].DiemTK+list[i].DiemTH)/2)*2 
+                                        +(list[i].DiemGK*3)
+                                        +(list[i].DiemCK*5))/10%>
+                                    <%}else{%>
+                                        <%=((list[i].DiemTK)*2 
+                                        +(list[i].DiemGK*3)
+                                        +(list[i].DiemCK*5))/10%>
+                                    <%}%>
                                 <%}%>
                             </td>
                             <td>
-                                <% if( list[i].DiemTK== null || list[i].DiemGK== null ||list[i].DiemCK== null ||list[i].DiemTH== null){ %>
+                                <% if(list[i].DiemCK== null){ %>
                                     
                                 <%}else{%>
                                     <% var x =  (((list[i].DiemTK+list[i].DiemTH)/2)*2  

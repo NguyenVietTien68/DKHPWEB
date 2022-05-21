@@ -2,7 +2,6 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
     //local
-
     host:'localhost',
     user:'root',
     password:'123456',
@@ -482,7 +481,7 @@ exports.updatesisosinhviendadangkytrongmotlop = function(siso,malophp,callbackQu
 //lấy kết quả học tập cho sinh viên
 exports.layketquahoctapchosinhvien = function(MSSV,callbackQuery){
      // order by MSSV DESC limit 5
-    connection.query("select lophocphan.Nam, lophocphan.hocky, monhocphan.TenMHHP,monhocphan.SoTinChi, phieudangkylhp.DiemTK, phieudangkylhp.DiemGK, phieudangkylhp.DiemTH ,phieudangkylhp.DiemCK from phieudangkylhp inner join lophocphan on lophocphan.MaLopHP = phieudangkylhp.MaLopHP inner join monhocphan on monhocphan.MaMHP = lophocphan.MaMHP where phieudangkylhp.MSSV = ? and phieudangkylhp.Nhom ='LT' order by lophocphan.Nam asc , lophocphan.HocKy asc;",[MSSV], function(err, results,fields){
+    connection.query("select lophocphan.MaLopHP, lophocphan.Nam, lophocphan.hocky, monhocphan.TenMHHP,monhocphan.SoTinChi, phieudangkylhp.DiemTK, phieudangkylhp.DiemGK, phieudangkylhp.DiemTH ,phieudangkylhp.DiemCK from phieudangkylhp inner join lophocphan on lophocphan.MaLopHP = phieudangkylhp.MaLopHP inner join monhocphan on monhocphan.MaMHP = lophocphan.MaMHP where phieudangkylhp.MSSV = ? and phieudangkylhp.Nhom ='LT' order by lophocphan.Nam asc , lophocphan.HocKy asc;",[MSSV], function(err, results,fields){
         if(!err){
             callbackQuery(results);
         }else{
@@ -490,6 +489,18 @@ exports.layketquahoctapchosinhvien = function(MSSV,callbackQuery){
         }
     })  
     //closeDB();
+}
+
+exports.layketquahoctapchosinhvienth = function(MSSV,callbackQuery){
+    // order by MSSV DESC limit 5
+   connection.query("select lophocphan.MaLopHP, lophocphan.Nam, lophocphan.hocky, monhocphan.TenMHHP,monhocphan.SoTinChi, phieudangkylhp.DiemTK, phieudangkylhp.DiemGK, phieudangkylhp.DiemTH ,phieudangkylhp.DiemCK from phieudangkylhp inner join lophocphan on lophocphan.MaLopHP = phieudangkylhp.MaLopHP inner join monhocphan on monhocphan.MaMHP = lophocphan.MaMHP where phieudangkylhp.MSSV = ? and phieudangkylhp.Nhom !='LT' order by lophocphan.Nam asc , lophocphan.HocKy asc;",[MSSV], function(err, results,fields){
+       if(!err){
+           callbackQuery(results);
+       }else{
+           console.log(err);
+       }
+   })  
+   //closeDB();
 }
 
 /*
@@ -849,6 +860,31 @@ exports.nvloclichhoc = function(nh,hk,callbackQuery){
 exports.xlkiemtradulieu = function(malop,manhom,callbackQuery){
      
     connection.query("SELECT * FROM thoigian_phonghoc_giangvien where MaLopHP in (?) and MaNhom in (?)",[malop,manhom],
+    (err,results)=>{
+        if(!err){
+            callbackQuery(results);
+        }else{
+            console.log(err);
+            results = null;
+        }
+    }) 
+};
+
+exports.xlkiemtratrunglich = function(hocky,nam,tiethoc,ngayhoc,phonghoc,callbackQuery){
+    connection.query("select thoigian_phonghoc_giangvien.* from lophocphan INNER JOIN thoigian_phonghoc_giangvien on lophocphan.MaLopHP =  thoigian_phonghoc_giangvien.MaLopHP where lophocphan.HocKy in (?) and  lophocphan.Nam in (?) and thoigian_phonghoc_giangvien.TietHoc in (?) and thoigian_phonghoc_giangvien.NgayHoc in (?) and thoigian_phonghoc_giangvien.PhongHoc in (?)",[hocky,nam,tiethoc,ngayhoc,phonghoc],
+    (err,results)=>{
+        if(!err){
+            callbackQuery(results);
+        }else{
+            console.log(err);
+            results = null;
+        }
+    }) 
+};
+
+exports.xllaynamkiemtra = function(malop,callbackQuery){
+     
+    connection.query("SELECT * FROM lophocphan where MaLopHP in (?) ",[malop],
     (err,results)=>{
         if(!err){
             callbackQuery(results);
@@ -1827,8 +1863,8 @@ exports.nvlaymkduoicsdl = function(manv,callbackQuery){
     Bắt đầu xử lý giao diện nhập điểm
 */
 
-exports.nvnhapdiemthongtinlop = function(callbackQuery){
-    connection.query("SELECT phieudangkylhp.MaLopHP, lophocphan.Nam, lophocphan.HocKy FROM phieudangkylhp inner join lophocphan on phieudangkylhp.MaLopHP = lophocphan.MaLopHP group by phieudangkylhp.MaLopHP;",(err,results)=>{
+exports.nvnhapdiemthongtinlop = function(nam, hocky, callbackQuery){
+    connection.query("SELECT phieudangkylhp.MaLopHP, monhocphan.TenMHHP FROM phieudangkylhp inner join lophocphan on phieudangkylhp.MaLopHP = lophocphan.MaLopHP inner join monhocphan on monhocphan.MaMHP = lophocphan.MaMHP where lophocphan.Nam = ? and lophocphan.HocKy= ? group by phieudangkylhp.MaLopHP;",[nam, hocky],(err,results)=>{
         if(!err){
             callbackQuery(results);
         }else{
@@ -1849,30 +1885,7 @@ exports.laydiemloptheonam = function(nam,callbackQuery){
     })
 };
 
-exports.laydiemlop = function(nam,hocky,callbackQuery){
-    connection.query("SELECT phieudangkylhp.MaLopHP, lophocphan.Nam, lophocphan.HocKy FROM phieudangkylhp inner join lophocphan on phieudangkylhp.MaLopHP = lophocphan.MaLopHP where Nam = ? and HocKy = ? group by phieudangkylhp.MaLopHP;",[nam,hocky],(err,results)=>{
-        if(!err){
-            callbackQuery(results);
-        }else{
-            console.log(err);
-            results = null;
-        }
-    })
-};
-
-exports.laydiemlop = function(nam, hocky,callbackQuery){
-    connection.query("SELECT phieudangkylhp.MaLopHP, lophocphan.Nam, lophocphan.HocKy FROM phieudangkylhp inner join lophocphan on phieudangkylhp.MaLopHP = lophocphan.MaLopHP where Nam = ? group by phieudangkylhp.MaLopHP;",[nam,hocky],(err,results)=>{
-        if(!err){
-            callbackQuery(results);
-        }else{
-            console.log(err);
-            results = null;
-        }
-    })
-};
-
 exports.nvnhapdiemlaydssv = function(malop,callbackQuery){
-     
     connection.query("SELECT ph.MSSV,sv.HoTen,ph.MaLopHP,ph.DiemTK,ph.DiemGK,ph.DiemTH,ph.DiemCK FROM  phieudangkylhp ph join  sinhvien sv on ph.MSSV = sv.MSSV where MaLopHP = ? and Nhom = 'LT'",[malop],(err,results)=>{
         if(!err){
             callbackQuery(results);
@@ -1886,6 +1899,18 @@ exports.nvnhapdiemlaydssv = function(malop,callbackQuery){
 exports.nvnhapdiemlaysv = function(mssv,malop,callbackQuery){
      
     connection.query("SELECT * FROM  phieudangkylhp where MSSV = ? and MaLopHP = ? and Nhom = 'LT'",[mssv,malop],(err,results)=>{
+        if(!err){
+            callbackQuery(results);
+        }else{
+            console.log(err);
+            results = null;
+        }
+    }) 
+};
+
+exports.nvnhapdiemlaysvth = function(mssv,malop,callbackQuery){
+     
+    connection.query("SELECT * FROM  phieudangkylhp where MSSV = ? and MaLopHP = ? and Nhom != 'LT'",[mssv,malop],(err,results)=>{
         if(!err){
             callbackQuery(results);
         }else{

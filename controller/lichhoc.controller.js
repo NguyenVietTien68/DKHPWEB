@@ -123,6 +123,9 @@ module.exports.savedata = function (req, res) {
     };
     var arrlhp = new Array();
     var arrnhom = new Array();
+    let arrTietHoc = new Array();
+    let arrNgay = new Array();
+    let arrPhong = new Array();
     readXlsxFile('./file/datalichhoc.xlsx', { schema }).then(({ rows, errors }) => {
         errors.length === 0;
             for (let i = 0; i < rows.length; i++) {
@@ -130,22 +133,40 @@ module.exports.savedata = function (req, res) {
                 arrlhp.push(MaLopHP);
                 let MaNhom = rows[i].MaNhom;
                 arrnhom.push(MaNhom);
+                arrTietHoc.push(rows[i].TietHoc);
+                arrNgay.push(rows[i].NgayHoc);
+                arrPhong.push(rows[i].PhongHoc);
             };
+            // console.log(arrTietHoc)
+            // console.log(arrNgay)
+            // console.log(arrPhong)
            database.xlkiemtradulieu(arrlhp,arrnhom,function (results) {
             if(results.length>0){
-                res.send({ message: 'Lớp học phần có mã'+'\t' + results[0].MaLopHP +'\t' + 'và nhóm' + '\t' + results[0].MaNhom + '\t' + 'đã tồn tại' });
+                res.send({ message: 'Lớp học phần có mã'+'\t' + results[0].MaLopHP +'\t' + 'nhóm' + '\t' + results[0].MaNhom + '\t' + 'đã tồn tại' });
             }else{
-                let dem = 0;
-                for (let a = 0; a < rows.length; a++) {
-                    let data = {
-                        MaNhom: rows[a].MaNhom, MaLopHP: rows[a].MaLopHP, TietHoc: rows[a].TietHoc,
-                        NgayHoc: rows[a].NgayHoc, PhongHoc: rows[a].PhongHoc, MaGV: rows[a].MaGV, NgayBatDau: rows[a].NgayBatDau
-                    };
-                    database.themlichhoc(data, function (results) {
-                    });
-                    dem++;
-                };
-                res.send({ message: 'Đã thêm '+dem+' lịch học' });
+                database.xllaynamkiemtra(arrlhp, function (listnamhocky) {
+                    if(listnamhocky.length>0){
+                    let namhoc = listnamhocky[0].Nam;
+                    let hocky = listnamhocky[0].HocKy;
+                    // console.log(namhoc);
+                    // console.log(hocky);
+                    database.xlkiemtratrunglich(hocky,namhoc,arrTietHoc,arrNgay,arrPhong, function(lichtrung){
+                        res.send({ message: 'Trùng lịch với lớp học phần ' + lichtrung[0].MaLopHP + ' nhóm '+lichtrung[0].MaNhom})
+                    })
+                    }else{
+                        let dem = 0;
+                        for (let a = 0; a < rows.length; a++) {
+                            let data = {
+                                MaNhom: rows[a].MaNhom, MaLopHP: rows[a].MaLopHP, TietHoc: rows[a].TietHoc,
+                                NgayHoc: rows[a].NgayHoc, PhongHoc: rows[a].PhongHoc, MaGV: rows[a].MaGV, NgayBatDau: rows[a].NgayBatDau
+                            };
+                            database.themlichhoc(data, function (results) {
+                            });
+                            dem++;
+                        };
+                        res.send({ message: 'Đã thêm '+dem+' lịch học' });
+                    }
+                })
             } 
            });
     });

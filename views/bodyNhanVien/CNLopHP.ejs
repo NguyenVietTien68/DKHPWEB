@@ -53,21 +53,27 @@
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        <%for(let i=0;i< listlophp.length;i++){%>
-                                            <tr>
-                                                <!-- <td><input type="radio"></td> -->
-                                                <td><%=listlophp[i].MaLopHP%></td>
-                                                <td><%=listlophp[i].SiSo%></td>
-                                                <td><%=listlophp[i].MaMHP%></td>
-                                                <td><%=listlophp[i].Nam%></td>
-                                                <td><%=listlophp[i].HocKy%></td>
-                                                <td><%=listlophp[i].DaDangKy%></td>
-                                                <td>
-                                                    <a href="/nhanvien/cnlophp/editlophp/<%=listlophp[i].MaLopHP%>" class="btn btn-warning" >Sửa</a>
-                                                    <a href="/nhanvien/cnlophp/deletelophp/<%=listlophp[i].MaLopHP%>" class="btn btn-danger" >Xóa</a>
-                                                </td>
-                                            </tr>
-                                        <%}%>
+                                        <%if(listlophp.length>0){%>
+                                            <%for(let i=0;i< listlophp.length;i++){%>
+                                                <tr>
+                                                    <!-- <td><input type="radio"></td> -->
+                                                    <td><%=listlophp[i].MaLopHP%></td>
+                                                    <td><%=listlophp[i].SiSo%></td>
+                                                    <td><%=listlophp[i].MaMHP%></td>
+                                                    <td><%=listlophp[i].Nam%></td>
+                                                    <td><%=listlophp[i].HocKy%></td>
+                                                    <td><%=listlophp[i].DaDangKy%></td>
+                                                    <td>
+                                                        <a href="/nhanvien/cnlophp/editlophp/<%=listlophp[i].MaLopHP%>" class="btn btn-warning" >Sửa</a>
+                                                        <a href="/nhanvien/cnlophp/deletelophp/<%=listlophp[i].MaLopHP%>" class="btn btn-danger" >Xóa</a>
+                                                    </td>
+                                                </tr>
+                                            <%}%>
+                                            <%}else{%>
+                                                <tr>
+                                                  <td>Chưa có dữ liệu</td>
+                                                </tr>
+                                            <%}%>
                                     </tbody>
                                   </table>
                             </div>
@@ -79,7 +85,8 @@
                                         </ul>
                                     <%}%>
                                 <%}%>
-                              </div>
+                            </div>
+
                         </div>
                     </div>
                     <div id="tab2" class="tab-pane fade">
@@ -115,7 +122,11 @@
                 </script>
             <%}%>
         <%}%>
-    
+        <%if(mess!=""){%>
+            <script>
+                swal("<%=mess%>");
+            </script>
+        <%}%>
         <script>
             $('#tukhoa').val("<%=query%>");
         </script>

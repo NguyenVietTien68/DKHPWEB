@@ -26,20 +26,23 @@ module.exports.trangcapnhatHocKy = function (req, res) {
 
 module.exports.chuyennhapHocKy = function (req, res) {
     var matudong;
+    let mess= "";
     database.layhktudong(function(result){
         matudong = parseInt(result[0].HocKy);
         matudong = matudong +1;
-        return res.render('./bodyKhongMenu/GD_NV_Form_Add_HocKy', { layout: './layouts/layoutKhongMenu', title: 'Thêm Học Kỳ', matdhk: matudong });
+        return res.render('./bodyKhongMenu/GD_NV_Form_Add_HocKy', { layout: './layouts/layoutKhongMenu', title: 'Thêm Học Kỳ',mess, matdhk: matudong });
     })
     
 };
 
 module.exports.luuHocKy = function(req,res){
-    console.log(req.body);
+    let mess= "";
+    let matudong= "";
     const hocky = req.body.hocky;
     database.kiemtrahockytrung(hocky,function(result){
         if(result.length>0){
-            res.send({ message: 'Học kỳ'+" "+ result[0].HocKy+" "+ 'đã tồn tại' });
+            mess= 'Học kỳ'+" "+ result[0].HocKy+" "+ 'đã tồn tại'; 
+            return res.render('./bodyKhongMenu/GD_NV_Form_Add_HocKy', { layout: './layouts/layoutKhongMenu', title: 'Thêm Học Kỳ',mess, matdhk: matudong });   
         }else{
             let data = {
                 HocKy: req.body.hocky

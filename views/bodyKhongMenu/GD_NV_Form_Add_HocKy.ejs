@@ -4,7 +4,7 @@
         <form action="/nhanvien/cnhocky/save_hocky" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="HocKy">Học kỳ:</label>
-                <input type="text" class="form-control" id="hocky" placeholder="Học kỳ" name="hocky" value="<%=matdhk%>" readonly required>
+                <input type="text" class="form-control" id="hocky" placeholder="Học kỳ" name="hocky" value="<%=matdhk%>" required>
             </div>
             <button type="submit" class="btn btn-default">Lưu</button>
             <div>
@@ -13,3 +13,8 @@
         </form>
     </div>
 </div>
+<%if(mess!=""){%>
+    <script>
+        swal("<%=mess%>");
+    </script>
+<%}%>

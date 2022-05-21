@@ -21,8 +21,7 @@
             <form class="form-inline" action="/nhanvien/nhapdiem/loclop">
               <div class="form-group">
                 <label for="LopHP">Năm học:</label>
-                <select class="form-control" id="select_namsv" name="namhoc">
-                  <option value="null">null</option>
+                <select class="form-control" id="namhoc" name="namhoc">
                   <%for(let a=0;a < listnamhoc.length;a++){%>
                       <option value="<%=listnamhoc[a].Nam%>">
                         <%=listnamhoc[a].Nam%>
@@ -32,8 +31,7 @@
               </div>&emsp;
               <div class="form-group">
                 <label for="LopHP">Học kỳ:</label>
-                <select class="form-control" id="select_hockysv" name="hocky">
-                  <option value="null">null</option>
+                <select class="form-control" id="hocky" name="hocky">
                   <%for(let a=0;a < listhocky.length;a++){%>
                       <option value= <%=listhocky[a].HocKy%>>
                         <%=listhocky[a].HocKy%>
@@ -45,11 +43,11 @@
 
               <div class="form-group">
                 <label for="LopHP">Lớp học:</label>
-                <select class="form-control" id="select_lhpsv" name="lhpsv">
+                <select class="form-control" id="lhpsv" name="lhpsv">
                   <% if(listma.length > 0){%>  
                     <%for(let a=0;a < listma.length;a++){%>
                         <option value="<%=listma[a].MaLopHP%>">
-                          <%=listma[a].MaLopHP%>
+                          <%=listma[a].MaLopHP%> - <%=listma[a].TenMHHP%>
                         </option>
                     <%}%>
                   <%}else{%>
@@ -66,8 +64,8 @@
             <%if(dssv.length>0){%>
               <input type="hidden" id="malop" name="malop" value="<%=MaLopHP%>">
               <a href="/nhanvien/nhapdiem/exportfile/<%=MaLopHP%>" class="btn btn-success">Export lớp <%=MaLopHP%> ra file excel</a>
-              <%}%>
-                <table class="table table-bordered" style="margin-top: 2%;">
+            <%}%>
+                <table class="table table-bordered" style="margin-top: 2%;" id="table-content">
                   <thead>
                     <tr>
                       <th>Mã sinh viên</th>
@@ -154,6 +152,27 @@
       </div>
     </div>
   </div>
+  <%for(let c=0; c < listma.length; c++){%>
+    <%if(  lhp == listma[c].MaLopHP){%>
+        <script>
+            $('#lhpsv').val("<%=listma[c].MaLopHP%>");
+      </script>
+    <%}%>
+  <%}%>
+  <%for(let c=0; c < listnamhoc.length; c++){%>
+    <%if(  namhoc == listnamhoc[c].Nam){%>
+        <script>
+            $('#namhoc').val("<%=listnamhoc[c].Nam%>");
+      </script>
+    <%}%>
+  <%}%>
+  <%for(let c=0; c < listhocky.length; c++){%>
+    <%if(  hocky == listhocky[c].HocKy){%>
+        <script>
+            $('#hocky').val("<%=listhocky[c].HocKy%>");
+      </script>
+    <%}%>
+  <%}%>
   <script>
     $(document).ready(function () {
         $('#uploadForm').submit(function () {

@@ -25,16 +25,17 @@ module.exports.trangcapnhatPhongHoc = function (req, res) {
 };
 
 module.exports.chuyennhapPhongHoc = function (req, res) {
-    return res.render('./bodyKhongMenu/GD_NV_Form_Add_PhongHoc', { layout: './layouts/layoutKhongMenu', title: 'Thêm Phòng Học' });
+    let mess = "";
+    return res.render('./bodyKhongMenu/GD_NV_Form_Add_PhongHoc', { layout: './layouts/layoutKhongMenu', title: 'Thêm Phòng Học',mess });
 };
 
 module.exports.luuPhongHoc = function(req,res){
-    console.log(req.body);
-
+    let mess= "";
     const ph = req.body.phonghoc;
     database.kiemtraphonghoctrung(ph,function(result){
         if(result.length>0){
-            res.send({ message: 'Phòng học'+" "+ result[0].PhongHoc+" "+ 'đã tồn tại' });
+            mess='Phòng học'+" "+ result[0].PhongHoc+" "+ 'đã tồn tại';
+            return res.render('./bodyKhongMenu/GD_NV_Form_Add_PhongHoc', { layout: './layouts/layoutKhongMenu', title: 'Thêm Phòng Học', mess });
         }else{
             let data = {
                 PhongHoc: req.body.phonghoc
@@ -57,7 +58,7 @@ module.exports.xoaPhongHoc = function (req, res) {
 
 module.exports.timkiemPhongHoc = function (req, res) {
     var query = req.query.tukhoaphonghoc;
-    console.log(query);
+    // console.log(query);
     database.timkiemPhongHoc(query, function (results) {
         if (results.length > 0) {
             res.render('./bodyNhanVien/CNPhongHoc', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Phòng Học', listphong: results,sotrang:0 });
