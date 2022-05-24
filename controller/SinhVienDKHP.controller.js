@@ -9,10 +9,10 @@ module.exports.dangkyhocphan = function (req, res) {
     let hockykiemtra1;
     let namhockiemtra1;
     let d = new Date();
-    // let year = d.getFullYear();
-    // let month = d.getMonth()+1;
-    let month = 9;
-    let year = 2021;
+    let year = d.getFullYear();
+    let month = d.getMonth()+1;
+    // let month = 9;
+    // let year = 2021;
     // console.log(month);      
     // let day = d.getDate();
     if (month <= 5) {
