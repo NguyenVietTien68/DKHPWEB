@@ -1,19 +1,6 @@
 var database = require("../database");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const readXlsxFile = require('read-excel-file/node');
-var multer = require('multer');
-// const { param } = require("../routes/sinhvien.route");
-var storage = multer.diskStorage({
-    destination: function (req, file, callback) {
-        callback(null, './file');
-    },
-    filename: function (req, file, callback) {
-        callback(null, file.originalname);
-    }
-});
-
-
 module.exports.dangnhap = function (req, res) {
     var username = req.body.tendn;
     var pass = req.body.matkhau;
@@ -37,21 +24,17 @@ module.exports.dangnhap = function (req, res) {
                 } else {
                     database.getPassSV(username, function (resultQuery) {
                         if (resultQuery.length > 0) {
-
                             bcrypt.compare(pass, resultQuery[0].Pass, function (err, result) {
                                 // console.log("reult:" + result);
                                 if (result) {
                                     res.cookie('mssv', username);
                                     return res.redirect('sinhvien/xemttcn');
-                                } else {
-                                   
+                                } else {  
                                     res.render('./bodyChung/DangNhap',{layout: './layouts/layoutDangNhap' , title: 'Trang Chủ', mess:'Mã số hoặc mật khẩu không hợp lệ' });
                                 }
-
                             });
 
                         }else{
-                           
                             res.render('./bodyChung/DangNhap',{layout: './layouts/layoutDangNhap' , title: 'Trang Chủ', mess:'Mã số hoặc mật khẩu không hợp lệ' });
                         }
                     });

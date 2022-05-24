@@ -55,6 +55,7 @@ module.exports.locmhp = function (req, res) {
 
     database.getAllMHP(function (dsmamon) {
         database.layLHPtheoMH(mamhp, function (listlophp) {
+            console.log(listlophp)
             let sotrang = (listlophp.length) / perPage;
             return res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Chuyên Ngành', mess, mamhp, query, dsmamon: dsmamon, listlophp: listlophp.slice(start, end), sotrang: sotrang + 1 });
         });
@@ -104,7 +105,7 @@ module.exports.xoalophp = function (req, res) {
     let query = "";
     let mess = "";
     database.xoaLHP(lophpid, function (results) {
-        res.redirect('/nhanvien/cnlophp');
+        // res.redirect('/nhanvien/cnlophp');
         database.getAllLHP(function (listlophp) {
             database.getAllMHP(function (dsmamon) {
                 mess="Xoá thành công lớp học phần "+ lophpid;
@@ -147,6 +148,7 @@ module.exports.timkiemlophp = function (req, res) {
     let mess = "";
     // console.log(query);
     database.timkiemlhp(query, function (results) {
+        console.log(results)
         if (results.length > 0) {
             // res.render('./bodyNhanVien/CNLopHP', { layout: './layouts/layoutNhanVien', title: 'Cập Nhật Lớp Học Phần', listlophp: results });
             database.getAllMHP(function (dsmamon) {

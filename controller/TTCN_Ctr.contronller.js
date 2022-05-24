@@ -1,8 +1,6 @@
 var database = require("../database");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const readXlsxFile = require('read-excel-file/node');
-var multer = require('multer');
 
 module.exports.xemthongtincanhan = function(req, res){
     const { cookies } = req;
@@ -23,7 +21,7 @@ module.exports.xemthongtincanhan = function(req, res){
         var sodt =resultQuery[0].SoDT;
         var khoahoc =resultQuery[0].KhoaHoc;
         
-        console.log("resultQuery[0]"+resultQuery[0]);
+        // console.log("resultQuery[0]"+resultQuery[0]);
         return res.render('./bodySinhVien/GD_SV_xemttcn',{layout: './layouts/layoutSinhVien' , title: 'Xem Thông Tin Cá Nhân', diachi, gioitinh,ngaysinh,sodt,khoahoc,mssv,hoten});
     });
 };

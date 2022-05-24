@@ -11,8 +11,8 @@ module.exports.dangkyhocphan = function (req, res) {
     let d = new Date();
     // let year = d.getFullYear();
     // let month = d.getMonth()+1;
-    let month = 9;
-    let year = 2021;
+    let month = d.getMonth()+1;
+    let year = d.getFullYear();
     // console.log(month);      
     // let day = d.getDate();
     if (month <= 5) {
@@ -25,7 +25,7 @@ module.exports.dangkyhocphan = function (req, res) {
         hockykiemtra1 = "1";
     }
     namhockiemtra1 = year + "-"+ (year+1);
-    // console.log(namhockiemtra1,hockykiemtra1);
+    console.log(namhockiemtra1,hockykiemtra1);
     database.getAllHocKy(function (listhocky) {
         database.getAllNamHoc(function (listnamhoc) {
             database.getKhoaHocSV(mssv, function (khoa) {
@@ -35,7 +35,7 @@ module.exports.dangkyhocphan = function (req, res) {
                 // console.log("nam hoc: "+namhoc);
                 var monhp = req.query.monhp;
                 var chonlophocdadangky = req.query.lhpddk;
-                console.log(hocky)
+                // console.log(hocky)
                 let dadangky;
                 let tachkhoa = khoa[0].KhoaHoc.slice(0, 4);
                 let viTri;
@@ -161,8 +161,8 @@ module.exports.kiemtralopchosinhvien = function (req, res) {
                                         database.layhockykiemtra(MaLopHP, function (kt) {
                                             const hockykiemtra = kt[0].HocKy;
                                             const namkiemtra = kt[0].Nam;
-                                            console.log(hockykiemtra);
-                                            console.log(namkiemtra);
+                                            // console.log(hockykiemtra);
+                                            // console.log(namkiemtra);
                                             //Kiểm tra trùng lịch học lý thuyết
                                             database.kiemtralichtrungthoigianchosinhvien(hockykiemtra, namkiemtra, mssv, MaLopHP, manhomlt, function (ktthoigian) {
                                                 //Thời gian học lý thuyết bị trùng
@@ -171,7 +171,7 @@ module.exports.kiemtralopchosinhvien = function (req, res) {
                                                     return res.render('./bodySinhVien/GD_SV_dkhplh', { layout: './layouts/layoutSinhVien', title: 'Đăng ký nhóm', listthuchanh, listlythuyet, MaLopHP, mess });
                                                 } else {
                                                     //Kiểm tra lịch học thực hành 
-                                                    console.log("Hoàn thành kiểm tra");
+                                                    // console.log("Hoàn thành kiểm tra");
                                                     database.dangkyhocphanchosinhvien(mssv, MaLopHP, manhomlt);
                                                     //tăng 1 sinh viên cho lớp học
                                                     database.laymotlophocphanchosinhvien(MaLopHP, function (lophocdangky) {
@@ -198,8 +198,8 @@ module.exports.kiemtralopchosinhvien = function (req, res) {
                                 database.layhockykiemtra(MaLopHP, function (kt) {
                                     const hockykiemtra = kt[0].HocKy;
                                     const namkiemtra = kt[0].Nam;
-                                    console.log(hockykiemtra);
-                                    console.log(namkiemtra);
+                                    // console.log(hockykiemtra);
+                                    // console.log(namkiemtra);
                                     //Kiểm tra trùng lịch học lý thuyết
                                     database.kiemtralichtrungthoigianchosinhvien(hockykiemtra, namkiemtra, mssv, MaLopHP, manhomlt, function (ktthoigian) {
                                         //Thời gian học lý thuyết bị trùng

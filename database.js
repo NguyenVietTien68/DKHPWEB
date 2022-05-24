@@ -2,10 +2,10 @@
 var mysql = require('mysql');
 var connection = mysql.createConnection({
     //local
-    host:'localhost',
-    user:'root',
-    password:'123456',
-    database:'sqlquanlyhocphan'
+    // host:'localhost',
+    // user:'root',
+    // password:'123456',
+    // database:'sqlquanlyhocphan'
 
     //phải có dòng này trong mysql local, còn trên aws không cần
     //alter user 'root'@'localhost' identified with mysql_native_password by 'sapassword'
@@ -16,10 +16,10 @@ var connection = mysql.createConnection({
     // password:'',
     // database:''   
 
-    // host:process.env.DATABASE_HOST || 'dt3bgg3gu6nqye5f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
-    // user:process.env.DATABASE_USER || 'ma1oem39jp772diw',
-    // password:process.env.DATABASE_PASS || 'xgyru0t28effeuar',
-    // database:process.env.DATABASE_NAME || 'qxg1q9a5sd3r2k7l'
+    host:process.env.DATABASE_HOST || 'dt3bgg3gu6nqye5f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
+    user:process.env.DATABASE_USER || 'ma1oem39jp772diw',
+    password:process.env.DATABASE_PASS || 'xgyru0t28effeuar',
+    database:process.env.DATABASE_NAME || 'qxg1q9a5sd3r2k7l'
 });
 var connect = function(){
     connection.connect(function(err){
@@ -1030,7 +1030,7 @@ exports.svkiemtratruocxoa = function(masv,callbackQuery){
 
 exports.laymhtheocng = function(macng,callbackQuery){
      
-    connection.query("SELECT ctk.MachuyenNganh,ctk.MaMHP,mh.TenMHHP,ctk.HocKy FROM monhocphan mh join chuongtrinhkhung ctk on mh.MaMHP = ctk.MaMHP where ctk.MachuyenNganh = ?",[macng],
+    connection.query("SELECT ctk.MachuyenNganh,ctk.MaMHP,mh.TenMHHP,ctk.HocKy FROM monhocphan mh join chuongtrinhkhung ctk on mh.MaMHP = ctk.MaMHP where ctk.MachuyenNganh = ? order by ctk.HocKy",[macng],
     (err,results)=>{
         if(!err){
             callbackQuery(results);
@@ -1154,7 +1154,7 @@ exports.updateLHP = function(siso,mamhp,nam,hocky,dadangky,malophp,callbackQuery
 
 exports.timkiemlhp = function(tukhoalhp,callbackQuery){
      
-    connection.query("Select * from lophocphan where MaLopHP like N'%"+tukhoalhp+"%' or SiSo like N'%"+tukhoalhp+"%'or MaMHP like N'%"+tukhoalhp+"%'or Nam like N'%"+tukhoalhp+"%'or HocKy like N'%"+tukhoalhp+"%'or DaDangKy like N'%"+tukhoalhp+"%' limit 10",
+    connection.query("Select lophocphan.*, monhocphan.TenMHHP from lophocphan inner join monhocphan on lophocphan.MaMHP = monhocphan.MaMHP where lophocphan.MaLopHP like N'%"+tukhoalhp+"%' or lophocphan.SiSo like N'%"+tukhoalhp+"%'or lophocphan.MaMHP like N'%"+tukhoalhp+"%'or lophocphan.Nam like N'%"+tukhoalhp+"%'or lophocphan.HocKy like N'%"+tukhoalhp+"%'or lophocphan.DaDangKy like N'%"+tukhoalhp+"%' limit 10",
     (err,results)=>{
         if(!err){
             callbackQuery(results);
@@ -1180,7 +1180,7 @@ exports.lhpkiemtradulieu = function(data,callbackQuery){
 
 exports.layLHPtheoMH = function(data,callbackQuery){
      
-    connection.query("SELECT lhp.* FROM monhocphan mhp join lophocphan lhp on mhp.MaMHP = lhp.MaMHP where mhp.MaMHP = ?",[data],
+    connection.query("SELECT lhp.*, mhp.TenMHHP FROM monhocphan mhp join lophocphan lhp on mhp.MaMHP = lhp.MaMHP where mhp.MaMHP = ?",[data],
     (err,results)=>{
         if(!err){
             callbackQuery(results);

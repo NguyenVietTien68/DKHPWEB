@@ -81,10 +81,6 @@
                     <%}%>
             </div>
           </div>
-          
-            
-
-          
         </div>
         <div id="tab2" class="tab-pane fade">
           <h3>Cập Nhật Bằng File Excel</h3>
@@ -96,7 +92,7 @@
             <span id="status"></span><br>
           </form><br>
 
-          <a id="btnsavekhung" href="#" class="btn btn-primary">Lưu dữ liệu từ file</a>
+          <a id="btnsavekhung" href="/nhanvien/xepkhung/savedata" class="btn btn-primary">Lưu dữ liệu từ file</a>
           <span id="statusupdatekhung"></span><br><br>
           <br /><br><br>
 
@@ -113,7 +109,11 @@
       </script>
     <%}%>
   <%}%>
-  
+  <%if(mess!=""){%>
+    <script>
+        swal("<%=mess%>");
+    </script>
+  <%}%> 
   <script>
     $(document).ready(function () {
       $('#uploadForm2').submit(function () {

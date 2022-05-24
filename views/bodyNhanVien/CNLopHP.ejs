@@ -21,7 +21,7 @@
                                     <select class="form-control" id="mamhphtml" name="mamhp" required>
                                         <%for(let i=0;i < dsmamon.length;i++){%>
                                             <option value="<%=dsmamon[i].MaMHP%>">
-                                                <%=dsmamon[i].TenMHHP%>
+                                                <%=dsmamon[i].MaMHP%> - <%=dsmamon[i].TenMHHP%>
                                             </option>
                                             <%}%>
                                     </select>
@@ -45,7 +45,7 @@
                                         <!-- <th>Chọn</th> -->
                                         <th>Mã Lớp Học Phần</th>
                                         <th>Sỉ số</th>
-                                        <th>Mã MHP</th>
+                                        <th>Tên MHP</th>
                                         <th>Năm</th>
                                         <th>Học kì</th>
                                         <th>Đã đăng ký</th>
@@ -59,7 +59,7 @@
                                                     <!-- <td><input type="radio"></td> -->
                                                     <td><%=listlophp[i].MaLopHP%></td>
                                                     <td><%=listlophp[i].SiSo%></td>
-                                                    <td><%=listlophp[i].MaMHP%></td>
+                                                    <td><%=listlophp[i].TenMHHP%></td>
                                                     <td><%=listlophp[i].Nam%></td>
                                                     <td><%=listlophp[i].HocKy%></td>
                                                     <td><%=listlophp[i].DaDangKy%></td>

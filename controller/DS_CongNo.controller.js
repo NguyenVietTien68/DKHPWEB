@@ -1,8 +1,8 @@
 var database = require("../database");
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const readXlsxFile = require('read-excel-file/node');
-var multer = require('multer');
+// const bcrypt = require('bcrypt');
+// const saltRounds = 10;
+// const readXlsxFile = require('read-excel-file/node');
+// var multer = require('multer');
 // const { param } = require("../routes/sinhvien.route");
 
 function format1(n, currency) {
@@ -38,7 +38,7 @@ module.exports.xemcongno = function (req, res) {
                     listTien.push(format1(resultQuery[a].SoTinChi * 790000, " VND"));
             }
             // console.log(listTien);
-            console.log(resultQuery)
+            // console.log(resultQuery)
             return res.render('./bodySinhVien/GD_SV_xemcongno', { layout: './layouts/layoutSinhVien', title: 'Xem Công Nợ', list, tong: tongcongno, listTien });
         // }
     });
