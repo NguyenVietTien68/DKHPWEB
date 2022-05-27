@@ -1,6 +1,44 @@
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
   <h1>CÔNG NỢ SINH VIÊN</h1><br><br>
 </div>
+<div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
+  <div class="row col-xs-10 col-sm-10 col-md-10 col-lg-10" style="margin-left: 100px;">
+      <form class="form-horizontal"  action="/sinhvien/chitietcongno"  >
+          <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+              <div class="form-group">
+                  <label class="label-control col-xs-4 col-sm-4 col-md-4 col-lg-4 ">Năm học:</label>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                      <select class="form-control" id="namhochtml" name="namhoc" >
+                          <%for(let i=0;i < listnamhoc.length;i++){%>
+                              <option value="<%=listnamhoc[i].Nam%>">
+                                  <%=listnamhoc[i].Nam%>
+                              </option>
+                          <%}%>
+                      </select>
+                      <br>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="label-control col-xs-4 col-sm-4 col-md-4 col-lg-4 ">Học kì:</label>
+                  <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                      <select class="form-control" id="hockyhtml" name="hocky">
+                          <%for(let i=0;i < listhocky.length;i++){%>
+                              <option value="<%=listhocky[i].HocKy%>">
+                                  <%=listhocky[i].HocKy%>
+                              </option>
+                          <%}%>
+                      </select>
+                      <br>
+                  </div>
+              </div>
+              <div class="form-group" style="margin-right: 70px">
+                  <button type="submit" class="btn btn-info"> Lọc công nợ </button>
+                  <br>
+                  <br>
+          </div>
+      </form>
+  </div>
+</div>
 <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center; margin-left: 150px;">
   <div class="row col-xs-10 col-sm-10 col-md-10 col-lg-10">
     <table class="table table-bordered" id="table-content">
@@ -14,39 +52,39 @@
         </tr>
       </thead>
       <tbody>
-        <%for(let i=0;i< list.length;i++){%>
-            <tr>
-              <td>
-                <%=list[i].TenMHHP%>
-              </td>
-              <td>
-                <%=list[i].SoTinChi%>
-              </td>
-              <td>
-                <%=list[i].Nam%>
-              </td>
-              <td>
-                <%=list[i].HocKy%>
-              </td>
-              <td>
-                <%=listTien[i]%>
-              </td>
-            </tr>
-          
-        <%}%>
-            <tr>
-              <td>
-                <h3>Tổng tiền học</h3>
-              </td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <h3>
-                  <%= tong%>
-                </h3>
-              </td>
-            </tr>
+          <%for(let i=0;i< list.length;i++){%>
+              <tr>
+                <td>
+                  <%=list[i].TenMHHP%>
+                </td>
+                <td>
+                  <%=list[i].SoTinChi%>
+                </td>
+                <td>
+                  <%=list[i].Nam%>
+                </td>
+                <td>
+                  <%=list[i].HocKy%>
+                </td>
+                <td>
+                  <%=listTien[i]%>
+                </td>
+              </tr>
+            
+          <%}%>
+              <tr>
+                <td>
+                  <h3>Tổng tiền học</h3>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <h3>
+                    <%= tong%>
+                  </h3>
+                </td>
+              </tr>
       </tbody>
     </table>
   </div>
@@ -59,3 +97,18 @@
     }) + currency;
   }
 </script>
+
+<%for(let c=0; c < listnamhoc.length; c++){%>
+  <%if(  namhoc == listnamhoc[c].Nam){%>
+      <script>
+          $('#namhochtml').val("<%=listnamhoc[c].Nam%>");
+    </script>
+  <%}%>
+<%}%>
+<%for(let d=0; d < listhocky.length; d++){%>
+  <%if( hocky == listhocky[d].HocKy){%>
+      <script>
+          $('#hockyhtml').val("<%=listhocky[d].HocKy%>");
+    </script>
+  <%}%>
+<%}%>

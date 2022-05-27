@@ -442,9 +442,9 @@ exports.huydangkyhocphanchosinhvien = function(masv,malophp,callbackQuery){
     }) 
 };
 //lấy công nợ cho sinh viên
-exports.laycongnochosinhvien = function(MSSV,callbackQuery){
+exports.laycongnochosinhvien = function(MSSV, Nam, HocKy,callbackQuery){
      // order by MSSV DESC limit 5 
-    connection.query("select monhocphan.TenMHHP, monhocphan.SoTinChi, lophocphan.Nam, lophocphan.HocKy, phieudangkylhp.nhom from phieudangkylhp inner join lophocphan on lophocphan.MaLopHP = phieudangkylhp.MaLopHP inner join monhocphan on monhocphan.MaMHP = lophocphan.MaMHP  where  phieudangkylhp.MSSV = ? order by lophocphan.Nam asc, lophocphan.HocKy asc;",[MSSV], function(err, results,fields){
+    connection.query("select monhocphan.TenMHHP, monhocphan.SoTinChi, lophocphan.Nam, lophocphan.HocKy, phieudangkylhp.nhom from phieudangkylhp inner join lophocphan on lophocphan.MaLopHP = phieudangkylhp.MaLopHP inner join monhocphan on monhocphan.MaMHP = lophocphan.MaMHP  where  phieudangkylhp.MSSV = ? and lophocphan.Nam= ? and lophocphan.HocKy=? and phieudangkylhp.Nhom = 'LT' order by lophocphan.Nam asc, lophocphan.HocKy asc;",[MSSV,Nam, HocKy], function(err, results,fields){
         if(!err){
             callbackQuery(results);
         }else{
