@@ -24,9 +24,10 @@ module.exports.trangxeplich = function (req, res) {
     let namhoc = "";
     let hocky = "";
     let query = "";
+    let mess = "";
     database.getdsNam(function (dsnam) {
         database.getdshocky(function (dshocky) {
-            return res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp Lịch Học', namhoc, hocky, query, listlh: 0, sotrang: 0, nam: 0, hk: 0, dsnam: dsnam, dshocky: dshocky });
+            return res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp Lịch Học', mess, namhoc, hocky, query, listlh: 0, sotrang: 0, nam: 0, hk: 0, dsnam: dsnam, dshocky: dshocky });
         });
     });
 
@@ -43,12 +44,13 @@ module.exports.lockqlh = function (req, res) {
     var namhoc = req.query.namhoc;
     var hocky = req.query.hocky;
     let query = "";
+    let mess = "";
     database.getdsNam(function (dsnam) {
         database.getdshocky(function (dshocky) {
             database.nvloclichhoc(namhoc, hocky, function (listlich) {
                 // console.log(listlich)
                 let sotrang = (listlich.length) / perPage;
-                res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', namhoc, hocky, query, listlh: listlich.slice(start, end), sotrang: sotrang + 1, nam: namhoc, hk: hocky, dsnam: dsnam, dshocky: dshocky });
+                res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', mess, namhoc, hocky, query, listlh: listlich.slice(start, end), sotrang: sotrang + 1, nam: namhoc, hk: hocky, dsnam: dsnam, dshocky: dshocky });
             });
         });
     });
@@ -58,11 +60,12 @@ module.exports.timlhp = function (req, res) {
     var query = req.query.malophocphan;
     let namhoc = "";
     let hocky = "";
+    let mess = "";
     database.getdsNam(function (dsnam) {
         database.getdshocky(function (dshocky) {
             database.timlophplh(query, function (listlh) {
                 if (listlh.length > 0) {
-                    res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', namhoc, hocky, query, listlh: listlh, sotrang: 0, nam: 0, hk: 0, dsnam: dsnam, dshocky: dshocky });
+                    res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học',mess, namhoc, hocky, query, listlh: listlh, sotrang: 0, nam: 0, hk: 0, dsnam: dsnam, dshocky: dshocky });
                 } else {
                     // res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp lich học', listlh: 0, sotrang: 0,nam:0,hk:0,dsnam:dsnam,dshocky:dshocky });
                     return res.redirect('/nhanvien/xeplichhoc')
@@ -76,12 +79,26 @@ module.exports.timlhp = function (req, res) {
 module.exports.xoalichhoc = function (req, res) {
     const malhp = req.params.malop;
     const manhom = req.params.manhom;
+    let mess = "";
+    let namhoc = "";
+    let hocky = "";
+    let query = "";
     database.xlkiemtradulieutruocxoa(malhp, manhom, function (kq) {
         if (kq.length > 0) {
-            res.send('Lịch học đã có sinh viên đăng kí không xóa được')
+            mess = 'Lịch học đã có sinh viên đăng kí không xóa được';
+            database.getdsNam(function (dsnam) {
+                database.getdshocky(function (dshocky) {
+                    return res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp Lịch Học', mess, namhoc, hocky, query, listlh: 0, sotrang: 0, nam: 0, hk: 0, dsnam: dsnam, dshocky: dshocky });
+                });
+            });
         } else {
             database.xoalichhoc(malhp, manhom, function (results) {
-                res.redirect('/nhanvien/xeplichhoc');
+                mess = 'Xoá thành công lịch học lớp học phần '+ malhp +' - '+manhom;
+                database.getdsNam(function (dsnam) {
+                    database.getdshocky(function (dshocky) {
+                        return res.render('./bodyNhanVien/XepLichHoc', { layout: './layouts/layoutNhanVien', title: 'Xếp Lịch Học', mess, namhoc, hocky, query, listlh: 0, sotrang: 0, nam: 0, hk: 0, dsnam: dsnam, dshocky: dshocky });
+                    });
+                });
             });
         }
     });
@@ -139,7 +156,7 @@ module.exports.savedata = function (req, res) {
         // console.log(arrTietHoc)
         // console.log(arrNgay)
         // console.log(arrPhong)
-        // console.log(arrlhp)
+        console.log(arrlhp)
         // console.log(arrnhom)
         database.xlkiemtradulieu(arrlhp, arrnhom, function (results) {
             if (results.length > 0) {
