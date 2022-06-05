@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
 
     host:process.env.DATABASE_HOST || 'dt3bgg3gu6nqye5f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
     user:process.env.DATABASE_USER || 'ma1oem39jp772diw',
-    password:process.env.DATABASE_PASS || 'xgyru0t28effeuar',
+    password:process.env.DATABASE_PASS || 'cqw6twej62tlpm9d',
     database:process.env.DATABASE_NAME || 'qxg1q9a5sd3r2k7l'
 });
 var connect = function(){
