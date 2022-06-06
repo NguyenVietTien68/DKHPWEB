@@ -306,9 +306,9 @@ exports.laydanhsachmonhocphanchosinhvien = function(MSSV,HocKy,Nam,callbackQuery
     //closeDB();
 }
 //lấy danh sách lớp học phần cho sinh viên
-exports.laydanhsachlophocphanchosinhvien = function(MaMonHP,callbackQuery){
+exports.laydanhsachlophocphanchosinhvien = function(MaMonHP,Nam, HocKy,callbackQuery){
      // order by MSSV DESC limit 5
-    connection.query(" select lophocphan.* from lophocphan where lophocphan.MaMHP =?",[MaMonHP], function(err, results,fields){
+    connection.query(" select lophocphan.* from lophocphan where lophocphan.MaMHP =? and lophocphan.Nam =? and lophocphan.HocKy=?",[MaMonHP,Nam,HocKy], function(err, results,fields){
         if(!err){
             callbackQuery(results);
         }else{

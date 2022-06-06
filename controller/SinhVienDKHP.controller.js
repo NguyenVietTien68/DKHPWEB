@@ -73,7 +73,7 @@ module.exports.dangkyhocphan = function (req, res) {
                     database.laydanhsachmonhocphanchosinhvien(mssv, hocky, namhoc, function (listmh) {
                         // console.log(khoa[0].KhoaHoc);
                         // console.log(listnamhoca);
-                        database.laydanhsachlophocphanchosinhvien(monhp, function (listlh) {
+                        database.laydanhsachlophocphanchosinhvien(monhp,namhoc,hocky, function (listlh) {
                             // console.log(monhp);
                             // console.log(listlh);
                             // console.log(monhp);
