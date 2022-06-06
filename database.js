@@ -18,7 +18,7 @@ var connection = mysql.createConnection({
 
     host:process.env.DATABASE_HOST || 'dt3bgg3gu6nqye5f.cbetxkdyhwsb.us-east-1.rds.amazonaws.com',
     user:process.env.DATABASE_USER || 'ma1oem39jp772diw',
-    password:process.env.DATABASE_PASS || 'xgyru0t28effeuar',
+    password:process.env.DATABASE_PASS || 'cqw6twej62tlpm9d',
     database:process.env.DATABASE_NAME || 'qxg1q9a5sd3r2k7l'
 });
 var connect = function(){
@@ -306,9 +306,9 @@ exports.laydanhsachmonhocphanchosinhvien = function(MSSV,HocKy,Nam,callbackQuery
     //closeDB();
 }
 //lấy danh sách lớp học phần cho sinh viên
-exports.laydanhsachlophocphanchosinhvien = function(MaMonHP,callbackQuery){
+exports.laydanhsachlophocphanchosinhvien = function(MaMonHP,Nam, HocKy,callbackQuery){
      // order by MSSV DESC limit 5
-    connection.query(" select lophocphan.* from lophocphan where lophocphan.MaMHP =?",[MaMonHP], function(err, results,fields){
+    connection.query(" select lophocphan.* from lophocphan where lophocphan.MaMHP =? and lophocphan.Nam =? and lophocphan.HocKy=?",[MaMonHP,Nam,HocKy], function(err, results,fields){
         if(!err){
             callbackQuery(results);
         }else{
@@ -442,9 +442,9 @@ exports.huydangkyhocphanchosinhvien = function(masv,malophp,callbackQuery){
     }) 
 };
 //lấy công nợ cho sinh viên
-exports.laycongnochosinhvien = function(MSSV,callbackQuery){
+exports.laycongnochosinhvien = function(MSSV, Nam, HocKy,callbackQuery){
      // order by MSSV DESC limit 5 
-    connection.query("select monhocphan.TenMHHP, monhocphan.SoTinChi, lophocphan.Nam, lophocphan.HocKy, phieudangkylhp.nhom from phieudangkylhp inner join lophocphan on lophocphan.MaLopHP = phieudangkylhp.MaLopHP inner join monhocphan on monhocphan.MaMHP = lophocphan.MaMHP  where  phieudangkylhp.MSSV = ? order by lophocphan.Nam asc, lophocphan.HocKy asc;",[MSSV], function(err, results,fields){
+    connection.query("select monhocphan.TenMHHP, monhocphan.SoTinChi, lophocphan.Nam, lophocphan.HocKy, phieudangkylhp.nhom from phieudangkylhp inner join lophocphan on lophocphan.MaLopHP = phieudangkylhp.MaLopHP inner join monhocphan on monhocphan.MaMHP = lophocphan.MaMHP  where  phieudangkylhp.MSSV = ? and lophocphan.Nam= ? and lophocphan.HocKy=? and phieudangkylhp.Nhom = 'LT' order by lophocphan.Nam asc, lophocphan.HocKy asc;",[MSSV,Nam, HocKy], function(err, results,fields){
         if(!err){
             callbackQuery(results);
         }else{

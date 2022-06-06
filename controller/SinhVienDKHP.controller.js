@@ -9,10 +9,10 @@ module.exports.dangkyhocphan = function (req, res) {
     let hockykiemtra1;
     let namhockiemtra1;
     let d = new Date();
-    // let year = d.getFullYear();
-    // let month = d.getMonth()+1;
-    let month = d.getMonth()+1;
     let year = d.getFullYear();
+    let month = d.getMonth()+1;
+    // let month = 9;
+    // let year = 2021;
     // console.log(month);      
     // let day = d.getDate();
     if (month <= 5) {
@@ -73,7 +73,7 @@ module.exports.dangkyhocphan = function (req, res) {
                     database.laydanhsachmonhocphanchosinhvien(mssv, hocky, namhoc, function (listmh) {
                         // console.log(khoa[0].KhoaHoc);
                         // console.log(listnamhoca);
-                        database.laydanhsachlophocphanchosinhvien(monhp, function (listlh) {
+                        database.laydanhsachlophocphanchosinhvien(monhp,namhoc,hocky, function (listlh) {
                             // console.log(monhp);
                             // console.log(listlh);
                             // console.log(monhp);

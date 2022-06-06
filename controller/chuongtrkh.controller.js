@@ -98,11 +98,11 @@ module.exports.savedata = function (req, res) {
                         let data = {
                             MaChuyenNganh: rows[i].MaChuyenNganh, MaMHP: rows[i].MaMHP, HocKy: rows[i].HocKy
                         };
-                        database.themMHCN(data, function (results) {
+                        database.themMHCN(data, function (resultsa) {
 
                         });
                         dem++;
-                    };
+                };
                 let mess = 'Đã thêm '+ dem+ ' môn học phần vào '+ arrcn[0].MaChuyenNganh;
                 let macn = "";
                 database.getAllChuyenNganh(function (dsma) {

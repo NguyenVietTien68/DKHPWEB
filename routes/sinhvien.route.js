@@ -43,7 +43,8 @@ router.get('/doimk', controllerTDMK.doiMatKhauSV);
 router.post('/doimatkhau',upload.fields([]), controllerTDMK.postDoiMatKhauSV);
 
 //xem công nợ
-router.get('/xemcongno',controllerCN.xemcongno);
+router.get('/xemcongno',controllerCN.trangxemcongno);
+router.get('/chitietcongno',controllerCN.xemcongno);
 
 //xem chương trình khung
 router.get('/xemctk',controllerCTK.xemchuongtrinhkhung);
